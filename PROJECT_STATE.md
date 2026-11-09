@@ -96,10 +96,10 @@ The inspection request was read-only. Copilot's subsequent report explicitly sta
 | Matter | Status | Decision evidence / note |
 |---|---|---|
 | Controlled archive organization by Kernel version | COMPLETED FILING BATCHES MERGED BY OPERATOR | Operator reviewed and merged PRs #1–#4 |
-| Cross-Agent Continuity Layer — PR 1 | MERGED; FORMAL ADOPTION STATUS NOT SEPARATELY RECORDED | Operator reported completion; PR #5 merge is confirmed. The three instruction files remain explicitly marked draft |
-| Cross-Agent Continuity Layer — PR 2 | PENDING OPERATOR REVIEW | Operator instructed creation of this Draft PR |
-| Cross-Agent Continuity Layer — PR 3 | NOT YET AUTHORIZED / NOT STARTED | To be considered after PR 2 review |
-| Markdown migration direction | APPROVED IN PRINCIPLE; METHOD AND EXECUTION GATES REMAIN | The operator previously approved a controlled migration toward a single Markdown format, subject to validation and preservation safeguards |
+| Cross-Agent Continuity Layer — PR 1 | MERGED; FORMAL ADOPTION STATUS NOT SEPARATELY RECORDED | PR #5 merged; the three instruction files remain explicitly marked draft |
+| Cross-Agent Continuity Layer — PR 2 | MERGED | PR #6 merged; the original snapshot is now being refreshed because its next-step instructions became stale |
+| Cross-Agent Continuity Layer — PR 3 | MERGED | PR #7 merged; `HANDOFF_LOG.md` is present on `main` and remains marked draft |
+| Markdown migration direction | APPROVED IN PRINCIPLE; EXECUTION DEFERRED | The operator approved a controlled migration toward Markdown in principle, but has now explicitly deferred conversion until PC access is available. No conversion or original-file replacement is currently authorized |
 | Removal of confirmed redundant duplicates | CONDITIONALLY APPROVED IN PRINCIPLE; CASE-BY-CASE VERIFICATION REQUIRED | The operator approved removing genuinely redundant duplicates only after verification; no deletion is proposed in this PR and each removal must be evidenced and reviewable |
 
 The three governance documents below were observed as `DRAFT — AWAITING OPERATOR APPROVAL`; this snapshot does not activate them:
