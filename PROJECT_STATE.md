@@ -87,18 +87,18 @@ The extensionless file observed is:
 2. `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/01_sentinel-master-task-register (Kernel v3.5.0 Ratified).md.docx`
 3. `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.0/DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL (KERNEL V3.0 REVISED).docx`
 
-The inspection request was read-only. No conversion result is asserted here. The operator's last update indicated Copilot was taking time; the final inspection report has not been supplied in the current working context.
+The inspection request was read-only. No conversion result is asserted here. The operator's last update indicated Copilot was taking time; the final inspection report has not been supplied in the current working context. The overall controlled Markdown-migration direction has been approved in principle, but the pilot findings, conversion method, validation gates, and execution sequence still need to be reviewed before conversion begins.
 
 ## 6. Operator decisions and approval status
 
 | Matter | Status | Decision evidence / note |
 |---|---|---|
-| Controlled archive organization by Kernel version | OPERATOR-APPROVED FOR THE COMPLETED FILING BATCHES | Operator reviewed and merged PRs #1–#4 |
+| Controlled archive organization by Kernel version | COMPLETED FILING BATCHES MERGED BY OPERATOR | Operator reviewed and merged PRs #1–#4 |
 | Cross-Agent Continuity Layer — PR 1 | MERGED; FORMAL ADOPTION STATUS NOT SEPARATELY RECORDED | Operator reported completion; PR #5 merge is confirmed. The three instruction files remain explicitly marked draft |
 | Cross-Agent Continuity Layer — PR 2 | PENDING OPERATOR REVIEW | Operator instructed creation of this Draft PR |
 | Cross-Agent Continuity Layer — PR 3 | NOT YET AUTHORIZED / NOT STARTED | To be considered after PR 2 review |
-| DOCX pilot conversion | NO CONVERSION AUTHORIZATION RECORDED IN THIS SNAPSHOT | Inspection only was requested; await inspection findings and an explicit next-step decision |
-| Deletion of historical files | NOT AUTHORIZED BY THIS SNAPSHOT | Any proposed deletion requires evidence that the copy is genuinely redundant and a separate reviewable change |
+| Markdown migration direction | APPROVED IN PRINCIPLE; METHOD AND EXECUTION GATES REMAIN | The operator previously approved a controlled migration toward a single Markdown format, subject to validation and preservation safeguards |
+| Removal of confirmed redundant duplicates | CONDITIONALLY APPROVED IN PRINCIPLE; CASE-BY-CASE VERIFICATION REQUIRED | The operator approved removing genuinely redundant duplicates only after verification; no deletion is proposed in this PR and each removal must be evidenced and reviewable |
 
 The three governance documents below were observed as `DRAFT — AWAITING OPERATOR APPROVAL`; this snapshot does not activate them:
 
