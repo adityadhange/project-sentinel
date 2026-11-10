@@ -37,3 +37,15 @@
 \- Execution Specialists: \`SKL-researcher\` (Evidence Lead), \`SKL-critical-analyst\` (Adversarial Lead), \`SKL-operator\` (Assembly Lead).
 
 \- \`SKL-verifier-officer\`: Independent Epistemic & Quantitative Authority. Handles \`RUL-STRIKE\_ARBITRATION\` via \`TST-BATCH\_CONSOLIDATION\`.
+
+## 1.1 Level C clarification — post-mutation read-back
+
+The Level C definition above establishes pre-approval verification inside isolated sandboxes. The Verifier working specification also assigns independent post-mutation read-back after an approved persistent write. These provisions must be read together as follows:
+
+- Level C pre-approval verification remains confined to isolated, authorized sandboxes.
+- Post-mutation read-back is permitted only if a separate, explicit, read-only retrieval permission has been granted for the exact authorized project namespace.
+- The Verifier compares independently retrieved actual state against the approved expected state and records the evidence and outcome.
+- This read-back permission does not grant target creation, modification, deletion, repair, rollback, or Level D approval authority.
+- If retrieval permission is absent, denied, or inconclusive, the Verifier records INDETERMINATE. A successful write response or another agent's assertion cannot establish PASS.
+
+This clarification defines the required permission boundary; it does not itself grant the permission or prove that the host platform enforces it. The capability-permissions matrix and actual platform controls must be updated and verified separately before the capability is treated as active.
