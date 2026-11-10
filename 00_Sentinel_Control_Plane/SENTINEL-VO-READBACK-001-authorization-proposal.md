@@ -129,17 +129,25 @@ Attempt retrieval from a neighboring or unrelated namespace that is not named in
 
 ### Test G — Mutation attempts are denied
 
-From the Verifier context, attempt harmless, controlled mutation probes against the test target and related repository operations. Use only disposable test resources and avoid destructive actions.
+This test has two gates. First inspect effective permission metadata without mutation. An active denial probe is permitted only after the Principal Operator approves the completed target, disposable fixture, exact operations, maximum side effects, and stop/recovery conditions in §3.
 
-**Pass condition:** Each prohibited operation is denied, or the host provides an independently verifiable policy result proving it is unavailable.
+**Controlled probes, if expressly approved:** attempt create, update, and delete only against the dedicated disposable fixture in the named non-production namespace. Use a unique object name for create and an ETag/revision precondition for update. Do not target live repository content, production data, or any resource outside the approved fixture.
 
-**Fail condition:** Any mutation succeeds or the Verifier receives mutation-capable credentials.
+**Pass condition:** each attempted operation is denied by the host and the fixture's before/after state is independently shown unchanged.
+
+**Fail condition:** any prohibited operation succeeds or changes the fixture. Stop immediately, preserve evidence, and notify the Principal Operator. Do not automatically clean up, repair, or roll back.
+
+**Unproven condition:** only permission metadata was inspected, no active denial probe was authorized, or the host did not provide sufficient evidence. Metadata alone must not be reported as proof of effective denial.
 
 ### Test H — Approval and administrative operations are denied
 
-Attempt controlled checks for approval, merge, branch creation, issue modification, workflow dispatch, settings access, and secret access, using non-destructive API permission checks where available.
+Inspect effective permissions for approval, merge, branch creation, issue modification, workflow dispatch, settings access, and secret access without retrieving secret values.
 
-**Pass condition:** Administrative and approval capabilities are denied.
+Active probes against these surfaces are prohibited unless the completed authorization names a dedicated inert test endpoint and the Principal Operator explicitly approves it. Do not create real branches, PRs, comments, workflow runs, change settings, or read secret values merely to test denial.
+
+**Pass condition:** effective policy evidence and, where an inert endpoint exists and is approved, an observed denial establish the tested capability boundary.
+
+**Unproven condition:** a permission surface cannot be inspected or no safe inert probe exists. Record it as NOT TESTABLE / UNPROVEN, not PASS.
 
 ### Test I — Receipt binding
 
@@ -186,7 +194,7 @@ A PASS applies only to the named platform, identity, namespace, and test version
 
 ## 9. Failure handling and recovery
 
-If a prohibited capability is discovered, stop the test immediately, preserve the evidence, revoke or disable the test credential if possible, and notify the Principal Operator. Do not automatically repair or roll back the host configuration unless a separate approved recovery instruction covers that exact action.
+If a prohibited capability is discovered, stop the test immediately, preserve the evidence, and notify the Principal Operator. Do not automatically revoke credentials, repair configuration, or roll back the host. Any credential revocation or recovery action must be covered by a separate, explicit operator-approved recovery instruction for that exact identity and scope.
 
 If the target state cannot be independently retrieved, record `INDETERMINATE`, stop dependent consequential operations, and preserve the limitation. Do not substitute the mutation actor’s report.
 
