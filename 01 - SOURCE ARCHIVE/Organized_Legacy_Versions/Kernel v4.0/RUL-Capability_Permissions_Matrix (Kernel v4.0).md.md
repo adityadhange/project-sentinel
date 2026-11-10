@@ -29,3 +29,11 @@
 | \*\*\`SKL-verifier-officer\`\*\* | SENTINEL\_EPISTEMIC\_AUTHORITY. E2 recalculations, tripartite citation verification, single-pass defect reporting (\`TST-BATCH\_CONSOLIDATION\`). | E2 (Code Tools). Sole arbiter for \`RUL-STRIKE\_ARBITRATION\`. |
 
 | \*\*\`SKL-co-developer\`\*\* | ARCHITECTURE\_CO\_DEVELOPER (Offline). | Advisory / M-Class proposals. |
+
+## 2.1 Verifier read-back permission clarification
+
+The `SKL-verifier-officer` row above assigns E2 recalculation, tripartite citation verification, single-pass defect reporting, and sole arbitration authority. The v4.0 Verifier working specification also assigns independent post-mutation read-back responsibility.
+
+**Permission gap:** The row does not expressly grant the independent, read-only retrieval capability required to perform that responsibility. Until separately authorized and enforced, post-mutation retrieval is a defined responsibility with an unresolved platform permission prerequisite; it must not be represented as an active capability.
+
+The intended permission, if approved, is limited to retrieving and inspecting resulting target state within an explicitly authorized project namespace. It grants no create, modify, delete, repair, rollback, or Level D approval authority. A matrix statement alone does not provision or prove host-side enforcement.
