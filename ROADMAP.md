@@ -109,6 +109,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-005` | P2 | Complete an independent Gemini peer review of MAPCA and the merged reconciliation, when the service is available; report 503 or other failure accurately rather than repeatedly retrying. | Gemini | BLOCKED | Gemini service availability |
 | `SNT-006` | P2 | Establish the common peer-review reconciliation: compare completed independent reports, preserve dissent, distinguish evidence from inference, and prepare operator decisions. | ChatGPT (proposed) | BACKLOG | SNT-004 and SNT-005 |
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
+| `SNT-008` | P1 | Conduct Microsoft Copilot’s first manual MAPCA peer review using a fixed repository snapshot and the common response/provenance format. No Copilot Studio, direct GitHub write access, paid API, or repository change. | Microsoft Copilot | READY | Fixed review pack and Principal Operator assignment |
 
 ### Task acceptance criteria
 
@@ -154,6 +155,14 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 - Keep one owner per task and no simultaneous duplicate work.
 - Record measurable outcomes, failures, costs (target ₹0 incremental spend), and limitations.
 
+**SNT-008 — Microsoft Copilot Free manual peer review**
+- Use Mode M — manual portable review; no Copilot Studio, custom API, paid API, or GitHub connector write capability is required.
+- Use a fixed repository snapshot with the repository, branch, full commit SHA, exact files supplied, review question, and known limitations recorded.
+- Obtain Microsoft Copilot’s independent first-pass assessment before supplying other peer conclusions, where practical.
+- Record findings, evidence links to supplied source paths/sections, disagreements, assumptions, unknowns, limitations, and confidence.
+- Label provenance accurately as manually supplied and operator-transcribed; do not claim direct GitHub access, authentication, or posting by Microsoft Copilot.
+- Make no repository edits, commits, branches, PRs, settings, permissions, credentials, or paid API calls as part of this task.
+
 ---
 
 ## 4. Active ownership lock
@@ -197,3 +206,4 @@ No handover is complete until the incoming owner explicitly accepts the task.
 ### Change log
 
 - **2026-11-11 — v1.0:** Initial roadmap and exclusive task-ownership protocol. Baseline refreshed after PR #19 merge. Proposed assignments are not accepted claims; no task is active.
+- **2026-11-11 — v1.1:** Added `SNT-008` for Microsoft Copilot’s zero-cost manual Mode M peer review. The task is `READY`, not active; no owner claim or repository access is implied.
