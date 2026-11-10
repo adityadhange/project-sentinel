@@ -1,7 +1,7 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
 **Document status:** ACTIVE — Principal Operator-approved coordination register  
-**Version:** 1.3  
+**Version:** 1.4  
 **Last refreshed:** 2026-11-11  
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
