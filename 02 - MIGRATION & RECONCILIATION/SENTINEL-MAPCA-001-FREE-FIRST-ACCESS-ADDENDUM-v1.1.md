@@ -166,3 +166,46 @@ This addendum is a design supplement proposed for operator review. It does not a
 The Principal Operator retains final authority. Existing Sentinel intake, verification, Level D, and execution gates remain controlling. MAPCA peers are advisory participants; no peer or coordinator may bypass those gates.
 
 **Proposed disposition requested:** review and approve or revise this free-first access model as an amendment to SENTINEL-MAPCA-001 v1.0.
+
+
+## 12. Explicit adapter reconciliation and version status
+
+This section records the concrete adapter state observed for this revision. It clarifies the access modes in §§3–4; it does not activate a workflow, grant permission, or amend the authority hierarchy.
+
+### 12.1 Existing Gemini execution adapter — Mode W (separately gated)
+
+The repository already contains .github/workflows/gemini-peer-execute.yml. It is not merely a read-only connector. Its observed workflow contract includes:
+
+- It is triggered by an owner-authored issue comment beginning with the Gemini execute command.
+- It requires a separate Principal Operator approval comment in the form @sentinel-operator approve-phase-2: TOKEN, matching the token supplied with the execution request.
+- The approval must predate the execution request, be no older than 24 hours, and must not have been consumed previously.
+- The workflow records token consumption before Gemini execution; a failed or interrupted attempt does not leave that approval reusable.
+- Its GitHub Actions token declares contents: write, issues: write, and pull-requests: write for the workflow job.
+- Gemini itself is instructed to use local file tools only and is not given the GitHub token or shell/network/MCP access. A trusted publication step enforces an allowlist limited to Markdown additions/modifications under four named migration/reconciliation subdirectories, rejects deletions/renames/type changes/symlinks/binaries/out-of-scope paths, and publishes an isolated branch and Draft PR. It does not merge.
+- The workflow comments on the source issue and therefore has an issue-write surface. The trusted workflow, not Gemini's model-level instruction, performs GitHub publication.
+
+Accordingly, this is **Mode W — Controlled write adapter, gated**, not Mode R. Its current presence does not mean Phase 2 is globally activated or that a specific execution is approved. Each execution remains subject to its separate one-time approval gate and the workflow's actual runtime controls. The existence of a gate is not proof that the gate has been runtime-tested or that every permission boundary is effective.
+
+**Registry entry for this revision:**
+
+| Participant / adapter | Mode | Observed boundary | Current operational statement |
+|---|---|---|---|
+| Gemini manual review | M | Portable review pack and returned assessment | Available as a manual fallback, subject to free-plan limits |
+| Gemini execution workflow | W | Owner-triggered, one-time Phase 2 approval, isolated branch and Draft PR, constrained publication allowlist; workflow job has write scopes | Present in repository; separately gated; do not describe as read-only or globally activated |
+| Claude Free | M | Manual versioned review pack; response transcribed by operator | Baseline no-API route; no Anthropic API key required |
+| Claude API workflow PR #16 | R-intended adapter | Proposed direct Anthropic API call and GitHub issue-comment publication; requires ANTHROPIC_API_KEY secret | Separate draft PR; not merged or live; may incur API charges; not part of the free-first baseline |
+| Other peers | M or R per session | Must be recorded from the actual route used | Do not infer access mode from platform name or prior sessions |
+
+### 12.2 Mode R is not the same as read-only contents access
+
+For every connected peer, the registry must record all effective surfaces separately: repository contents, issues/comments, pull requests/reviews, Actions/workflow dispatch, secrets/settings, branch creation/push, and external API/billing access. A workflow that can post comments is not strictly read-only even if it cannot modify repository files. A model that receives only read tools may still be operating inside a workflow whose trusted wrapper has broader permissions; document both layers.
+
+### 12.3 Claude Free and PR #16 are separate paths
+
+Claude Free's manual Mode M procedure is the default and costs no API usage. PR #16 is an optional, API-based automation proposal. It requires an Anthropic API credential configured outside the conversation and may incur usage charges. It is not needed for Claude Free participation and must not be treated as live merely because the PR or workflow file exists. No API secret is required or requested by this addendum.
+
+### 12.4 Version and approval semantics
+
+This file is **Addendum v1.1 to SENTINEL-MAPCA-001 v1.0**, not a complete replacement or consolidated v1.1 specification. The parent v1.0 remains the parent document; this addendum must be read alongside it. Any conflict with v1.0 or controlling Sentinel governance must be surfaced for explicit operator disposition rather than silently resolved by this addendum.
+
+The addendum's merge into main records repository incorporation only. Its status remains **DRAFT — FOR PRINCIPAL OPERATOR REVIEW**. Merge does not constitute operator approval, policy activation, workflow activation, credential approval, or permission grant.
