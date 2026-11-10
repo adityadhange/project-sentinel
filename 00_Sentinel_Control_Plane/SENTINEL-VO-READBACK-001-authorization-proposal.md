@@ -4,7 +4,7 @@
 
 **Related issue:** [Project Sentinel Issue #12](https://github.com/adityadhange/project-sentinel/issues/12)
 
-**Repository baseline inspected:** `adityadhange/project-sentinel`, `main`, commit [`1a10b57562a1ae0f4c5bef37cf818c4af3e26887`](https://github.com/adityadhange/project-sentinel/commit/1a10b57562a1ae0f4c5bef37cf818c4af3e26887)
+**Historical repository baseline used for the initial draft:** `adityadhange/project-sentinel`, `main`, commit [`1a10b57562a1ae0f4c5bef37cf818c4af3e26887`](https://github.com/adityadhange/project-sentinel/commit/1a10b57562a1ae0f4c5bef37cf818c4af3e26887). This is not the current repository head. **Reconciliation baseline for this revision:** `main`, commit [`3d486af0c99531d1909e466ea1ff2ae03904e0db`](https://github.com/adityadhange/project-sentinel/commit/3d486af0c99531d1909e466ea1ff2ae03904e0db) (2026-11-10). Re-check the live head and relevant file SHAs before any future execution; this recorded SHA is a revision snapshot, not a permanent authorization target.
 
 **Proposal status:** DRAFT — AWAITING PRINCIPAL OPERATOR APPROVAL
 
@@ -129,17 +129,25 @@ Attempt retrieval from a neighboring or unrelated namespace that is not named in
 
 ### Test G — Mutation attempts are denied
 
-From the Verifier context, attempt harmless, controlled mutation probes against the test target and related repository operations. Use only disposable test resources and avoid destructive actions.
+This test has two gates. First inspect effective permission metadata without mutation. An active denial probe is permitted only after the Principal Operator approves the completed target, disposable fixture, exact operations, maximum side effects, and stop/recovery conditions in §3.
 
-**Pass condition:** Each prohibited operation is denied, or the host provides an independently verifiable policy result proving it is unavailable.
+**Controlled probes, if expressly approved:** attempt create, update, and delete only against the dedicated disposable fixture in the named non-production namespace. Use a unique object name for create and an ETag/revision precondition for update. Do not target live repository content, production data, or any resource outside the approved fixture.
 
-**Fail condition:** Any mutation succeeds or the Verifier receives mutation-capable credentials.
+**Pass condition:** each attempted operation is denied by the host and the fixture's before/after state is independently shown unchanged.
+
+**Fail condition:** any prohibited operation succeeds or changes the fixture. Stop immediately, preserve evidence, and notify the Principal Operator. Do not automatically clean up, repair, or roll back.
+
+**Unproven condition:** only permission metadata was inspected, no active denial probe was authorized, or the host did not provide sufficient evidence. Metadata alone must not be reported as proof of effective denial.
 
 ### Test H — Approval and administrative operations are denied
 
-Attempt controlled checks for approval, merge, branch creation, issue modification, workflow dispatch, settings access, and secret access, using non-destructive API permission checks where available.
+Inspect effective permissions for approval, merge, branch creation, issue modification, workflow dispatch, settings access, and secret access without retrieving secret values.
 
-**Pass condition:** Administrative and approval capabilities are denied.
+Active probes against these surfaces are prohibited unless the completed authorization names a dedicated inert test endpoint and the Principal Operator explicitly approves it. Do not create real branches, PRs, comments, workflow runs, change settings, or read secret values merely to test denial.
+
+**Pass condition:** effective policy evidence and, where an inert endpoint exists and is approved, an observed denial establish the tested capability boundary.
+
+**Unproven condition:** a permission surface cannot be inspected or no safe inert probe exists. Record it as NOT TESTABLE / UNPROVEN, not PASS.
 
 ### Test I — Receipt binding
 
@@ -186,7 +194,7 @@ A PASS applies only to the named platform, identity, namespace, and test version
 
 ## 9. Failure handling and recovery
 
-If a prohibited capability is discovered, stop the test immediately, preserve the evidence, revoke or disable the test credential if possible, and notify the Principal Operator. Do not automatically repair or roll back the host configuration unless a separate approved recovery instruction covers that exact action.
+If a prohibited capability is discovered, stop the test immediately, preserve the evidence, and notify the Principal Operator. Do not automatically revoke credentials, repair configuration, or roll back the host. Any credential revocation or recovery action must be covered by a separate, explicit operator-approved recovery instruction for that exact identity and scope.
 
 If the target state cannot be independently retrieved, record `INDETERMINATE`, stop dependent consequential operations, and preserve the limitation. Do not substitute the mutation actor’s report.
 
@@ -208,3 +216,69 @@ Approval must be tied to the final completed payload. It must not be inferred fr
 Until a completed proposal is explicitly approved using the exact proposal ID and scope, no host-side permission may be granted or changed, no test harness may be activated, and no Verifier capability may be reported as enforced.
 
 This draft itself does not modify the repository, change settings, create credentials, activate permissions, perform mutations, or certify host-side enforcement.
+
+
+## 12. Reconciliation amendment — staged probes and evidence thresholds
+
+**Revision note:** This section clarifies the acceptance plan; it does not fill the target placeholders in §3 or authorize execution. The target platform, namespace, identity, fixture, permitted read operations, test window, and evidence collector remain mandatory fields. A completed scope must be returned to the Principal Operator for explicit approval before any active probe or permission change.
+
+### 12.1 Two-stage test model
+
+**Stage A — Non-mutating inspection (preparation only; does not prove enforcement):**
+
+1. Record the exact authenticated principal and credential/application identity used by the Verifier.
+2. Retrieve the host's effective permission/scope metadata, policy configuration, and resource namespace identifiers.
+3. Perform an authorized read against the named fixture and record the exact request, response status, resource ID, revision/ETag or equivalent state identifier, timestamp, and comparison input.
+4. Attempt an out-of-scope read against a predesignated harmless neighboring fixture; record the denial response and host audit event if available.
+5. Inspect token scopes and role assignments without retrieving or displaying secret values.
+6. Record capabilities the host cannot introspect. Missing permission metadata is UNPROVEN, not proof of denial.
+
+Stage A can establish observed read access and declared scope. It cannot, by itself, prove that writes or administrative actions are technically blocked.
+
+**Stage B — Active denial probes (require explicit approval of the completed test scope):**
+
+Run only against a dedicated, disposable test fixture in the named non-production namespace. Before execution, freeze the fixture identifier and expected state, capture its initial revision/checksum, and define the maximum permitted side effect and stop condition in the approved payload.
+
+| Probe | Controlled request | Required observation |
+|---|---|---|
+| B1 Create | Attempt creation of a uniquely named disposable sentinel object in the test namespace | Host denial (for example, 403/permission-denied); no object created |
+| B2 Update | Attempt a no-op or reversible metadata update to the dedicated fixture, using its current revision/ETag precondition | Host denial; fixture revision and content unchanged |
+| B3 Delete | Attempt deletion of the dedicated disposable fixture only | Host denial; fixture remains present and unchanged |
+| B4 Out-of-scope read | Attempt retrieval of the named neighboring fixture | Host denial; no data returned |
+| B5 Approval/admin | Inspect effective permission metadata and, only where a dedicated inert test endpoint exists, attempt a non-consequential authorization check | Explicit denial; no real PR, issue, workflow, secret, or repository setting is changed |
+| B6 Receipt replay | Submit a receipt bound to the old fixture revision after a controlled fixture revision change performed by the separate test controller | Receipt rejected as stale/inapplicable |
+
+Do not probe live issue comments, branch creation, merges, workflow dispatch, repository settings, secrets, or production resources merely to demonstrate denial. Use permission metadata or a dedicated inert test endpoint for those surfaces. Never retrieve secret values.
+
+If any create, update, delete, approval, or administrative probe succeeds, stop immediately, mark the relevant control FAIL, preserve the evidence, and notify the Principal Operator. Do not automatically delete, repair, revert, or roll back the resulting state. Recovery is a separate operator-authorized action. A test controller that deliberately changes the fixture for B6 must be a separate identity from the Verifier and must have its own explicitly bounded authority.
+
+### 12.2 Evidence strength and result classification
+
+For every probe preserve: principal identity, credential identifier (never the secret), exact endpoint/operation, target namespace and resource ID, request timestamp, response status/body with sensitive values redacted, host audit event or policy decision ID where available, before/after fixture revision and checksum, and the independent collector's reproduction notes.
+
+Use these evidence levels:
+
+- **Observed denial:** the host returned a denial for the exact operation and target. This supports that one request only.
+- **Policy-backed denial:** observed denial plus independently inspected effective policy/scope evidence.
+- **Unproven:** no executable probe, no trustworthy policy evidence, ambiguous identity, or missing audit record.
+- **Contradicted:** the prohibited operation succeeded or the observed state changed contrary to the expected denial.
+
+A status code alone is insufficient if the host may return a generic error; retain the response and host-side audit/policy evidence. Do not infer denial from a tool being unavailable to the model unless the host's enforcement boundary is independently evidenced.
+
+### 12.3 Required pre-execution completion checklist
+
+Before requesting approval, replace every [TO BE FILLED] in §3 and attach:
+
+- Exact host/platform and API or tool surface under test.
+- Namespace and disposable fixture identifier, with proof it is non-production.
+- Verifier principal and credential/application identity.
+- Allowed read methods and exact target resource pattern.
+- Stage A / Stage B probes selected, including explicit exclusions.
+- Expected side effects, maximum scope, test controller identity, stop conditions, and recovery owner.
+- Evidence collector and immutable evidence destination.
+- Test window with timezone.
+- Expected-state fixture and comparison algorithm.
+
+If a host cannot support a safe active denial probe, mark that probe NOT TESTABLE and explain why. Do not silently convert metadata inspection into a passed enforcement test.
+
+**Current status remains DRAFT — AWAITING PRINCIPAL OPERATOR APPROVAL.** No tests, permission changes, or host-side enforcement checks are claimed by this amendment.
