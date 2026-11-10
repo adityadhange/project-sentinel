@@ -32,6 +32,7 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          EXECUTION_COMMENT_CREATED_AT: ${{ github.event.comment.created_at }}
         run: |
           set -euo pipefail
 
@@ -68,8 +69,14 @@ jobs:
           APPROVAL_ID="$(jq -r '.id' <<< "$APPROVAL")"
           APPROVAL_CREATED="$(jq -r '.created_at' <<< "$APPROVAL")"
           APPROVAL_EPOCH="$(date -u -d "$APPROVAL_CREATED" +%s)"
+          EXECUTION_EPOCH="$(date -u -d "$EXECUTION_COMMENT_CREATED_AT" +%s)"
           NOW_EPOCH="$(date -u +%s)"
           APPROVAL_AGE=$((NOW_EPOCH - APPROVAL_EPOCH))
+
+          if (( APPROVAL_EPOCH >= EXECUTION_EPOCH )); then
+            echo "::error::The separate Phase 2 approval must predate the execution request."
+            exit 1
+          fi
 
           if (( APPROVAL_AGE < 0 || APPROVAL_AGE > 86400 )); then
             echo "::error::Phase 2 approval is expired or has an invalid timestamp. Approval validity is 24 hours."
