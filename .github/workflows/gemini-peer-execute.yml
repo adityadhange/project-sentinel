@@ -220,7 +220,6 @@ jobs:
                 ;;
               "02 - MIGRATION & RECONCILIATION/04 - Migration Verification Records/"*.md)
                 ;;
-                ;;
               *)
                 echo "::error::Path is outside the strict publication allowlist: $PATHNAME"
                 exit 1
