@@ -205,7 +205,14 @@ jobs:
             fi
 
             case "$PATHNAME" in
-              "02 - MIGRATION & RECONCILIATION/01 - Source Inventory/"*.md|              "02 - MIGRATION & RECONCILIATION/02 - Migration Records/"*.md|              "02 - MIGRATION & RECONCILIATION/03 - Duplicate & Version Reconciliation/"*.md|              "02 - MIGRATION & RECONCILIATION/04 - Migration Verification Records/"*.md)
+              "02 - MIGRATION & RECONCILIATION/01 - Source Inventory/"*.md)
+                ;;
+              "02 - MIGRATION & RECONCILIATION/02 - Migration Records/"*.md)
+                ;;
+              "02 - MIGRATION & RECONCILIATION/03 - Duplicate & Version Reconciliation/"*.md)
+                ;;
+              "02 - MIGRATION & RECONCILIATION/04 - Migration Verification Records/"*.md)
+                ;;
                 ;;
               *)
                 echo "::error::Path is outside the strict publication allowlist: $PATHNAME"
