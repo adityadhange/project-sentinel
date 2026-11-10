@@ -100,7 +100,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 
 ## 3. Roadmap and task register
 
-**Important:** The owners below are proposed assignments only. No task becomes `ACTIVE` until the Principal Operator confirms the assignment and the named AI explicitly claims it. No AI is represented as having accepted a task in this initial version.
+**Assignment state:** The Principal Operator has confirmed Claude for `SNT-004` and Microsoft Copilot for `SNT-008`. These are assigned owners, not accepted claims. Both tasks remain `READY` until the named AI explicitly claims its task. Other owner entries below remain proposed nominations unless separately confirmed.
 
 | ID | Priority | Task | Proposed owner | Status | Depends on |
 |---|---|---|---|---|---|
@@ -112,6 +112,17 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-006` | P2 | Establish the common peer-review reconciliation: compare completed independent reports, preserve dissent, distinguish evidence from inference, and prepare operator decisions. | ChatGPT (proposed) | BACKLOG | SNT-004 and SNT-005 |
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
 | `SNT-008` | P1 | Provide Microsoft Copilot roadmap intelligence and task-coordination recommendations: read the current repository, identify pending work and suitable owners, prepare roadmap/task proposals, and report recommendations to the Principal Operator. | Microsoft Copilot | READY | Fixed repository snapshot and Principal Operator delegation |
+
+
+
+### Confirmed review assignments — awaiting owner claims
+
+| Task | Assigned owner | Current status | Fixed review source | Claim requirement |
+|---|---|---|---|---|
+| `SNT-004` | Claude Free | `READY — AWAITING CLAIM` | `SENTINEL-MAPCA-REVIEW-PACK-001.md`, snapshot `aaf21fd80f706abdbbce686dc854f5af724f02eb` | Claude must explicitly state `CLAIM: SNT-004` before becoming ACTIVE. First-pass report precedes access to Copilot's report; challenge pass follows. |
+| `SNT-008` | Microsoft Copilot | `READY — AWAITING CLAIM` | `SENTINEL-MAPCA-REVIEW-PACK-001.md`, same snapshot | Copilot must explicitly state `CLAIM: SNT-008` before becoming ACTIVE. Complete independent report before Claude's challenge pass. |
+
+The pack is delivered to the operator for manual transfer to each provider. No direct access, authenticated connection, provider acceptance, or model-originated GitHub activity is implied. The active ownership lock remains empty until each participant claims its own task. These two tasks are separate, sequentially coordinated review streams; Claude's challenge phase depends on Copilot's preserved first-pass report.
 
 ### Task acceptance criteria
 
@@ -228,3 +239,4 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - **2026-11-11 — v1.1:** Added `SNT-008` for Microsoft Copilot’s zero-cost manual Mode M peer review. The task is `READY`, not active; no owner claim or repository access is implied.
 - **2026-11-11 — v1.2:** Expanded `SNT-008` to roadmap intelligence and task-coordination recommendations. Microsoft Copilot recommends; the Principal Operator decides and delegates; another AI implements approved repository updates.
 - **2026-11-11 — v1.3:** Expanded `SNT-008` to include document comparison, contradiction/stale-reference detection, and drafting support. Expanded `SNT-004` into Claude Free's independent first-pass and subsequent challenge/assurance review. Clarified review sequencing, manual provenance, role boundaries, and the current versus historical repository baseline.
+- **2026-11-11 — v1.4:** Confirmed Claude as the assigned owner of `SNT-004` and Microsoft Copilot as the assigned owner of `SNT-008`, both awaiting explicit claims. Added the fixed-snapshot review pack and four source bundles pinned to `aaf21fd80f706abdbbce686dc854f5af724f02eb`. The pack records the missing parent MAPCA v1.0 and external issue/PR limitations. No task is ACTIVE.
