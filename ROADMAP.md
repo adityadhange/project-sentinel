@@ -1,11 +1,12 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
-**Document status:** DRAFT — awaiting Principal Operator review  
-**Version:** 1.0  
+**Document status:** ACTIVE — Principal Operator-approved coordination register  
+**Version:** 1.3  
 **Last refreshed:** 2026-11-11  
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
-**Baseline observed:** `4ffd9172dca5551fb30c7dafde3541d44767167f`  
+**Baseline observed before this update:** `c278d62edfbca8b64a01e8fdb7f5123cde41e6d2`  
+**Historical baseline at initial roadmap creation:** `4ffd9172dca5551fb30c7dafde3541d44767167f`  
 **Purpose:** One authoritative queue for project work, with one accountable AI owner per active task.
 
 > This roadmap coordinates work; it does not grant repository, workflow, credential, policy, or execution authority. A task assignment is not permission to exceed the task's stated scope. The Principal Operator remains the final authority.
@@ -83,9 +84,10 @@ A reviewer checks the evidence. The Principal Operator determines acceptance.
 
 ## 2. Current repository baseline
 
-Observed immediately before preparing this roadmap:
+Observed immediately before this roadmap update:
 
-- `main` head: `4ffd9172dca5551fb30c7dafde3541d44767167f`.
+- `main` head: `c278d62edfbca8b64a01e8fdb7f5123cde41e6d2`.
+- The initial roadmap baseline `4ffd9172dca5551fb30c7dafde3541d44767167f` is historical; it is not the current repository head.
 - PR #19 has been merged. It reconciles the Verifier read-back proposal and the MAPCA free-first access addendum, including the Gemini execution workflow's Mode W classification.
 - PR #16 remains open and Draft. It adds an Anthropic API-dependent Claude workflow requiring `ANTHROPIC_API_KEY`. This is not required for Claude Free and is inconsistent with the zero-cost default unless explicitly retained as an optional future adapter.
 - The current `PROJECT_STATE.md` is stale relative to the November 10 MAPCA / Verifier work and must not be treated as the current work queue.
@@ -105,7 +107,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-001` | P1 | Reconcile PR #16 with the free-first MAPCA policy; recommend retain-as-optional or close as not pursued. Do not configure a paid API key or incur charges. | ChatGPT | READY | Operator decision on PR disposition |
 | `SNT-002` | P1 | Validate the merged Gemini Phase 2 execution gate: inspect exact workflow, build non-production fixtures, test approval freshness, token consumption/replay, allowlist, and Draft-PR-only behavior. Do not use live destructive or out-of-scope operations. | ChatGPT | READY | Test plan and safe fixture scope |
 | `SNT-003` | P1 | Turn the Verifier read-back proposal into a fully specified Stage A non-mutating test pack, including target identity, surfaces, expected evidence, and exact pass/fail/indeterminate rules. Do not run active probes. | Manus | READY | Current merged Verifier proposal |
-| `SNT-004` | P1 | Conduct Claude Free's first manual MAPCA peer review using a fixed repository snapshot and the common response/provenance format. No API key or paid route. | Claude | READY | Review pack and snapshot SHA |
+| `SNT-004` | P1 | Claude Free acts as the independent challenge and assurance reviewer for roadmap intelligence and coordination recommendations: conduct an independent first pass on the fixed repository snapshot, then challenge Microsoft Copilot's SNT-008 recommendations for evidence, scope, ownership, dependencies, duplication, governance conflicts, and readiness. No API key or paid route. | Claude | READY | Fixed snapshot; independent first pass precedes access to SNT-008 recommendations; challenge pass follows receipt of those recommendations |
 | `SNT-005` | P2 | Complete an independent Gemini peer review of MAPCA and the merged reconciliation, when the service is available; report 503 or other failure accurately rather than repeatedly retrying. | Gemini | BLOCKED | Gemini service availability |
 | `SNT-006` | P2 | Establish the common peer-review reconciliation: compare completed independent reports, preserve dissent, distinguish evidence from inference, and prepare operator decisions. | ChatGPT (proposed) | BACKLOG | SNT-004 and SNT-005 |
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
@@ -132,11 +134,14 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 - Explicitly mark unknown or unavailable evidence as `UNPROVEN`.
 - Do not execute active probes or claim permission boundaries have been tested.
 
-**SNT-004 — Claude Free peer review**
-- Use a fixed commit SHA and identify every source file reviewed.
-- Review independently before reading other AI assessments, where practical.
-- Return findings, evidence, disagreements, assumptions, unknowns, confidence, and what would change the assessment.
-- Identify the Claude product/access mode accurately; do not imply GitHub independently authenticated the model.
+**SNT-004 — Claude Free independent challenge and assurance review**
+- Operate in Mode M using the same fixed repository snapshot supplied for SNT-008; no Anthropic API, paid route, Copilot Studio, or direct GitHub write access.
+- **Independent first pass:** before Claude is shown Microsoft Copilot's recommendations, review the snapshot, roadmap, governance records, MAPCA documents, and any supplied issue/PR/project-state extracts. Record the exact commit SHA, every source file or extract reviewed, findings, evidence, contradictions, stale references, assumptions, unknowns, confidence, and dissent.
+- **Challenge pass:** only after the independent first pass is preserved, provide Claude the SNT-008 recommendations. Ask Claude to assess whether proposed priorities and owners are supported by evidence and challenge scope mismatch, unavailable/blocked providers, duplicated work, missing dependencies, weak acceptance criteria, stale records, and governance/authority conflicts.
+- Review whether each proposed task stays within its stated authority and access mode; propose corrections to wording, dependencies, acceptance criteria, and review gates.
+- Preserve agreement, disagreement, minority findings, uncertainty, and the evidence or event that would change Claude's view. Recommend whether each proposal is ready for Principal Operator decision; do not issue an approval.
+- Treat roadmap, issue, PR, and project-state information not present in the supplied snapshot as unavailable. Do not claim live repository access, direct GitHub authentication, or model-originated posting; label provenance as manually supplied and operator-transcribed.
+- Claude does not maintain the roadmap, assign or activate tasks, create ownership locks, override Copilot or the Principal Operator, edit GitHub, create branches, commit, open PRs, or use the Anthropic API.
 
 **SNT-005 — Gemini peer review**
 - Use the same fixed snapshot and review contract as other peers.
@@ -157,14 +162,25 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 
 **SNT-008 — Microsoft Copilot roadmap intelligence and task-coordination recommendations**
 - Operate in Mode M — manual portable review; no Copilot Studio, custom API, paid API, or GitHub connector write capability is required.
-- Read a fixed repository snapshot and identify pending work, dependencies, blockers, suitable AI owners, and relevant evidence.
-- Prepare proposed roadmap entries, task scopes, acceptance criteria, dependency updates, handover notes, and assignment recommendations.
-- Report recommendations to the Principal Operator with source paths, commit SHA, assumptions, unknowns, limitations, and confidence.
-- Recommend ChatGPT, Manus, Gemini, or another participant only when the proposed owner and service availability are supported by evidence; mark unavailable providers as blocked or unverified rather than assuming execution.
+- Review a fixed repository snapshot and all extracts explicitly supplied for the task. Identify pending work, dependencies, blockers, stale references, duplicated or conflicting tasks, governance contradictions, unfinished work, and suitable AI owners.
+- Compare roadmaps, task registers, governance documents, MAPCA records, project-state extracts, and supplied issue/PR records. Do not claim access to GitHub issues, PRs, comments, Actions, or other surfaces unless their contents are included in the supplied pack or independently verified in the actual Copilot environment.
+- Draft proposed roadmap entries, task scopes, acceptance criteria, dependency updates, handover notes, decision records, issue/PR descriptions, and exact proposed Markdown content.
+- Report recommendations to the Principal Operator with source paths/sections, full snapshot commit SHA, evidence, assumptions, unknowns, limitations, and confidence. Distinguish verified facts, inferences, and recommendations.
+- Recommend ChatGPT, Manus, Gemini, Claude, or another participant only when the proposed owner, capability, access mode, and service availability are supported by evidence; mark unavailable providers as blocked or unverified.
 - The Principal Operator retains authority to approve, reject, override, delegate, activate, pause, or reassign tasks.
 - Microsoft Copilot does not activate tasks, create ownership locks, override the Principal Operator, edit GitHub, create branches, commit, open PRs, change settings, manage credentials, or make paid API calls.
-- After operator delegation, ChatGPT, Manus, or Gemini may implement an approved roadmap update through the normal branch-and-Draft-PR process within the delegated scope.
+- After operator delegation, ChatGPT, Manus, or Gemini may implement an approved repository update through the normal branch-and-Draft-PR process within the delegated scope.
 - Label provenance accurately as manually supplied and operator-transcribed; do not claim direct GitHub access, authentication, or posting by Microsoft Copilot.
+
+**SNT-004 / SNT-008 review sequence and role separation**
+1. Prepare one fixed snapshot and record its repository, branch, full commit SHA, included files/extracts, and known omissions.
+2. Claude receives the snapshot first and completes its independent first-pass assessment without seeing Copilot's recommendations. Preserve this output before proceeding.
+3. Microsoft Copilot receives the same snapshot and produces its SNT-008 roadmap intelligence and owner recommendations.
+4. Claude receives the Copilot recommendation and completes the challenge pass. Preserve agreement, disagreement, unsupported assumptions, dissent, and what evidence would change its assessment.
+5. The Principal Operator considers both outputs and decides whether to delegate, revise, defer, or reject proposed work.
+6. Only the AI explicitly delegated by the Principal Operator may implement the approved change. It must claim the relevant task and respect the exclusive ownership lock.
+
+Role boundary: Microsoft Copilot recommends; Claude independently challenges and assures; the Principal Operator decides and delegates; ChatGPT, Manus, or Gemini implements only the delegated change. These roles confer no automatic repository permissions or execution authority.
 
 ---
 
@@ -211,3 +227,4 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - **2026-11-11 — v1.0:** Initial roadmap and exclusive task-ownership protocol. Baseline refreshed after PR #19 merge. Proposed assignments are not accepted claims; no task is active.
 - **2026-11-11 — v1.1:** Added `SNT-008` for Microsoft Copilot’s zero-cost manual Mode M peer review. The task is `READY`, not active; no owner claim or repository access is implied.
 - **2026-11-11 — v1.2:** Expanded `SNT-008` to roadmap intelligence and task-coordination recommendations. Microsoft Copilot recommends; the Principal Operator decides and delegates; another AI implements approved repository updates.
+- **2026-11-11 — v1.3:** Expanded `SNT-008` to include document comparison, contradiction/stale-reference detection, and drafting support. Expanded `SNT-004` into Claude Free's independent first-pass and subsequent challenge/assurance review. Clarified review sequencing, manual provenance, role boundaries, and the current versus historical repository baseline.
