@@ -1,37 +1,38 @@
 # Project State
 
-**Snapshot status:** PROPOSED — REFRESHED AFTER PR #7  
-**Last updated:** 2026-11-09  
+**Snapshot status:** PROPOSED — REFRESHED AFTER PR #39 AND DRAFT PR #40
+**Last updated:** 2026-11-12
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
 **Baseline branch:** `main`  
-**Baseline commit observed:** `a0726ebc313e6db05ea9aa080843f61d0e93a98c`  
-**Snapshot publication branch:** `docs/refresh-project-state-after-pr7`  
+**Baseline commit observed:** `72efeb770b10611e7c386663ef612cd044c365ce`
+**Snapshot publication branch:** `docs/refresh-project-state-20261112`
 **Publication status:** Proposed through a new Draft PR; awaiting operator review
 
 > This is a timestamped repository snapshot, not a live feed, an approval ledger, or an independent grant of authority. Facts below are limited to the evidence and checks identified here. Refresh GitHub state before relying on this snapshot in a later session.
 
 ## 1. Current repository status
 
-- **Observed fact:** The repository default branch is `main`, observed at commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c` on 2026-11-09, after PR #7 merged.
+- **Observed fact:** The repository default branch is `main`, observed at commit `72efeb770b10611e7c386663ef612cd044c365ce` on 2026-11-12, after PR #39 merged.
 - **Observed fact:** The latest recursive Git tree inspection completed without truncation.
-- **Observed fact:** No open pull requests were returned during the inspection on 2026-11-09. This is time-sensitive and must be checked again at each new session.
+- **Observed fact:** Draft PR #40, `Add task-bound approval and acceptance reference layer`, is open from `implementation/task-bound-approval-acceptance-ci` against `main`. Its CI check completed successfully on commit `f4f57e6184cae824a92fad3df73393e3663e99b0`.
+- **Observed fact:** The working tree for this refresh is based on clean `main`; the refresh itself is being prepared on `docs/refresh-project-state-20261112`.
 - **Assessment:** The archive filing batches and cross-agent continuity files are merged. The DOCX-to-Markdown migration is deferred until the operator has access to a PC; no conversion is currently authorized or underway.
-- **Unknown:** This repository snapshot does not establish the overall operational status of every Project Sentinel architecture, evaluation, or implementation workstream.
+- **Unknown:** This repository snapshot does not establish runtime enforcement of the approval/acceptance reference layer or the overall operational status of every Project Sentinel architecture, evaluation, or implementation workstream.
 
 ## 2. Active task and phase
 
 **Task:** Repository continuity record maintenance  
-**Current phase:** Refresh project-state snapshot after completion of PRs #5–#7  
+**Current phase:** Refresh project-state snapshot against live `main`, PR, and test evidence
 **Work status:** PROPOSED — this refresh is on a review branch  
-**Branch:** `docs/refresh-project-state-after-pr7`  
-**Base commit:** `a0726ebc313e6db05ea9aa080843f61d0e93a98c`  
-**Authorization basis:** The operator explicitly approved preparation of this state-refresh PR.
+**Branch:** `docs/refresh-project-state-20261112`
+**Base commit:** `72efeb770b10611e7c386663ef612cd044c365ce`
+**Authorization basis:** The operator instructed the assistant to address remaining open issues or select another actionable open issue; this narrowly scoped state-refresh Draft PR addresses open Issue #26.
 
 The continuity layer's three initial stages are complete and merged:
 
 1. **PR 1 — shared agent instructions:** merged as PR #5. The files remain marked `DRAFT — AWAITING OPERATOR APPROVAL`; formal adoption is not inferred.
-2. **PR 2 — project state:** merged as PR #6. This file is now being refreshed because its original next-step instructions became stale.
+2. **PR 2 — project state:** merged as PR #6. This file is being refreshed because its original baseline and next-step instructions became stale.
 3. **PR 3 — handoff log:** merged as PR #7. `HANDOFF_LOG.md` is present on `main` and remains marked draft pending operator approval.
 
 ## 3. Completed work and repository evidence
@@ -45,6 +46,8 @@ The continuity layer's three initial stages are complete and merged:
 | Cross-agent instruction entry points | MERGED; files re-fetched from `main` | PR #5; merge commit `9ae0ff39a113f986335af55d20a5e681e0d0c4d3` | Confirmed all three files exist on `main`; all retain draft status |
 | Initial project-state snapshot | MERGED | PR #6; merge commit `f0120b7ac7e1ec0047bd5ea56587efd1752a81ef` | `PROJECT_STATE.md` confirmed present on `main`; this refresh corrects stale next-step details |
 | Chronological handoff log | MERGED; file re-fetched from `main` | PR #7; merge commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c` | `HANDOFF_LOG.md` confirmed present; first handoff entry records PRs #5–#6 |
+| Hardened document and Kernel workflows | MERGED | PR #39; merge commit `72efeb770b10611e7c386663ef612cd044c365ce` | Read-only audit/preflight and workflow hardening changes are present on `main`; semantic correctness remains separately reviewable |
+| Task-bound approval and acceptance reference layer | OPEN DRAFT PR | PR #40; head commit `f4f57e6184cae824a92fad3df73393e3663e99b0` | Isolated Task_Packs reference implementation; GitHub Actions CI passed; no runtime activation or host enforcement claimed |
 | Current archive file inventory | CHECKED on 2026-11-09 | Recursive tree for `main` at `eef3719cc962ce50e8136d523252ddc6483f821b` | 418 archive files, excluding `.gitkeep` placeholders |
 
 Historical post-merge checks are recorded as such; they are not a claim that every archived document has undergone semantic or content-level verification.
@@ -112,9 +115,10 @@ A commit, PR merge, or AI recommendation is not by itself evidence of operator a
 
 ## 7. Open pull requests
 
-At the time of the 2026-11-09 baseline check:
+At the time of the 2026-11-12 baseline check:
 
-- **Open PRs observed:** NONE, checked on 2026-11-09 immediately before this refresh.
+- **Open PRs observed:** PR #40 is open as a Draft, checked on 2026-11-12 immediately before this refresh.
+- **PR #40:** Draft; `Add task-bound approval and acceptance reference layer`; head commit `f4f57e6184cae824a92fad3df73393e3663e99b0`; CI completed successfully; no runtime activation or host-enforcement claim.
 - **PR #5:** merged; merge commit `9ae0ff39a113f986335af55d20a5e681e0d0c4d3`.
 - **PR #6:** merged; merge commit `f0120b7ac7e1ec0047bd5ea56587efd1752a81ef`.
 - **PR #7:** merged; merge commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c`.
@@ -131,6 +135,7 @@ This section is a dated observation, not a live status. Every agent must query G
 - A merged archive relocation PR does not prove semantic correctness or content-level completeness.
 - The repository's `main` branch was reported as unprotected in the earlier Copilot assessment. This setting was not rechecked as part of this snapshot and no settings change is proposed here.
 - The repository records do not synchronize private AI conversation histories and cannot guarantee that an agent has read or followed them.
+- Issues #32–#37 remain open governance/reconciliation work; this snapshot does not claim that retrospective assessments are independent runtime evidence.
 
 ## 9. Next authorized action
 
@@ -155,6 +160,6 @@ Before relying on this file:
 
 ---
 
-**Snapshot prepared from:** GitHub `main` branch and open-PR state refreshed on 2026-11-09 at baseline commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c`; historical archive inventory counts retain their separately stated baseline.  
-**Prepared as:** A proposed continuity-record refresh on branch `docs/refresh-project-state-after-pr7`.  
+**Snapshot prepared from:** GitHub `main` branch and open-PR state refreshed on 2026-11-12 at baseline commit `72efeb770b10611e7c386663ef612cd044c365ce`; historical archive inventory counts retain their separately stated baseline.
+**Prepared as:** A proposed continuity-record refresh on branch `docs/refresh-project-state-20261112`.
 **Approval status:** DRAFT — AWAITING OPERATOR APPROVAL.
