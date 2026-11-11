@@ -1,0 +1,165 @@
+name: Deduplicate Exact Bit-for-Bit Copies
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry Run (Preview only, do not delete)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deduplicate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Process Exact Duplicates
+        id: cleanup
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - << 'EOF'
+          import os
+          import re
+          import hashlib
+          from pathlib import Path
+          from collections import defaultdict
+
+          def get_sha256(filepath):
+              hasher = hashlib.sha256()
+              try:
+                  with open(filepath, 'rb') as f:
+                      for chunk in iter(lambda: f.read(65536), b''):
+                          hasher.update(chunk)
+                  return hasher.hexdigest()
+              except Exception:
+                  return None
+
+          def score_keeper(path_str):
+              """
+              Lower score = better canonical file to KEEP.
+              Higher score = redundant/glitched copy to DELETE.
+              """
+              score = 0
+              lower = path_str.lower()
+              
+              # Heavy penalties for sync artifacts and duplicates
+              if "_recovered_duplicate_copies" in lower:
+                  score += 100
+              if "_historical_source_material" in lower:
+                  score += 40
+              if "copy of" in lower:
+                  score += 50
+              if ".md.md" in lower:
+                  score += 40
+              if re.search(r'\(\d+\)', lower):
+                  score += 30
+              if "[superseded" in lower:
+                  score += 15
+                  
+              # Slight penalty for longer path to prefer root/canonical folders
+              score += len(path_str) * 0.05
+              return score
+
+          root = Path('.')
+          ignored_dirs = {'.git', '.github'}
+
+          all_files = [
+              f for f in root.rglob('*')
+              if f.is_file() and not any(part in ignored_dirs for part in f.parts)
+          ]
+
+          hash_map = defaultdict(list)
+          for f in all_files:
+              # CRITICAL SAFEGUARD: Never cross-deduplicate .gitkeep files
+              if f.name == ".gitkeep":
+                  continue
+                  
+              h = get_sha256(f)
+              if h:
+                  hash_map[h].append(str(f))
+
+          exact_groups = [paths for paths in hash_map.values() if len(paths) > 1]
+          is_dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+
+          total_deleted = 0
+          summary_lines = []
+
+          summary_lines.append("# 🛡️ Hardened Exact Duplicate Cleanup\n\n")
+          summary_lines.append(f"- **Mode:** {'🔍 DRY RUN (Simulation)' if is_dry_run else '🚀 ACTIVE PR CREATION'}\n")
+          summary_lines.append(f"- **Identical Hash Groups Found:** {len(exact_groups)}\n")
+          summary_lines.append(f"- **Protected:** `.gitkeep` files were completely exempted.\n\n")
+
+          files_to_remove = []
+
+          for idx, group in enumerate(exact_groups, 1):
+              # Sort by penalty score: index 0 will be the best canonical keeper
+              group.sort(key=score_keeper)
+              keep_file = group[0]
+              remove_files = group[1:]
+
+              summary_lines.append(f"### Group {idx}\n")
+              summary_lines.append(f"🟢 **KEPT (Canonical):** `{keep_file}`\n\n")
+              summary_lines.append("**Redundant Clones Marked for Removal:**\n")
+              for r in remove_files:
+                  summary_lines.append(f"- 🔴 `{r}`\n")
+                  files_to_remove.append(r)
+                  total_deleted += 1
+              summary_lines.append("\n")
+
+          summary_lines.append(f"\n---\n**Total redundant copies to be removed:** {total_deleted}\n")
+
+          with open(os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md'), 'w', encoding='utf-8') as out:
+              out.write("".join(summary_lines))
+
+          if not is_dry_run and files_to_remove:
+              for file_path in files_to_remove:
+                  if os.path.exists(file_path):
+                      os.remove(file_path)
+
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                  f.write(f"deleted_count={total_deleted}\n")
+          else:
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                  f.write("deleted_count=0\n")
+
+          EOF
+
+      - name: Create Pull Request with Deletions
+        if: ${{ steps.cleanup.outputs.deleted_count > 0 }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="cleanup/remove-exact-duplicates-$(date +%s)"
+          git checkout -b "$BRANCH_NAME"
+          git add -u
+          git commit -m "chore: remove ${{ steps.cleanup.outputs.deleted_count }} exact bit-for-bit duplicate copies"
+          git push origin "$BRANCH_NAME"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH_NAME" \
+            --title "🧹 Clean up ${{ steps.cleanup.outputs.deleted_count }} exact duplicate clones" \
+            --body "Automated cleanup of 100% SHA-256 identical duplicate files.
+
+          ### Safeguards Applied:
+          - **Bit-for-bit verified:** Only files with identical cryptographic SHA-256 hashes are removed.
+          - **Intelligent Keeper Priority:** Kept canonical filenames; removed \`(1)\`, \`(2)\`, \`.md.md\`, \`Copy of\`, and \`_Recovered_Duplicate_Copies\`.
+          - **Exemptions:** \`.gitkeep\` files and divergent content versions were completely untouched.
+
+          Please review the diff and tap Merge to apply."
