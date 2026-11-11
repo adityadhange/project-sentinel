@@ -59,11 +59,17 @@ def prepare_intake(manifest: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"duplicate work-package id: {node_id}")
         if not isinstance(deps, list):
             raise ValueError(f"depends_on for {node_id!r} must be a list")
+        owner = item.get("owner")
+        mutating = item.get("mutating", False)
+        if owner is not None and (not isinstance(owner, str) or not owner.strip()):
+            raise ValueError(f"owner for {node_id!r} must be a non-empty string when supplied")
+        if not isinstance(mutating, bool):
+            raise ValueError(f"mutating for {node_id!r} must be a boolean")
         normalized[node_id] = {
             "id": node_id,
             "depends_on": deps,
-            "owner": item.get("owner"),
-            "mutating": bool(item.get("mutating", False)),
+            "owner": owner,
+            "mutating": mutating,
         }
 
     graph = {node_id: item["depends_on"] for node_id, item in normalized.items()}
