@@ -1,166 +1,90 @@
-name: Prune Incomplete & Truncated Drafts
+name: Audit Potentially Truncated Documents (Read-Only)
 
 on:
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Dry Run (Preview only, do not delete)'
-        type: boolean
-        default: false
-  push:
-    paths:
-      - '.github/workflows/prune_truncated_subsets.yml'
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  prune_truncated:
+  audit_truncated:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out repository without persisted credentials
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Detect and Prune Truncated Files
-        id: prune
-        env:
-          DRY_RUN: ${{ github.event.inputs.dry_run }}
-          GH_TOKEN: ${{ github.token }}
+      - name: Identify exact-prefix candidates without modifying files
         run: |
-          python - << 'EOF'
+          python - << 'PY'
           import os
           import re
-          from pathlib import Path
           from collections import defaultdict
+          from pathlib import Path
 
           def clean_stem(name):
-              n = re.sub(r'(\(\d+\))|\.md\.md|\.md$', '', name, flags=re.IGNORECASE)
-              n = re.sub(r'[\s_\-\(\)]+', '', n).lower()
-              return n
+              value = re.sub(r'(\(\d+\))|\.md\.md|\.md$', '', name, flags=re.IGNORECASE)
+              return re.sub(r'[\s_\-\(\)]+', '', value).lower()
 
-          def is_truncated_version(short_lines, long_lines):
-              """
-              Instant check: Returns True ONLY if short_lines is an exact 
-              unbroken prefix of long_lines (proven mid-generation stop).
-              """
-              if not short_lines or len(short_lines) >= len(long_lines):
-                  return False
-              
-              # Check if the longer file starts line-for-line with the shorter file
-              return long_lines[:len(short_lines)] == short_lines
+          def is_archive_path(path):
+              return any('archive' in part.lower() for part in path.parts)
 
-          root = Path('.')
-          ignored_dirs = {'.git', '.github'}
+          def is_exact_prefix(shorter, longer):
+              return bool(shorter) and len(shorter) < len(longer) and longer[:len(shorter)] == shorter
+
           allowed_exts = {'.md', '.txt'}
-
-          all_files = [
-              f for f in root.rglob('*')
-              if f.is_file() and f.suffix.lower() in allowed_exts and not any(part in ignored_dirs for part in f.parts)
+          ignored_dirs = {'.git', '.github'}
+          files = [
+              path for path in Path('.').rglob('*')
+              if path.is_file()
+              and path.suffix.lower() in allowed_exts
+              and not any(part in ignored_dirs for part in path.parts)
+              and not is_archive_path(path)
+              and path.name != '.gitkeep'
           ]
 
-          family_map = defaultdict(list)
-          for f in all_files:
-              if f.name == ".gitkeep":
-                  continue
-              stem = clean_stem(f.name)
+          families = defaultdict(list)
+          for path in files:
               try:
-                  with open(f, 'r', encoding='utf-8', errors='ignore') as fp:
-                      # Strip empty trailing lines for clean comparison
-                      raw_lines = [line.rstrip() for line in fp.readlines()]
-                      while raw_lines and not raw_lines[-1]:
-                          raw_lines.pop()
+                  lines = path.read_text(encoding='utf-8').splitlines()
+                  while lines and not lines[-1].strip():
+                      lines.pop()
+                  families[clean_stem(path.name)].append((str(path), lines))
+              except (OSError, UnicodeError) as exc:
+                  print(f'WARN: skipped unreadable file {path}: {exc}')
 
-                  family_map[stem].append({
-                      'path': str(f),
-                      'lines': raw_lines,
-                      'line_count': len(raw_lines)
-                  })
-              except Exception:
-                  pass
+          candidates = []
+          for family in families.values():
+              family.sort(key=lambda item: len(item[1]), reverse=True)
+              for i, (long_path, long_lines) in enumerate(family):
+                  for short_path, short_lines in family[i + 1:]:
+                      if is_exact_prefix(short_lines, long_lines):
+                          candidates.append((short_path, len(short_lines), long_path, len(long_lines)))
 
-          is_dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
-          truncated_candidates = []
-          summary_lines = []
-
-          summary_lines.append("# ✂️ Truncated / Incomplete Drafts Audit\n\n")
-          summary_lines.append(f"- **Mode:** {'🔍 DRY RUN (Simulation)' if is_dry_run else '🚀 APPLIED (PR Staged)'}\n\n")
-
-          match_idx = 1
-          for stem, group in family_map.items():
-              if len(group) < 2:
-                  continue
-
-              # Sort from longest to shortest line count
-              group.sort(key=lambda x: x['line_count'], reverse=True)
-
-              for i in range(len(group)):
-                  longer = group[i]
-                  for j in range(i + 1, len(group)):
-                      shorter = group[j]
-                      if shorter['path'] in [c['remove'] for c in truncated_candidates]:
-                          continue
-
-                      if is_truncated_version(shorter['lines'], longer['lines']):
-                          truncated_candidates.append({
-                              'keep': longer['path'],
-                              'remove': shorter['path'],
-                              'short_lines': shorter['line_count'],
-                              'long_lines': longer['line_count']
-                          })
-                          summary_lines.append(f"### Match {match_idx}: `{shorter['path']}`\n")
-                          summary_lines.append(f"- 🔴 **Incomplete / Cut-off file ({shorter['line_count']} lines):** `{shorter['path']}`\n")
-                          summary_lines.append(f"- 🟢 **Complete Parent file ({longer['line_count']} lines):** `{longer['path']}`\n")
-                          summary_lines.append(f"- *Verification:* Proven 100% exact line-prefix cutoff.\n\n")
-                          match_idx += 1
-
-          summary_lines.append(f"\n---\n**Total incomplete subsets detected:** {len(truncated_candidates)}\n")
-
-          with open(os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md'), 'w', encoding='utf-8') as out:
-              out.write("".join(summary_lines))
-
-          deleted_count = 0
-          if not is_dry_run and truncated_candidates:
-              for item in truncated_candidates:
-                  target = item['remove']
-                  if os.path.exists(target):
-                      os.remove(target)
-                      deleted_count += 1
-
-              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                  f.write(f"deleted_count={deleted_count}\n")
-          else:
-              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                  f.write("deleted_count=0\n")
-
-          EOF
-
-      - name: Create Pull Request with Pruned Subsets
-        if: ${{ steps.prune.outputs.deleted_count > 0 }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          BRANCH_NAME="cleanup/prune-truncated-subsets-$(date +%s)"
-          git checkout -b "$BRANCH_NAME"
-          git add -u
-          git commit -m "chore: prune ${{ steps.prune.outputs.deleted_count }} truncated incomplete drafts"
-          git push origin "$BRANCH_NAME"
-
-          gh pr create \
-            --base main \
-            --head "$BRANCH_NAME" \
-            --title "✂️ Prune ${{ steps.prune.outputs.deleted_count }} truncated/incomplete drafts" \
-            --body "Automated cleanup of files proven to be incomplete/interrupted drafts.
-
-          ### Mathematical Proof:
-          - Each removed file was proven to be an exact line-by-line prefix of its longer counterpart.
-          - Zero unique lines or custom modifications were deleted.
-          - The complete parent file was preserved."
+          summary = [
+              '# Potentially Truncated Document Audit',
+              '',
+              '- **Mode:** READ-ONLY',
+              '- **Scope:** Active-scope Markdown and text files; archive paths are excluded.',
+              '- **Action:** No files are deleted, renamed, staged, committed, or submitted in a pull request.',
+              '- **Interpretation:** An exact line-prefix match is a review candidate, not proof that a file is safe to delete.',
+              '',
+          ]
+          for index, (short_path, short_count, long_path, long_count) in enumerate(candidates, 1):
+              summary.extend([
+                  f'## Candidate {index}: {short_path}',
+                  f'- Shorter file: {short_count} lines',
+                  f'- Longer comparison file: {long_path} ({long_count} lines)',
+                  '- Result: exact line-prefix relationship; human review required.',
+                  '',
+              ])
+          summary.extend(['---', f'**Total candidates:** {len(candidates)}', ''])
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary), encoding='utf-8')
+          print(f'READ-ONLY AUDIT COMPLETE: {len(candidates)} candidate(s); zero repository mutations.')
+          PY

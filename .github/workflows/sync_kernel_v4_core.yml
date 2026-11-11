@@ -1,112 +1,88 @@
-name: Sync Reconciled Kernel v4.0 Core & Fleet
+name: Kernel Core Promotion Preflight (Read-Only)
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/sync_kernel_v4_core.yml'
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  sync_core_files:
+  promotion_preflight:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out repository without persisted credentials
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - name: Copy & Standardize Master Files
+      - name: Inspect proposed legacy source mappings
         run: |
-          python - << 'EOF'
+          python - << 'PY'
           import os
-          import shutil
+          import re
+          import sys
           from pathlib import Path
 
-          # 1. Ensure target canonical directories exist
-          Path("00_Sentinel_Control_Plane").mkdir(parents=True, exist_ok=True)
-          Path("01_Execution_Subsystem").mkdir(parents=True, exist_ok=True)
-          Path("05_System_Evolution").mkdir(parents=True, exist_ok=True)
-
-          # 2. Map existing complete source files to clean active paths
-          # We pick the verified, full-length files identified in the audit
+          # These are the source mappings used by the former automated sync.
+          # This preflight never copies files or writes to the repository.
           mappings = [
-              # Track 1 & 2: Control Plane (Governance, Verifier, Matrix, Contract)
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/01-sentinel-manager-v3.6.0.md",
-                  "00_Sentinel_Control_Plane/sentinel-manager.md"
-              ),
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/07-verifier-records-officer-v3.6.0.md",
-                  "00_Sentinel_Control_Plane/verifier-officer.md"
-              ),
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md",
-                  "00_Sentinel_Control_Plane/RUL-Shared_Governance_Contract.md"
-              ),
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1)(2).md",
-                  "00_Sentinel_Control_Plane/RUL-Capability_Permissions_Matrix.md"
-              ),
-
-              # Track 1: Execution Specialists
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/06-assembly-operator-v3.6.0.md",
-                  "01_Execution_Subsystem/operator.md"
-              ),
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/04-researcher-v3.6.0.md",
-                  "01_Execution_Subsystem/researcher.md"
-              ),
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/05_critical-analyst (Kernel v3.5.0 Ratified)(4).md",
-                  "01_Execution_Subsystem/critical-analyst.md"
-              ),
-
-              # Track 1: Offline Meta-Architecture Channel
-              (
-                  "01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/08_co-developer (Kernel v3.6.0 Ratified).md(1).md",
-                  "05_System_Evolution/co-developer.md"
-              ),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/01-sentinel-manager-v3.6.0.md',
+               '00_Sentinel_Control_Plane/sentinel-manager.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/07-verifier-records-officer-v3.6.0.md',
+               '00_Sentinel_Control_Plane/verifier-officer.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md',
+               '00_Sentinel_Control_Plane/RUL-Shared_Governance_Contract.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1)(2).md',
+               '00_Sentinel_Control_Plane/RUL-Capability_Permissions_Matrix.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/06-assembly-operator-v3.6.0.md',
+               '01_Execution_Subsystem/operator.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/04-researcher-v3.6.0.md',
+               '01_Execution_Subsystem/researcher.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/05_critical-analyst (Kernel v3.5.0 Ratified)(4).md',
+               '01_Execution_Subsystem/critical-analyst.md'),
+              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/08_co-developer (Kernel v3.6.0 Ratified).md(1).md',
+               '05_System_Evolution/co-developer.md'),
           ]
 
-          copied = 0
-          for src, dst in mappings:
-              if os.path.exists(src):
-                  shutil.copyfile(src, dst)
-                  print(f"✅ Copied {src} -> {dst}")
-                  copied += 1
-              else:
-                  print(f"⚠️ Source missing: {src}")
+          results = []
+          for source, target in mappings:
+              path = Path(source)
+              if not path.is_file():
+                  results.append((source, target, 'MISSING SOURCE'))
+                  continue
+              source_text = path.read_text(encoding='utf-8', errors='replace')
+              version_match = re.search(r'Kernel v(\d+\.\d+)', source_text[:12000], re.IGNORECASE)
+              version = version_match.group(1) if version_match else 'UNIDENTIFIED'
+              status = 'REVIEW REQUIRED' if version == '4.0' else 'BLOCKED: NOT VERIFIED AS KERNEL 4.0'
+              results.append((source, target, f'{status} (detected version: {version})'))
 
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-              f.write(f"copied_count={copied}\n")
-          EOF
-        id: copy_step
+          lines = [
+              '# Kernel Core Promotion Preflight',
+              '',
+              '- **Mode:** READ-ONLY; no copy, rename, commit, branch creation, or pull request.',
+              '- **Promotion rule:** Historical material is not promoted merely because it is complete or has a clean filename.',
+              '- **Required:** Each active specification must be reconciled against the approved current architecture, authority model, and operator dispositions in a separately reviewed change.',
+              '',
+              '## Source mapping review',
+              '',
+          ]
+          for source, target, status in results:
+              lines.extend([f'### {target}', f'- Source: {source}', f'- Result: {status}', ''])
 
-      - name: Create Pull Request
-        if: ${{ steps.copy_step.outputs.copied_count > 0 }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          BRANCH_NAME="feat/sync-kernel-v4-core-$(date +%s)"
-          git checkout -b "$BRANCH_NAME"
-          git add "00_Sentinel_Control_Plane/" "01_Execution_Subsystem/" "05_System_Evolution/"
-          git commit -m "feat: synchronize 8 reconciled Kernel v4.0 core and persona specifications"
-          git push origin "$BRANCH_NAME"
-
-          gh pr create \
-            --base main \
-            --head "$BRANCH_NAME" \
-            --title "🚀 Sync Reconciled Kernel v4.0 Core & Fleet" \
-            --body "This PR promotes and standardizes the complete, unabridged versions of the 8 core specifications:
-
-          - \`00_Sentinel_Control_Plane/\` -> \`sentinel-manager.md\`, \`verifier-officer.md\`, \`RUL-Shared_Governance_Contract.md\`, \`RUL-Capability_Permissions_Matrix.md\`
-          - \`01_Execution_Subsystem/\` -> \`operator.md\`, \`researcher.md\`, \`critical-analyst.md\`
-          - \`05_System_Evolution/\` -> \`co-developer.md\`
-
-          Clean filenames enforced; full operational details, E2 code execution mandates, and read-back permissions preserved."
+          blocked = [item for item in results if 'BLOCKED' in item[2] or 'MISSING' in item[2]]
+          lines.extend([
+              '---',
+              f'**Mappings reviewed:** {len(results)}',
+              f'**Mappings blocked or unverified as Kernel 4.0:** {len(blocked)}',
+              '',
+              '**No repository files were changed.** Any promotion requires a separate, human-reviewed pull request.',
+              '',
+          ])
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(lines), encoding='utf-8')
+          for source, target, status in results:
+              print(f'{status}: {source} -> {target}')
+          print('READ-ONLY PREFLIGHT COMPLETE. No repository mutations performed.')
+          if blocked:
+              print(f'Promotion must remain blocked: {len(blocked)} mapping(s) are not verified as Kernel 4.0.')
+              sys.exit(1)
+          PY
