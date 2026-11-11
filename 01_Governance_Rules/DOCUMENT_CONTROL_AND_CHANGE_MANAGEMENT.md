@@ -1,17 +1,15 @@
 # DOCUMENT CONTROL AND CHANGE MANAGEMENT
 
 **Document ID:** GOV-003  
-**Version:** 0.1  
-**Status:** DRAFT — AWAITING OPERATOR APPROVAL  
+**Version:** 1.0  
+**Status:** RATIFIED — KERNEL v4.0 BASELINE by Principal Operator Aditya Vijay Dhange  
 **Document Class:** Governance / Proposed Control Procedure
 
 ## 1. Purpose
 
-This document proposes a consistent method for identifying, classifying, reviewing, changing, approving, and preserving Project Sentinel documents.
+This document establishes the controlled method for identifying, classifying, reviewing, changing, approving, and preserving Project Sentinel documents.
 
-It is intended to prevent accidental authority changes, silent overwrites, undocumented decisions, and confusion between repository activity and governance approval.
-
-This document remains a proposal until explicitly approved by the human operator. Its presence in the repository does not make it an active policy.
+It prevents accidental authority changes, silent overwrites, undocumented decisions, and confusion between repository activity and governance approval. This procedure is active as part of the ratified Kernel v4.0 governance baseline.
 
 ## 2. Governing Rules
 
@@ -39,7 +37,7 @@ A document must not claim an owner or approving authority that has not been assi
 
 ## 4. Document Statuses
 
-The following status labels are proposed:
+The following status labels govern controlled repository documents:
 
 | Status | Meaning |
 |---|---|
@@ -85,7 +83,7 @@ A proposal that lacks material information must identify the gaps. Missing evide
 
 ## 7. Review and Approval Workflow
 
-The following workflow is proposed:
+The following workflow applies to substantive controlled-document changes:
 
 1. **Identify:** Record the issue, inconsistency, or requested improvement.
 2. **Scope:** Identify affected documents, dependencies, and possible authority conflicts.
@@ -144,27 +142,22 @@ If any of these details are unavailable, state what is missing. Do not manufactu
 
 This document is intended to operate consistently with:
 
-- **GOV-001 — SOURCE OF TRUTH:** proposed rules concerning authority, source conflicts, preservation, and approval.
-- **GOV-002 — AI AUTHORITY AND RESPONSIBILITY FRAMEWORK:** proposed boundaries for the human operator, Sentinel, Optimus, Copilot, ChatGPT, other AI systems, and the Sentinel verifier.
+- **GOV-001 — SOURCE OF TRUTH:** RATIFIED — KERNEL v4.0 BASELINE; establishes source authority and confirms `GEMINI.md` as the root source-precedence anchor.
+- **GOV-002 — AI AUTHORITY AND RESPONSIBILITY FRAMEWORK:** remains DRAFT unless and until separately ratified by the Principal Operator.
+- **GOV-003 — DOCUMENT CONTROL AND CHANGE MANAGEMENT:** RATIFIED — KERNEL v4.0 BASELINE by this decision.
 
-All three documents are currently subject to their own recorded approval status. GOV-003 does not approve, activate, amend, or supersede GOV-001 or GOV-002.
+GOV-003 operates within the source-precedence hierarchy in `GEMINI.md` and does not override GOV-001 or independently ratify GOV-002. Resolve any conflict using that hierarchy; halt and refer unresolved conflicts to the Principal Operator.
 
-If a conflict is found between these documents, record the exact conflicting provisions and seek operator determination. Do not assume that GOV-003 takes precedence because it is newer.
+## 12. Ratification and approval record
 
-## 12. Current Approval Boundary
+This document establishes the ratified document-control procedure for the Kernel v4.0 baseline. It does not ratify GOV-002 or any other document not explicitly named in this approval record, declare every repository document approved, claim that host-platform permissions or enforcement exist merely because a document states a rule, authorize autonomous changes outside applicable approval gates, or replace evidence-based verification and explicit operator decisions.
 
-This document establishes a proposed document-control procedure only.
-
-It does not:
-
-- Approve itself or any other repository document.
-- Declare GOV-001 or GOV-002 approved.
-- Establish a final versioning standard for the entire repository.
-- Authorize autonomous changes, deletions, releases, or runtime execution.
-- Certify that the repository is complete or internally consistent.
-- Replace the need for evidence-based verification and explicit operator decisions.
-
-**Final approval authority remains with the human operator.**
+- **Decision:** RATIFIED — KERNEL v4.0 BASELINE.
+- **Approving authority:** Principal Operator Aditya Vijay Dhange.
+- **Decision date:** 2026-11-12.
+- **Scope:** GOV-003, Version 1.0, including the controlled document lifecycle, review, approval, read-back, and preservation procedure.
+- **Traceability:** Explicit Principal Operator instruction issued for the repository remediation on branch `fix/governance-and-ci-reconciliation`; this branch and its resulting pull request preserve the implementation record.
+- **Conditions:** GOV-002 remains separately unratified. Host enforcement and actual tool permissions must be evidenced independently.
 
 ---
 
