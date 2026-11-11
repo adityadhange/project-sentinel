@@ -1,0 +1,15 @@
+# OS & System Artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Node Fallbacks
+node_modules/
+npm-debug.log*
+
+# Temporary Scratchpads
+*.tmp
+*.bak
