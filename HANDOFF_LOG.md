@@ -76,3 +76,26 @@ Copy this template and append a completed entry below the previous entry.
   - No historical archive files were deleted as part of PRs #5 or #6.
 - **Next authorized action:** Submit the proposed `HANDOFF_LOG.md` through Draft PR 3 for operator review. Do not merge it; the operator retains review and merge authority.
 - **Handoff confidence:** **Partially verified.** PR merge states, merge SHAs, file presence, main branch SHA, and open-PR state were checked against GitHub. The content and semantic correctness of every archived source document were not re-audited in this session.
+
+
+## 2026-11-12 — Governance and CI baseline reconciliation
+
+- **Agent / contributor:** ChatGPT-assisted repository work; explicit scope and governance disposition supplied by Principal Operator Aditya Vijay Dhange.
+- **Repository branch and starting commit:** `fix/governance-and-ci-reconciliation`, created from `main` at `b6713f48eaa06cddc5059497b340ef08b4628635`.
+- **Objective:** Reconcile governance ratification, Manager WIP-1 lifecycle, Verifier read-back bounds, co-developer identifier/CI paths, and continuity registers against the Kernel v4.0 repository layout.
+- **Actions performed:** Prepared changes to GOV-001 and GOV-003; ratified the complete Manager v4.0 operating specification; defined WIP-1 reservation/lock/release/rollback events; removed the invalid co-developer Skill ID; updated workflow path filters and archive/control-plane mappings; qualified Verifier read-back fallback; refreshed roadmap, project-state and this append-only handoff.
+- **Changes proposed or made:** This branch proposes the changes in the remediation PR. No changes have been merged to `main` by this entry.
+- **Evidence and verification:**
+  - Baseline `main` commit: `b6713f48eaa06cddc5059497b340ef08b4628635`.
+  - PR #30 is merged at `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`.
+  - PR #44 is merged at `a5aeb9888ffa133accc425b6bd52348de51e9550`.
+  - PR #45 is merged at `956873c03b31bc28e8a8893458fdbcf26d4fc283`.
+  - PR #46 is merged at `1d0e7ee03112dcc360d653d21883715c5ca1ce15`.
+  - PR #47 is merged at `b6713f48eaa06cddc5059497b340ef08b4628635`.
+  - PR #40 was also rechecked and is merged at `3f1a0c01e1335928fdd065487780acb9c90961d2`; the prior PROJECT_STATE open status was stale.
+  - The recursive Git tree for the baseline was not truncated. Workflow archive source paths were matched to the current `02_Archive_Legacy/` tree.
+  - No GitHub Actions run or local test execution is claimed by this handoff.
+- **Operator decisions:** Explicitly ratify GOV-001, GOV-003 and the complete Kernel v4.0 Manager baseline; approve the specified WIP-1 lifecycle; direct the specified naming/workflow corrections and continuity updates; approve the Verifier read-back qualification and checksum fallback.
+- **Outstanding work / blockers:** Review and merge this PR; inspect resulting CI runs; run the updated read-only Kernel promotion preflight and naming audit; confirm the archive mappings and any remaining source-to-target gaps. Checksum fallback is not independent post-mutation target read-back and must not be represented as such.
+- **Next authorized action:** Principal Operator review of this PR and its resulting CI evidence. No runtime activation, host permission change, or mutation execution is authorized by this handoff.
+- **Handoff confidence:** **Partially verified.** Live PR merge states, main baseline SHA, and current archive paths were checked. Workflow execution and full semantic acceptance remain pending.
