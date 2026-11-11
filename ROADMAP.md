@@ -1,11 +1,11 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
 **Document status:** ACTIVE — Principal Operator-approved coordination register  
-**Version:** 1.4  
+**Version:** 1.5  
 **Last refreshed:** 2026-11-11  
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
-**Baseline observed before this update:** `c278d62edfbca8b64a01e8fdb7f5123cde41e6d2`  
+**Baseline observed before this update:** `4ae036bedd342a1527c57de57161c065608104b2`  
 **Historical baseline at initial roadmap creation:** `4ffd9172dca5551fb30c7dafde3541d44767167f`  
 **Purpose:** One authoritative queue for project work, with one accountable AI owner per active task.
 
@@ -86,12 +86,13 @@ A reviewer checks the evidence. The Principal Operator determines acceptance.
 
 Observed immediately before this roadmap update:
 
-- `main` head: `c278d62edfbca8b64a01e8fdb7f5123cde41e6d2`.
+- `main` head: `4ae036bedd342a1527c57de57161c065608104b2`. 
 - The initial roadmap baseline `4ffd9172dca5551fb30c7dafde3541d44767167f` is historical; it is not the current repository head.
 - PR #19 has been merged. It reconciles the Verifier read-back proposal and the MAPCA free-first access addendum, including the Gemini execution workflow's Mode W classification.
-- PR #16 remains open and Draft. It adds an Anthropic API-dependent Claude workflow requiring `ANTHROPIC_API_KEY`. This is not required for Claude Free and is inconsistent with the zero-cost default unless explicitly retained as an optional future adapter.
+- PR #16 was merged in commit `4ae036bedd342a1527c57de57161c065608104b2`; it adds an Anthropic API-dependent Claude workflow requiring `ANTHROPIC_API_KEY`. This is not required for Claude Free. No secret presence, workflow execution, or paid API use is inferred from the merge.
 - The current `PROJECT_STATE.md` is stale relative to the November 10 MAPCA / Verifier work and must not be treated as the current work queue.
-- Gemini's earlier Plan Only attempts returned HTTP 503 `UNAVAILABLE`. That establishes a service-availability failure for those attempts, not a permanent inability to participate.
+- Gemini Plan Only run logs show an initial workspace-trust failure on the first attempt, followed by HTTP 503 `UNAVAILABLE` and HTTP 429 `RESOURCE_EXHAUSTED` on later attempts. The 429 explicitly identifies the free-tier daily quota for `gemini-3.8-flash` (limit 20 requests/day) as exhausted. This is a quota/service-capacity failure, not evidence of a GitHub permission failure.
+- Later workflow runs marked `skipped` had no job steps, consistent with the issue-comment filter rejecting comments that did not match the owner-authored `@gemini-cli plan:` trigger. They are not counted as Gemini model failures.
 - The Verifier read-back proposal is a design proposal, not evidence that read-back tests have been executed or authorized.
 
 These are dated observations. Refresh GitHub before relying on PR or branch state in a later session.
@@ -100,29 +101,30 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 
 ## 3. Roadmap and task register
 
-**Assignment state:** The Principal Operator has confirmed Claude for `SNT-004` and Microsoft Copilot for `SNT-008`. These are assigned owners, not accepted claims. Both tasks remain `READY` until the named AI explicitly claims its task. Other owner entries below remain proposed nominations unless separately confirmed.
+**Assignment state:** Claude (`SNT-004`) and Microsoft Copilot (`SNT-008`) remain assigned but are on operator hold after both access checks failed. Neither task is active. Gemini recovery is the current P1 workstream; ChatGPT has claimed `SNT-009` under the Principal Operator's instruction.
 
 | ID | Priority | Task | Proposed owner | Status | Depends on |
 |---|---|---|---|---|---|
 | `SNT-001` | P1 | Reconcile PR #16 with the free-first MAPCA policy; recommend retain-as-optional or close as not pursued. Do not configure a paid API key or incur charges. | ChatGPT | READY | Operator decision on PR disposition |
 | `SNT-002` | P1 | Validate the merged Gemini Phase 2 execution gate: inspect exact workflow, build non-production fixtures, test approval freshness, token consumption/replay, allowlist, and Draft-PR-only behavior. Do not use live destructive or out-of-scope operations. | ChatGPT | READY | Test plan and safe fixture scope |
 | `SNT-003` | P1 | Turn the Verifier read-back proposal into a fully specified Stage A non-mutating test pack, including target identity, surfaces, expected evidence, and exact pass/fail/indeterminate rules. Do not run active probes. | Manus | READY | Current merged Verifier proposal |
-| `SNT-004` | P1 | Claude Free acts as the independent challenge and assurance reviewer for roadmap intelligence and coordination recommendations: conduct an independent first pass on the fixed repository snapshot, then challenge Microsoft Copilot's SNT-008 recommendations for evidence, scope, ownership, dependencies, duplication, governance conflicts, and readiness. No API key or paid route. | Claude | READY | Fixed snapshot; independent first pass precedes access to SNT-008 recommendations; challenge pass follows receipt of those recommendations |
-| `SNT-005` | P2 | Complete an independent Gemini peer review of MAPCA and the merged reconciliation, when the service is available; report 503 or other failure accurately rather than repeatedly retrying. | Gemini | BLOCKED | Gemini service availability |
+| `SNT-004` | P1 | Claude Free independent challenge and assurance review. | Claude | BLOCKED — OPERATOR HOLD | Operator decision to resume; direct GitHub access unavailable |
+| `SNT-005` | P1 | Complete Gemini's independent peer review of MAPCA and the merged reconciliation after the Plan Only integration is restored and a successful live run is observed. | Gemini | BLOCKED | SNT-009; available free-tier quota |
 | `SNT-006` | P2 | Establish the common peer-review reconciliation: compare completed independent reports, preserve dissent, distinguish evidence from inference, and prepare operator decisions. | ChatGPT (proposed) | BACKLOG | SNT-004 and SNT-005 |
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
-| `SNT-008` | P1 | Provide Microsoft Copilot roadmap intelligence and task-coordination recommendations: read the current repository, identify pending work and suitable owners, prepare roadmap/task proposals, and report recommendations to the Principal Operator. | Microsoft Copilot | READY | Fixed repository snapshot and Principal Operator delegation |
+| `SNT-009` | P1 | Restore reliable, zero-cost Gemini Plan Only operation: pin a free-tier-capable stable model and CLI version, add actionable failure classification, then perform one controlled live test. Do not alter the Phase 2 execution workflow. | ChatGPT | ACTIVE | Current Plan Only run evidence; no paid API or secret changes |
+| `SNT-008` | P1 | Microsoft Copilot roadmap intelligence and task-coordination recommendations. | Microsoft Copilot | BLOCKED — OPERATOR HOLD | Operator decision to resume; direct GitHub access unavailable |
 
 
 
-### Confirmed review assignments — awaiting owner claims
+### Confirmed review assignments — operator hold
 
 | Task | Assigned owner | Current status | Fixed review source | Claim requirement |
 |---|---|---|---|---|
-| `SNT-004` | Claude Free | `READY — AWAITING CLAIM` | `SENTINEL-MAPCA-REVIEW-PACK-001.md`, snapshot `aaf21fd80f706abdbbce686dc854f5af724f02eb` | Claude must explicitly state `CLAIM: SNT-004` before becoming ACTIVE. First-pass report precedes access to Copilot's report; challenge pass follows. |
-| `SNT-008` | Microsoft Copilot | `READY — AWAITING CLAIM` | `SENTINEL-MAPCA-REVIEW-PACK-001.md`, same snapshot | Copilot must explicitly state `CLAIM: SNT-008` before becoming ACTIVE. Complete independent report before Claude's challenge pass. |
+| `SNT-004` | Claude Free | `BLOCKED — OPERATOR HOLD` | Fixed snapshot `aaf21fd80f706abdbbce686dc854f5af724f02eb` | Resume only on a new operator instruction; no file transfer workaround is planned. |
+| `SNT-008` | Microsoft Copilot | `BLOCKED — OPERATOR HOLD` | Same fixed snapshot | Resume only on a new operator instruction; no file transfer workaround is planned. |
 
-The pack is delivered to the operator for manual transfer to each provider. No direct access, authenticated connection, provider acceptance, or model-originated GitHub activity is implied. The active ownership lock remains empty until each participant claims its own task. These two tasks are separate, sequentially coordinated review streams; Claude's challenge phase depends on Copilot's preserved first-pass report.
+Both providers returned `FAILED` for direct private-repository access. Per the Principal Operator's instruction on 2026-11-11, both review tasks are on hold; no download/upload workaround will be pursued. Their assignments and fixed snapshot are preserved for possible resumption.
 
 ### Task acceptance criteria
 
@@ -158,6 +160,13 @@ The pack is delivered to the operator for manual transfer to each provider. No d
 - Use the same fixed snapshot and review contract as other peers.
 - Preserve independent first-pass findings before cross-challenge.
 - Record service errors and unverified claims; do not fabricate a completed review.
+
+**SNT-009 — Gemini Plan Only recovery (ChatGPT; ACTIVE)**
+- Pin the Plan Only workflow to stable `gemini-3.5-flash-lite` (free tier) and the observed Gemini CLI version `0.67.0`; do not introduce paid authentication or change secrets.
+- Add a concise issue comment after failed Plan Only runs, classifying HTTP 429 quota exhaustion, HTTP 503 model unavailability, or other failures and linking the run logs.
+- Preserve the read-only Plan Only boundary and the existing Phase 2 execution gate; do not modify `.github/workflows/gemini-peer-execute.yml`.
+- Perform one controlled live Plan Only test after the Draft PR is merged. A model/quota failure is recorded as BLOCKED, not hidden or retried in a loop.
+- Record exact run ID, model/CLI versions, result, and any comment posted. No repository writes by Plan Only are permitted.
 
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
@@ -201,7 +210,7 @@ This table is the live lock register. A task may have only one active owner.
 
 | Task ID | Owner | Status | Claimed at | Scope lock / handover |
 |---|---|---|---|---|
-| None | — | No task currently claimed | — | All listed tasks await operator assignment and explicit AI claim |
+| `SNT-009` | ChatGPT | ACTIVE | 2026-11-11 — Principal Operator instruction | Gemini Plan Only recovery only; Phase 2 execution workflow and gate explicitly excluded |
 
 When a task becomes active, replace the `None` row with one row for that task. Do not create multiple active owners for the same task.
 
@@ -239,4 +248,4 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - **2026-11-11 — v1.1:** Added `SNT-008` for Microsoft Copilot’s zero-cost manual Mode M peer review. The task is `READY`, not active; no owner claim or repository access is implied.
 - **2026-11-11 — v1.2:** Expanded `SNT-008` to roadmap intelligence and task-coordination recommendations. Microsoft Copilot recommends; the Principal Operator decides and delegates; another AI implements approved repository updates.
 - **2026-11-11 — v1.3:** Expanded `SNT-008` to include document comparison, contradiction/stale-reference detection, and drafting support. Expanded `SNT-004` into Claude Free's independent first-pass and subsequent challenge/assurance review. Clarified review sequencing, manual provenance, role boundaries, and the current versus historical repository baseline.
-- **2026-11-11 — v1.4:** Confirmed Claude as the assigned owner of `SNT-004` and Microsoft Copilot as the assigned owner of `SNT-008`, both awaiting explicit claims. Added the fixed-snapshot review pack and four source bundles pinned to `aaf21fd80f706abdbbce686dc854f5af724f02eb`. The pack records the missing parent MAPCA v1.0 and external issue/PR limitations. No task is ACTIVE.
+- **2026-11-11 — v1.5:** Placed `SNT-004` and `SNT-008` on operator hold after both providers failed direct private-repository access checks. Recorded live Gemini run evidence: workspace trust was fixed, but the free-tier `gemini-3.8-flash` quota (20 RPD in the observed error) was exhausted after 503 retries. Added `SNT-009` as the active P1 ChatGPT-owned repair, pinning a free-tier Flash-Lite model and CLI version with explicit failure reporting. PR #16 is now merged; its API-dependent Claude workflow is not the Claude Free route.
