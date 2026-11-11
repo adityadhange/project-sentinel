@@ -1,0 +1,101 @@
+name: Audit co-developer identifier consistency
+
+on:
+  push:
+    paths:
+      - '**/*.md'
+      - '**/*.txt'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '.github/workflows/audit_co_developer_naming.yml'
+  pull_request:
+    paths:
+      - '**/*.md'
+      - '**/*.txt'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '.github/workflows/audit_co_developer_naming.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: co-developer-naming-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Enforce canonical offline role identifier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Audit tracked text files
+        id: audit
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import subprocess
+          import sys
+
+          legacy = "SKL-" + "co-developer"
+          canonical = "co-developer"
+          archive_prefix = "01 - SOURCE ARCHIVE/"
+          extensions = {".md", ".txt", ".yml", ".yaml", ".json", ".toml", ".py", ".sh"}
+          tracked = subprocess.check_output(
+              ["git", "ls-files", "-z"], text=True
+          ).split("\0")
+
+          historical = []
+          violations = []
+          for path in filter(None, tracked):
+              if os.path.splitext(path)[1].lower() not in extensions:
+                  continue
+              try:
+                  with open(path, "r", encoding="utf-8") as handle:
+                      content = handle.read()
+              except (UnicodeDecodeError, OSError):
+                  continue
+              count = content.count(legacy)
+              if not count:
+                  continue
+              entry = (path, count)
+              if path.startswith(archive_prefix):
+                  historical.append(entry)
+              else:
+                  violations.append(entry)
+
+          lines = [
+              "## co-developer identifier audit",
+              "",
+              f"- Canonical offline advisory identifier: `{canonical}`",
+              f"- Legacy alias occurrences in immutable source archive: {sum(n for _, n in historical)}",
+              f"- Legacy alias occurrences outside source archive: {sum(n for _, n in violations)}",
+              "",
+          ]
+          if historical:
+              lines += ["### Preserved historical occurrences", ""]
+              lines += [f"- `{path}`: {count}" for path, count in historical]
+              lines += [""]
+          if violations:
+              lines += ["### Active-scope violations", ""]
+              lines += [f"- `{path}`: {count}" for path, count in violations]
+              lines += ["", "Use `co-developer` in active documents. Do not alter immutable source-archive files."]
+              result = "failure"
+          else:
+              lines += ["**Result: PASS** — no legacy alias appears outside the immutable source archive."]
+              result = "success"
+
+          summary = "\n".join(lines) + "\n"
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as handle:
+              handle.write(summary)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"result={result}\n")
+
+          print(summary)
+          if violations:
+              sys.exit(1)
+          PY
