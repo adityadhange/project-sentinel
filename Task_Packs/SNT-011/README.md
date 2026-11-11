@@ -46,9 +46,10 @@ The task-level derived status is `ACTIVE` when any package is READY or IN_PROGRE
 
 - `SKL-sentinel-manager` owns intake, classification, task identity, compilation invocation, state-board updates and dispatch decisions.
 - Optimus specialists execute only work packages assigned to them.
-- This module records a Manager-authorized start; it does not authenticate the caller or enforce a platform permission.
+- Non-mutating starts record Manager-authorized state transitions. A work package marked `mutating: true` is an execution entry point and requires an exact, unused, non-expired task-bound approval record through the reference gate; the module does not authenticate the caller or enforce a host/platform permission.
 - READY means dependency-eligible, not automatically authorized. Scope, owner, WIP-1, capability, evidence and governance checks remain mandatory.
 - Level D approval, verifier receipts, mutation execution and independent read-back remain outside this module and are not bypassed.
+- The reference gate covers the `TaskStateManager.start()` route for mutating work packages. `complete()`, `fail()` and `block()` are state transitions, not mutation dispatch routes; no external dispatcher is present in this task pack.
 - The module does not dispatch agents, invoke external services, modify canonical skills or alter permissions/workflows.
 - The v4.0 Manager file remains a working draft; this task pack does not ratify it.
 

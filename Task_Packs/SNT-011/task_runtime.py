@@ -11,6 +11,8 @@ import os
 from pathlib import Path
 from typing import Any, Callable
 
+from approval_acceptance import ApprovalRecord, ApprovalRequest, validate_approval
+
 
 def _load_compiler() -> Callable[[dict[str, list[str]]], dict[str, Any]]:
     compiler_path = Path(__file__).resolve().parents[1] / "SNT-010" / "sentinel_dag.py"
@@ -160,8 +162,22 @@ class TaskStateManager:
             "states": {key: dict(value) for key, value in sorted(self.states.items())},
         }
 
-    def start(self, node_id: str) -> None:
-        """Record Manager-authorized start; this method is not an authorization control."""
+    def start(
+        self,
+        node_id: str,
+        *,
+        approval: ApprovalRecord | None = None,
+        approval_request: ApprovalRequest | None = None,
+        now=None,
+    ) -> None:
+        """Start a work package after state and, when required, approval checks.
+
+        Non-mutating packages retain the existing dependency/state behavior.
+        A package marked ``mutating`` is an execution entry point and requires
+        an exact, unused, non-expired approval record. This is still a
+        reference-layer check: identity authentication, atomic token
+        consumption, and host permission enforcement remain out of scope.
+        """
         item = self._get(node_id)
         if item["status"] != "READY":
             raise ValueError(f"{node_id!r} is not READY (current state: {item['status']})")
@@ -169,6 +185,19 @@ class TaskStateManager:
                  if self.states[dep]["status"] != "COMPLETED"]
         if unmet:
             raise ValueError(f"{node_id!r} has incomplete prerequisites: {', '.join(sorted(unmet))}")
+        if item["mutating"]:
+            if approval_request is None:
+                raise PermissionError("LEVEL_D_DENIED: APPROVAL_MISSING")
+            if (
+                approval_request.task_id != self.intake["task_id"]
+                or approval_request.target != f"work-package:{node_id}"
+                or approval_request.scope.get("work_package") != node_id
+            ):
+                raise PermissionError("LEVEL_D_DENIED: APPROVAL_MISMATCH")
+            allowed, reasons = validate_approval(approval, approval_request, now=now)
+            if not allowed:
+                reason_text = ", ".join(reasons) or "APPROVAL_UNSUPPORTED"
+                raise PermissionError(f"LEVEL_D_DENIED: {reason_text}")
         item["status"] = "IN_PROGRESS"
         item["blocked_reason"] = None
         self._refresh()
