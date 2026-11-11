@@ -1,0 +1,173 @@
+name: Prune Incomplete & Truncated Drafts
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry Run (Preview only, do not delete)'
+        type: boolean
+        default: false
+  push:
+    paths:
+      - '.github/workflows/prune_truncated_subsets.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prune_truncated:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Detect and Prune Truncated Files
+        id: prune
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - << 'EOF'
+          import os
+          import re
+          import difflib
+          from pathlib import Path
+          from collections import defaultdict
+
+          def clean_stem(name):
+              n = re.sub(r'(\(\d+\))|\.md\.md|\.md$', '', name, flags=re.IGNORECASE)
+              n = re.sub(r'[\s_\-\(\)]+', '', n).lower()
+              return n
+
+          def is_strict_subset(short_text, long_text):
+              """
+              Returns True ONLY if long_text contains 100% of short_text
+              with zero modifications or deletions (pure prefix or pure insertion).
+              """
+              if not short_text.strip() or len(short_text) >= len(long_text):
+                  return False
+
+              # Check 1: Direct prefix cutoff (typical mid-generation stop)
+              if long_text.startswith(short_text.rstrip()):
+                  return True
+
+              # Check 2: Sequence matcher check (zero replaces, zero deletes from short_text)
+              matcher = difflib.SequenceMatcher(None, short_text, long_text)
+              opcodes = matcher.get_opcodes()
+              for tag, i1, i2, j1, j2 in opcodes:
+                  if tag in ('replace', 'delete'):
+                      return False
+              return True
+
+          root = Path('.')
+          ignored_dirs = {'.git', '.github'}
+
+          all_files = [
+              f for f in root.rglob('*')
+              if f.is_file() and not any(part in ignored_dirs for part in f.parts)
+          ]
+
+          # Group text files by base name
+          family_map = defaultdict(list)
+          for f in all_files:
+              if f.name == ".gitkeep":
+                  continue
+              stem = clean_stem(f.name)
+              try:
+                  with open(f, 'r', encoding='utf-8', errors='ignore') as fp:
+                      content = fp.read()
+                  family_map[stem].append({
+                      'path': str(f),
+                      'content': content,
+                      'lines': len(content.splitlines()),
+                      'chars': len(content)
+                  })
+              except Exception:
+                  pass
+
+          is_dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+          truncated_candidates = []
+          summary_lines = []
+
+          summary_lines.append("# ✂️ Truncated / Incomplete Drafts Audit\n\n")
+          summary_lines.append(f"- **Mode:** {'🔍 DRY RUN (Simulation)' if is_dry_run else '🚀 APPLIED (PR Staged)'}\n\n")
+
+          match_idx = 1
+          for stem, group in family_map.items():
+              if len(group) < 2:
+                  continue
+
+              # Sort from longest to shortest
+              group.sort(key=lambda x: x['chars'], reverse=True)
+
+              for i in range(len(group)):
+                  longer = group[i]
+                  for j in range(i + 1, len(group)):
+                      shorter = group[j]
+                      if shorter['path'] in [c['remove'] for c in truncated_candidates]:
+                          continue
+
+                      if is_strict_subset(shorter['content'], longer['content']):
+                          truncated_candidates.append({
+                              'keep': longer['path'],
+                              'remove': shorter['path'],
+                              'short_lines': shorter['lines'],
+                              'long_lines': longer['lines']
+                          })
+                          summary_lines.append(f"### Match {match_idx}: `{shorter['path']}`\n")
+                          summary_lines.append(f"- 🔴 **Incomplete / Cut-off file ({shorter['lines']} lines):** `{shorter['path']}`\n")
+                          summary_lines.append(f"- 🟢 **Complete Parent file ({longer['lines']} lines):** `{longer['path']}`\n")
+                          summary_lines.append(f"- *Verification:* 100% of the shorter file is preserved inside the longer file.\n\n")
+                          match_idx += 1
+
+          summary_lines.append(f"\n---\n**Total incomplete subsets detected:** {len(truncated_candidates)}\n")
+
+          with open(os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md'), 'w', encoding='utf-8') as out:
+              out.write("".join(summary_lines))
+
+          deleted_count = 0
+          if not is_dry_run and truncated_candidates:
+              for item in truncated_candidates:
+                  target = item['remove']
+                  if os.path.exists(target):
+                      os.remove(target)
+                      deleted_count += 1
+
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                  f.write(f"deleted_count={deleted_count}\n")
+          else:
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                  f.write(f"deleted_count=0\n")
+
+          EOF
+
+      - name: Create Pull Request with Pruned Subsets
+        if: ${{ steps.prune.outputs.deleted_count > 0 }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="cleanup/prune-truncated-subsets-$(date +%s)"
+          git checkout -b "$BRANCH_NAME"
+          git add -u
+          git commit -m "chore: prune ${{ steps.prune.outputs.deleted_count }} truncated incomplete drafts"
+          git push origin "$BRANCH_NAME"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH_NAME" \
+            --title "✂️ Prune ${{ steps.prune.outputs.deleted_count }} truncated/incomplete drafts" \
+            --body "Automated cleanup of files proven to be incomplete/interrupted drafts.
+
+          ### Mathematical Proof:
+          - Each removed file was proven to be a **100% strict subset** of its longer counterpart.
+          - Zero unique lines or custom modifications were deleted.
+          - The complete parent file was preserved."
