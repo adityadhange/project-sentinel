@@ -178,6 +178,16 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Mark the task-pack artifact as a non-authoritative prototype. Do not wire it into runtime skills, workflows, permissions, or canonical governance documents.
 - Deliver a Draft PR for operator review; no merge or production activation.
 
+**SNT-011 — Task intake and lifecycle integration (ChatGPT; BLOCKED pending SNT-010 acceptance)**
+- Define the Manager's intake manifest and connect it to the single SNT-010 dependency compiler; do not duplicate graph validation or cycle detection.
+- Initialize work-package states from compiler output, distinguishing topological order from actual READY eligibility.
+- Release dependants only when all prerequisites are recorded COMPLETED; propagate failure/blocking downstream while preserving independent branches.
+- Persist task state and transition reasons within the task-pack boundary; report unknown/indeterminate state rather than infer persistence.
+- Update the v4.0 Manager working draft with the compiler-to-state lifecycle contract, while preserving its DRAFT status and existing authority boundaries.
+- Keep READY separate from authorization; preserve role/capability checks, WIP-1, Verifier, Level D and Principal Operator gates.
+- No runtime activation, automatic dispatch, permission changes, canonical governance ratification or production claim.
+- Execute focused tests and record exact results only after SNT-010 is accepted and SNT-011 resumes.
+
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
 - Keep each material claim linked to evidence or marked as inference / unverified.
