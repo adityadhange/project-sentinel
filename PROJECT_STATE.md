@@ -22,18 +22,18 @@
 
 ## 2. Active task and phase
 
-**Task:** Repository continuity record maintenance  
-**Current phase:** Refresh project-state snapshot against live `main`, PR, and test evidence
-**Work status:** PROPOSED — this refresh is on a review branch  
-**Branch:** `docs/refresh-project-state-20261112`
-**Base commit:** `72efeb770b10611e7c386663ef612cd044c365ce`
-**Authorization basis:** The operator instructed the assistant to address remaining open issues or select another actionable open issue; this narrowly scoped state-refresh Draft PR addresses open Issue #26.
+**Task:** Governance and CI baseline reconciliation  
+**Current phase:** Reconcile formal governance status, Kernel v4.0 control-plane specifications, CI path references, and continuity records  
+**Work status:** PROPOSED — this reconciliation is on a review branch  
+**Branch:** `fix/governance-and-ci-reconciliation`  
+**Base commit:** `b6713f48eaa06cddc5059497b340ef08b4628635`  
+**Authorization basis:** Explicit Principal Operator instruction dated 2026-11-12 authorizing the named governance, specification, workflow, and continuity changes.
 
 The continuity layer's three initial stages are complete and merged:
 
 1. **PR 1 — shared agent instructions:** merged as PR #5. The files remain marked `DRAFT — AWAITING OPERATOR APPROVAL`; formal adoption is not inferred.
-2. **PR 2 — project state:** merged as PR #6. This file is being refreshed because its original baseline and next-step instructions became stale.
-3. **PR 3 — handoff log:** merged as PR #7. `HANDOFF_LOG.md` is present on `main` and remains marked draft pending operator approval.
+2. **PR 2 — project state:** merged as PR #6. This file is maintained as a dated snapshot and must be refreshed against live GitHub state.
+3. **PR 3 — handoff log:** merged as PR #7. `HANDOFF_LOG.md` is present on `main` and remains a continuity record, not a policy authority.
 
 ## 3. Completed work and repository evidence
 
@@ -47,7 +47,7 @@ The continuity layer's three initial stages are complete and merged:
 | Initial project-state snapshot | MERGED | PR #6; merge commit `f0120b7ac7e1ec0047bd5ea56587efd1752a81ef` | `PROJECT_STATE.md` confirmed present on `main`; this refresh corrects stale next-step details |
 | Chronological handoff log | MERGED; file re-fetched from `main` | PR #7; merge commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c` | `HANDOFF_LOG.md` confirmed present; first handoff entry records PRs #5–#6 |
 | Hardened document and Kernel workflows | MERGED | PR #39; merge commit `72efeb770b10611e7c386663ef612cd044c365ce` | Read-only audit/preflight and workflow hardening changes are present on `main`; semantic correctness remains separately reviewable |
-| Task-bound approval and acceptance reference layer | OPEN DRAFT PR | PR #40; head commit `f4f57e6184cae824a92fad3df73393e3663e99b0` | Isolated Task_Packs reference implementation; GitHub Actions CI passed; no runtime activation or host enforcement claimed |
+| Task-bound approval and acceptance reference layer | MERGED | PR #40; merge commit `3f1a0c01e1335928fdd065487780acb9c90961d2` | Isolated Task_Packs reference implementation; merge does not imply runtime activation or host enforcement |
 | Current archive file inventory | CHECKED on 2026-11-09 | Recursive tree for `main` at `eef3719cc962ce50e8136d523252ddc6483f821b` | 418 archive files, excluding `.gitkeep` placeholders |
 
 Historical post-merge checks are recorded as such; they are not a claim that every archived document has undergone semantic or content-level verification.
