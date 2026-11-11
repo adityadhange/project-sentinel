@@ -1,22 +1,22 @@
 # Project State
 
-**Snapshot status:** PROPOSED — REFRESHED AFTER PR #39 AND DRAFT PR #40
+**Snapshot status:** PROPOSED — RECONCILED AGAINST MAIN AFTER PR #47
 **Last updated:** 2026-11-12
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
 **Baseline branch:** `main`  
-**Baseline commit observed:** `72efeb770b10611e7c386663ef612cd044c365ce`
-**Snapshot publication branch:** `docs/refresh-project-state-20261112`
-**Publication status:** Proposed through a new Draft PR; awaiting operator review
+**Baseline commit observed:** `b6713f48eaa06cddc5059497b340ef08b4628635`
+**Snapshot publication branch:** `fix/governance-and-ci-reconciliation`
+**Publication status:** Proposed through the governance and CI reconciliation PR; awaiting operator review
 
 > This is a timestamped repository snapshot, not a live feed, an approval ledger, or an independent grant of authority. Facts below are limited to the evidence and checks identified here. Refresh GitHub state before relying on this snapshot in a later session.
 
 ## 1. Current repository status
 
-- **Observed fact:** The repository default branch is `main`, observed at commit `72efeb770b10611e7c386663ef612cd044c365ce` on 2026-11-12, after PR #39 merged.
-- **Observed fact:** The latest recursive Git tree inspection completed without truncation.
-- **Observed fact:** Draft PR #40, `Add task-bound approval and acceptance reference layer`, is open from `implementation/task-bound-approval-acceptance-ci` against `main`. Its CI check completed successfully on commit `f4f57e6184cae824a92fad3df73393e3663e99b0`.
-- **Observed fact:** The working tree for this refresh is based on clean `main`; the refresh itself is being prepared on `docs/refresh-project-state-20261112`.
+- **Observed fact:** The repository default branch is `main`, observed at commit `b6713f48eaa06cddc5059497b340ef08b4628635` on 2026-11-12, after PR #47 merged.
+- **Observed fact:** The recursive Git tree for this baseline was retrieved without truncation.
+- **Observed fact:** PR #30 and PRs #44, #45, #46, and #47 are closed and merged. PR #40 is also closed and merged (merge commit `3f1a0c01e1335928fdd065487780acb9c90961d2`); the prior snapshot's statement that PR #40 was open is stale.
+- **Observed fact:** This reconciliation is being prepared on `fix/governance-and-ci-reconciliation`; it does not alter `main` until merged.
 - **Assessment:** The archive filing batches and cross-agent continuity files are merged. The DOCX-to-Markdown migration is deferred until the operator has access to a PC; no conversion is currently authorized or underway.
 - **Unknown:** This repository snapshot does not establish runtime enforcement of the approval/acceptance reference layer or the overall operational status of every Project Sentinel architecture, evaluation, or implementation workstream.
 
@@ -105,26 +105,25 @@ The inspection request was read-only. Copilot's subsequent report explicitly sta
 | Markdown migration direction | APPROVED IN PRINCIPLE; EXECUTION DEFERRED | The operator approved a controlled migration toward Markdown in principle, but has now explicitly deferred conversion until PC access is available. No conversion or original-file replacement is currently authorized |
 | Removal of confirmed redundant duplicates | CONDITIONALLY APPROVED IN PRINCIPLE; CASE-BY-CASE VERIFICATION REQUIRED | The operator approved removing genuinely redundant duplicates only after verification; no deletion is proposed in this PR and each removal must be evidenced and reviewable |
 
-The three governance documents below were observed as `DRAFT — AWAITING OPERATOR APPROVAL`; this snapshot does not activate them:
+The live governance paths are under `01_Governance_Rules/`:
 
-- `00 - GOVERNANCE AND RULES/SOURCE_OF_TRUTH.md`
-- `00 - GOVERNANCE AND RULES/AI_AUTHORITY_AND_RESPONSIBILITY.md`
-- `00 - GOVERNANCE AND RULES/DOCUMENT_CONTROL_AND_CHANGE_MANAGEMENT.md`
+- `SOURCE_OF_TRUTH.md` (GOV-001) and `DOCUMENT_CONTROL_AND_CHANGE_MANAGEMENT.md` (GOV-003) are explicitly ratified by the Principal Operator as the Kernel v4.0 baseline in this remediation proposal.
+- `AI_AUTHORITY_AND_RESPONSIBILITY.md` (GOV-002) remains separately DRAFT unless and until expressly ratified.
 
-A commit, PR merge, or AI recommendation is not by itself evidence of operator approval.
+The approval record is the Principal Operator's explicit 2026-11-12 instruction; repository commits and PR merge remain implementation evidence, not substitutes for that decision.
 
-## 7. Open pull requests
+## 7. Pull-request reconciliation
 
-At the time of the 2026-11-12 baseline check:
+This section corrects the earlier point-in-time snapshot; it is not a live feed. Refresh GitHub before relying on PR status in a later session.
 
-- **Open PRs observed:** PR #40 is open as a Draft, checked on 2026-11-12 immediately before this refresh.
-- **PR #40:** Draft; `Add task-bound approval and acceptance reference layer`; head commit `f4f57e6184cae824a92fad3df73393e3663e99b0`; CI completed successfully; no runtime activation or host-enforcement claim.
-- **PR #5:** merged; merge commit `9ae0ff39a113f986335af55d20a5e681e0d0c4d3`.
-- **PR #6:** merged; merge commit `f0120b7ac7e1ec0047bd5ea56587efd1752a81ef`.
-- **PR #7:** merged; merge commit `a0726ebc313e6db05ea9aa080843f61d0e93a98c`.
-- **PRs #1–#4:** merged; see the evidence table above.
+- **PR #30:** CLOSED / MERGED on 2026-11-11; merge commit `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`. SNT-011 integration is present on `main`; its PR description explicitly did not claim runtime activation or test execution.
+- **PR #44:** CLOSED / MERGED on 2026-11-11; merge commit `a5aeb9888ffa133accc425b6bd52348de51e9550`. Reorganized the legacy corpus and restored active Kernel v4.0 working files to `00_Control_Plane_v4.0/`.
+- **PR #45:** CLOSED / MERGED on 2026-11-11; merge commit `956873c03b31bc28e8a8893458fdbcf26d4fc283`. Restored the ratified Manager Core Operating Invariants preamble; the remaining Manager specification had previously remained draft.
+- **PR #46:** CLOSED / MERGED on 2026-11-11; merge commit `1d0e7ee03112dcc360d653d21883715c5ca1ce15`. Added the five Kernel v4.0 specialist specifications.
+- **PR #47:** CLOSED / MERGED on 2026-11-11; merge commit `b6713f48eaa06cddc5059497b340ef08b4628635`. Updated the root `GEMINI.md` control-plane and source-precedence anchor.
+- **PR #40:** CLOSED / MERGED; merge commit `3f1a0c01e1335928fdd065487780acb9c90961d2`. The earlier snapshot's open-Draft status was stale.
 
-This section is a dated observation, not a live status. Every agent must query GitHub again before relying on it.
+These merge facts establish that the changes are on `main`; they do not by themselves establish semantic correctness, runtime activation, host enforcement, or completion of unrun tests.
 
 ## 8. Known blockers, risks, and unresolved matters
 
@@ -139,7 +138,7 @@ This section is a dated observation, not a live status. Every agent must query G
 
 ## 9. Next authorized action
 
-**Immediate action:** Review this refreshed `PROJECT_STATE.md` through its Draft PR. The operator retains responsibility for review and merge.
+**Immediate action:** Review the governance and CI reconciliation PR, including the explicit ratification record and the changed workflow paths. The Principal Operator retains responsibility for review and merge.
 
 **After this PR:** Await operator direction. No additional repository change is authorized by this snapshot alone.
 
@@ -160,6 +159,6 @@ Before relying on this file:
 
 ---
 
-**Snapshot prepared from:** GitHub `main` branch and open-PR state refreshed on 2026-11-12 at baseline commit `72efeb770b10611e7c386663ef612cd044c365ce`; historical archive inventory counts retain their separately stated baseline.
-**Prepared as:** A proposed continuity-record refresh on branch `docs/refresh-project-state-20261112`.
-**Approval status:** DRAFT — AWAITING OPERATOR APPROVAL.
+**Snapshot prepared from:** GitHub `main` branch refreshed on 2026-11-12 at baseline commit `b6713f48eaa06cddc5059497b340ef08b4628635`; historical archive inventory counts retain their separately stated baseline.
+**Prepared as:** A proposed continuity-record reconciliation on branch `fix/governance-and-ci-reconciliation`.
+**Approval status:** PROPOSED — AWAITING PRINCIPAL OPERATOR REVIEW OF THIS PR.
