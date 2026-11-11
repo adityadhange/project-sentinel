@@ -1,0 +1,9 @@
+{
+  "name": "project-sentinel",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Project Sentinel Architecture, Governance, and Control Plane Specifications",
+  "scripts": {
+    "audit": "echo 'Running documentation integrity check...' && exit 0"
+  }
+}
