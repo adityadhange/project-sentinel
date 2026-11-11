@@ -89,6 +89,34 @@ When a cycle is detected:
 
 Cycle rejection is an existing DPR requirement (INV-021); this section describes safe handling after rejection. It does not introduce a second cycle-detection mechanism.
 
+### 4.1 Compiler-to-state lifecycle contract
+
+For Class C intake, the Manager must normalize the request into a task manifest before any specialist dispatch. The manifest identifies the task, payload, isolated workspace and work packages; each work package has a unique ID and an explicit list of prerequisite work-package IDs. The Manager validates the manifest and invokes the single dependency compiler. It must not maintain a second, competing cycle-detection or topological-order implementation.
+
+The compiler result is authoritative only for graph structure:
+- Cyclic strongly connected components are rejected as runnable work.
+- Every downstream dependant of a cyclic component is marked blocked.
+- Independent acyclic branches remain available for evaluation.
+- Unknown prerequisite IDs, duplicate IDs/dependencies and malformed graph input are explicit intake errors; the Manager must not silently drop or rewrite an edge.
+
+The Manager then initializes and maintains work-package state separately from graph compilation:
+- `PENDING`: prerequisites exist but are not all complete.
+- `READY`: every declared prerequisite is actually `COMPLETED`; dependency eligibility only.
+- `IN_PROGRESS`: the Manager has recorded that an eligible package was dispatched under the applicable authority and concurrency rules.
+- `BLOCKED`: cycle membership, a blocked/failed prerequisite, or an explicit Manager hold prevents progression.
+- `COMPLETED`: the package's execution result has been recorded; this is not whole-task acceptance.
+- `FAILED` / `CANCELLED`: terminal outcomes that prevent downstream progression unless a separately authorized recovery/replan changes the task graph.
+
+A node's presence in the compiler's topological order does not make it `READY`. The Manager may move a package from `PENDING` to `READY` only when all of its prerequisites have recorded `COMPLETED` state. After a package completes, the Manager reevaluates dependants and releases only those whose full prerequisite set is complete. Failure or explicit blocking propagates to downstream dependants; independent branches remain eligible.
+
+Before dispatching a `READY` package, the Manager must separately validate assigned owner/role, capability, task scope, applicable WIP-1 reservation, evidence prerequisites and any required approval. `READY` is not permission, authorization, or an instruction to dispatch automatically. Level D remains an independent halt-and-approval gate.
+
+The Manager records every state transition and its reason in the task state board, together with the compiled graph, blocked reasons, completed milestones, artifact/receipt references and next deterministic action. Persistence must remain within the task's authorized workspace. If state cannot be read or written reliably, the Manager reports the state as unknown/indeterminate and does not infer completion or dispatch eligibility from conversation history alone.
+
+When all work packages are recorded `COMPLETED`, the task advances to `REVIEW`, not `DONE`. The applicable Verifier review, required Level D operations, independent read-back and Principal Operator acceptance remain separate. The Manager must not convert a successful DAG run into deliverable acceptance.
+
+The SNT-010 compiler and SNT-011 intake/state task packs are non-authoritative reference implementations until separately reviewed, accepted and integrated through the governed release path. Their presence does not activate this working specification or establish host-enforced persistence, permissions, dispatch or concurrency controls.
+
 ## 5. WIP-1 mutation control
 
 The inherited v3.6 Manager rule is:

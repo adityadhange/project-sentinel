@@ -1,7 +1,7 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
 **Document status:** ACTIVE — Principal Operator-approved coordination register  
-**Version:** 1.6  
+**Version:** 1.7  
 **Last refreshed:** 2026-11-11  
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
@@ -101,7 +101,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 
 ## 3. Roadmap and task register
 
-**Assignment state:** Claude (`SNT-004`) and Microsoft Copilot (`SNT-008`) remain on operator hold. Gemini recovery (`SNT-009`) is parked by the Principal Operator's 2026-11-11 direction to focus on Sentinel core progress. ChatGPT has claimed `SNT-010`, a bounded task-pack prototype for deterministic dependency-graph compilation.
+**Assignment state:** Claude (`SNT-004`) and Microsoft Copilot (`SNT-008`) remain on operator hold. Gemini recovery (`SNT-009`) is parked by the Principal Operator's 2026-11-11 direction to focus on Sentinel core progress. ChatGPT submitted `SNT-010` for operator review and staged the dependent `SNT-011` integration implementation; `SNT-011` remains blocked pending acceptance of `SNT-010`.
 
 | ID | Priority | Task | Proposed owner | Status | Depends on |
 |---|---|---|---|---|---|
@@ -114,7 +114,8 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
 | `SNT-008` | P1 | Microsoft Copilot roadmap intelligence and task-coordination recommendations. | Microsoft Copilot | BLOCKED — OPERATOR HOLD | Operator decision to resume; direct GitHub access unavailable |
 | `SNT-009` | P1 | Restore reliable, zero-cost Gemini Plan Only operation: pin a free-tier-capable stable model and CLI version, add actionable failure classification, then perform one controlled live test. Do not alter the Phase 2 execution workflow. | ChatGPT | BLOCKED — OPERATOR HOLD (PARKED) | Resume only on a new operator instruction; no paid API or secret changes |
-| `SNT-010` | P1 | Build a bounded, executable Sentinel task-pack prototype for deterministic DAG compilation: identify cycle components, block downstream dependants, and preserve independent runnable branches. No production wiring or workflow changes. | ChatGPT | ACTIVE | None; isolated prototype only |
+| `SNT-010` | P1 | Build a bounded, executable Sentinel task-pack prototype for deterministic DAG compilation: identify cycle components, block downstream dependants, and preserve independent runnable branches. No production wiring or workflow changes. | ChatGPT | REVIEW — Draft PR #27 submitted; tests not yet executed | None; isolated prototype only |
+| `SNT-011` | P1 | Connect structured task intake and persistent work-package lifecycle state to the SNT-010 dependency compiler; preserve Sentinel authority and Optimus execution boundaries. No production activation or permission changes. | ChatGPT | BLOCKED — implementation staged; awaiting SNT-010 acceptance | SNT-010 accepted |
 
 
 
@@ -177,6 +178,16 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Mark the task-pack artifact as a non-authoritative prototype. Do not wire it into runtime skills, workflows, permissions, or canonical governance documents.
 - Deliver a Draft PR for operator review; no merge or production activation.
 
+**SNT-011 — Task intake and lifecycle integration (ChatGPT; BLOCKED pending SNT-010 acceptance)**
+- Define the Manager's intake manifest and connect it to the single SNT-010 dependency compiler; do not duplicate graph validation or cycle detection.
+- Initialize work-package states from compiler output, distinguishing topological order from actual READY eligibility.
+- Release dependants only when all prerequisites are recorded COMPLETED; propagate failure/blocking downstream while preserving independent branches.
+- Persist task state and transition reasons within the task-pack boundary; report unknown/indeterminate state rather than infer persistence.
+- Update the v4.0 Manager working draft with the compiler-to-state lifecycle contract, while preserving its DRAFT status and existing authority boundaries.
+- Keep READY separate from authorization; preserve role/capability checks, WIP-1, Verifier, Level D and Principal Operator gates.
+- No runtime activation, automatic dispatch, permission changes, canonical governance ratification or production claim.
+- Execute focused tests and record exact results only after SNT-010 is accepted and SNT-011 resumes.
+
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
 - Keep each material claim linked to evidence or marked as inference / unverified.
@@ -219,7 +230,7 @@ This table is the live lock register. A task may have only one active owner.
 
 | Task ID | Owner | Status | Claimed at | Scope lock / handover |
 |---|---|---|---|---|
-| `SNT-010` | ChatGPT | ACTIVE | 2026-11-11 — Principal Operator direction to prioritize core Sentinel progress | Deterministic DAG compiler prototype in `Task_Packs/SNT-010/`; no production runtime wiring, workflow changes, or authority changes |
+| `SNT-010` | ChatGPT | REVIEW | 2026-11-11 — Draft PR #27 submitted | Deterministic DAG compiler prototype; awaiting operator review and acceptance |
 
 When a task becomes active, replace the `None` row with one row for that task. Do not create multiple active owners for the same task.
 
@@ -260,3 +271,4 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - **2026-11-11 — v1.4:** Confirmed Claude as the assigned owner of `SNT-004` and Microsoft Copilot as the assigned owner of `SNT-008`, both awaiting explicit claims. Added the fixed-snapshot review pack and four source bundles pinned to `aaf21fd80f706abdbbce686dc854f5af724f02eb`. The pack records the missing parent MAPCA v1.0 and external issue/PR limitations. No task is ACTIVE.
 - **2026-11-11 — v1.5:** Placed `SNT-004` and `SNT-008` on operator hold after both providers failed direct private-repository access checks. Recorded live Gemini run evidence: after the workspace-trust fix, a Plan Only run first received HTTP 503 and then HTTP 429 with a `gemini-3.8-flash` Free Tier quota limit of 20 requests/day. Google applies quotas per project, so the evidence does not establish that this workflow alone consumed the quota. Added `SNT-009` as the active P1 ChatGPT-owned repair, pinning a free-tier Flash-Lite model and CLI version with explicit failure reporting. PR #16 is now merged; its API-dependent Claude workflow is not the Claude Free route.
 - **2026-11-11 — v1.6:** Parked `SNT-009` under the Principal Operator's latest direction to defer AI integrations and prioritize core Sentinel implementation. Refreshed the main baseline to `7e8d1863559d11dc1e028c177a26de68565e0d12`. Claimed `SNT-010` for a bounded executable DAG compiler prototype in an isolated task pack; no production wiring or workflow/policy changes are included.
+- **2026-11-11 — v1.7:** Submitted SNT-010 as Draft PR #27 and moved it to `REVIEW`; recorded the dependent SNT-011 intake/state integration implementation as staged but `BLOCKED` until SNT-010 is accepted. SNT-011 does not activate runtime skills, dispatch agents, or alter governance/permissions.
