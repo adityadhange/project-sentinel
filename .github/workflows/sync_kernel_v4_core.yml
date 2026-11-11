@@ -18,6 +18,7 @@ jobs:
       - name: Inspect proposed legacy source mappings
         run: |
           python - << 'PY'
+          import os
           import re
           import sys
           from pathlib import Path
@@ -49,8 +50,8 @@ jobs:
               if not path.is_file():
                   results.append((source, target, 'MISSING SOURCE'))
                   continue
-              text = path.read_text(encoding='utf-8', errors='replace')
-              version_match = re.search(r'Kernel v(\\d+\\.\\d+)', text[:12000], re.IGNORECASE)
+              source_text = path.read_text(encoding='utf-8', errors='replace')
+              version_match = re.search(r'Kernel v(\d+\.\d+)', source_text[:12000], re.IGNORECASE)
               version = version_match.group(1) if version_match else 'UNIDENTIFIED'
               status = 'REVIEW REQUIRED' if version == '4.0' else 'BLOCKED: NOT VERIFIED AS KERNEL 4.0'
               results.append((source, target, f'{status} (detected version: {version})'))
@@ -77,7 +78,7 @@ jobs:
               '**No repository files were changed.** Any promotion requires a separate, human-reviewed pull request.',
               '',
           ])
-          Path(__import__('os').environ['GITHUB_STEP_SUMMARY']).write_text('\\n'.join(lines), encoding='utf-8')
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(lines), encoding='utf-8')
           for source, target, status in results:
               print(f'{status}: {source} -> {target}')
           print('READ-ONLY PREFLIGHT COMPLETE. No repository mutations performed.')
