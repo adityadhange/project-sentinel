@@ -1,9 +1,8 @@
 # 00 — Control Plane v4.0
 
-This directory contains only material established as active for the current control-plane layout.
+The active Kernel v4.0 working control-plane files are located directly in this directory:
 
-- `standards/IDENTIFIER_NAMING_STANDARD.md` is operator-confirmed and applies to active Sentinel control-plane documents.
-- No active Kernel v4.0 `sentinel-manager.md` was present in the inspected baseline. The existing candidate is explicitly marked DRAFT and awaiting Principal Operator review; it has therefore been retained under `02_Archive_Legacy/v4.0_reconstruction_candidates/Control_Plane/`.
-- No specialist-agent files were promoted into this directory because the archived v4.0 specialist specifications state that capability-test validation is pending.
+- `sentinel-manager.md` — operator-designated active working intake specification. Its internal DRAFT/review markers remain intact; this placement does not itself ratify or remove those markers.
+- `IDENTIFIER_NAMING_STANDARD.md` — operator-confirmed active naming standard.
 
-Directory placement does not activate a draft or grant permissions.
+The archived v4.0 specialist specifications remain in `02_Archive_Legacy/v4.0_reconstruction_candidates/` because their capability-test validation is pending. They have not been promoted as active runtime agents.
