@@ -23,13 +23,14 @@ jobs:
       - name: Identify exact-prefix candidates without modifying files
         run: |
           python - << 'PY'
+          import os
           import re
           from collections import defaultdict
           from pathlib import Path
 
           def clean_stem(name):
-              value = re.sub(r'(\\(\\d+\\))|\\.md\\.md|\\.md$', '', name, flags=re.IGNORECASE)
-              return re.sub(r'[\\s_\\-\\(\\)]+', '', value).lower()
+              value = re.sub(r'(\(\d+\))|\.md\.md|\.md$', '', name, flags=re.IGNORECASE)
+              return re.sub(r'[\s_\-\(\)]+', '', value).lower()
 
           def is_archive_path(path):
               return any('archive' in part.lower() for part in path.parts)
@@ -84,6 +85,6 @@ jobs:
                   '',
               ])
           summary.extend(['---', f'**Total candidates:** {len(candidates)}', ''])
-          Path(__import__('os').environ['GITHUB_STEP_SUMMARY']).write_text('\\n'.join(summary), encoding='utf-8')
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary), encoding='utf-8')
           print(f'READ-ONLY AUDIT COMPLETE: {len(candidates)} candidate(s); zero repository mutations.')
           PY
