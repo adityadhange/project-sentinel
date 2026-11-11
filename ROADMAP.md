@@ -163,6 +163,11 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Record service errors and unverified claims; do not fabricate a completed review.
 
 **SNT-009 — Gemini Plan Only recovery (PARKED — OPERATOR HOLD)**
+- Pin the Plan Only workflow to stable `gemini-3.5-flash-lite` (free tier) and the observed Gemini CLI version `0.67.0`; do not introduce paid authentication or change secrets.
+- Add a concise issue comment after failed Plan Only runs, classifying HTTP 429 quota exhaustion, HTTP 503 model unavailability, or other failures and linking the run logs.
+- Preserve the read-only Plan Only boundary and the existing Phase 2 execution gate; do not modify `.github/workflows/gemini-peer-execute.yml`.
+- Perform one controlled live Plan Only test after the Draft PR is merged. A model/quota failure is recorded as BLOCKED, not hidden or retried in a loop.
+- Record exact run ID, model/CLI versions, result, and any comment posted. No repository writes by Plan Only are permitted.
 
 **SNT-010 — Deterministic DAG compiler prototype (ChatGPT; ACTIVE)**
 - Implement a standard-library Python module under `Task_Packs/SNT-010/` that accepts a node-to-prerequisites map.
@@ -171,11 +176,6 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Include a small focused `unittest` suite and a CLI that reads a JSON envelope from stdin.
 - Mark the task-pack artifact as a non-authoritative prototype. Do not wire it into runtime skills, workflows, permissions, or canonical governance documents.
 - Deliver a Draft PR for operator review; no merge or production activation.
-- Pin the Plan Only workflow to stable `gemini-3.5-flash-lite` (free tier) and the observed Gemini CLI version `0.67.0`; do not introduce paid authentication or change secrets.
-- Add a concise issue comment after failed Plan Only runs, classifying HTTP 429 quota exhaustion, HTTP 503 model unavailability, or other failures and linking the run logs.
-- Preserve the read-only Plan Only boundary and the existing Phase 2 execution gate; do not modify `.github/workflows/gemini-peer-execute.yml`.
-- Perform one controlled live Plan Only test after the Draft PR is merged. A model/quota failure is recorded as BLOCKED, not hidden or retried in a loop.
-- Record exact run ID, model/CLI versions, result, and any comment posted. No repository writes by Plan Only are permitted.
 
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
