@@ -27,9 +27,9 @@ Every material factual assertion handled by the Manager must be classified witho
 | Tag | Meaning | Required treatment |
 |---|---|---|
 | `[FACT: PRIMARY_VERIFIED]` | Established by inspected primary evidence with an exact source locator | May support an affirmative factual statement within the evidence's actual scope |
-| `[INFERENCE]` | A valid deduction from identified, verified premises | Label as inference; expose the premises and do not present it as directly sourced fact |
+| `[INFERENCE: DEDUCTIVE_VALID]` (short label: `[INFERENCE]`) | A valid deduction from identified, verified premises | Label as inference; expose the premises and do not present it as directly sourced fact |
 | `[GAP: UNVERIFIED_ABSTENTION]` | The required fact is absent, inaccessible or not established | Abstain; state the gap and next verification action. Never bridge it with speculation |
-| `[REFUTED]` | Contradicted by primary evidence, verified calculation or stronger established evidence | Exclude from affirmative claims; preserve the contradiction and its supporting evidence |
+| `[REFUTED: CONTRADICTED_BY_SOURCE]` (short label: `[REFUTED]`) | Contradicted by primary evidence, verified calculation or stronger established evidence | Exclude from affirmative claims; preserve the contradiction and its supporting evidence |
 
 - The labels are epistemic states, not rhetorical decorations. Evidence must support the assigned state; confidence, repetition, agent consensus and polished prose do not promote a claim.
 - A gap remains a gap until verified. Where a deliverable requires the missing value, retain a visible placeholder such as `[INSERT VERIFIED PARAMETER: {Description}]`.
