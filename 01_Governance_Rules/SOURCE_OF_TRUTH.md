@@ -2,8 +2,8 @@
 ## SOURCE OF TRUTH AND DOCUMENT AUTHORITY
 
 **Document ID:** GOV-001  
-**Status:** DRAFT — AWAITING OPERATOR APPROVAL  
-**Version:** 0.1  
+**Status:** RATIFIED — KERNEL v4.0 BASELINE by Principal Operator Aditya Vijay Dhange  
+**Version:** 1.0  
 **Purpose:** Establish the rules governing the authority, status and interpretation of documents within Project Sentinel.
 
 ---
@@ -38,17 +38,19 @@ No AI system may independently change a document's authority status.
 
 ### 3. Authority of Sources
 
-Until the operator formally approves a complete authority hierarchy, no general precedence between conflicting historical files shall be assumed.
+The root `GEMINI.md` is the repository's **root source-precedence anchor**. Its Section 7, **Conflict and precedence**, is the controlling index for resolving instruction and record conflicts. This GOV-001 policy is the applicable living-governance layer identified at Level 2 of that hierarchy; it does not displace the hierarchy itself.
 
-Where two or more sources conflict:
+The approved precedence order is:
 
-1. Identify the conflicting statements.
-2. Record the exact source documents and relevant passages.
-3. Explain the nature and implications of the conflict.
-4. Identify what evidence or decision would resolve it.
-5. Escalate the matter to the operator.
+1. **Explicit current Principal Operator instruction**, within applicable safety and platform limits.
+2. **Applicable living governance policy** in `01_Governance_Rules/`.
+3. **Ratified Kernel v4.0 invariants and canonical specifications** in `00_Control_Plane_v4.0/`.
+4. **Task-specific instructions and artifacts** within the authorized task pack.
+5. **Historical or archived material**, which is context only and never overrides active authority.
 
-Do not silently merge, overwrite or discard conflicting material.
+Where two active authoritative sources conflict, do not silently choose, merge, or synthesize a new rule. Identify the exact conflicting provisions and source locations, preserve both references, halt the affected action, and request the required Principal Operator governance disposition. Historical or archived material cannot override an active source merely because it is older, newer, more detailed, or described as canonical.
+
+Any future change to the hierarchy requires an explicit Principal Operator decision and a controlled revision of `GEMINI.md` and this policy.
 
 ### 4. AI System Restrictions
 
@@ -89,13 +91,20 @@ AI recommendations are advisory until explicitly approved.
 
 GitHub storage, upload, editing or revision history does not itself constitute architectural approval.
 
-### 7. Current Limitation
+### 7. Current Authority
 
-This document establishes provisional migration safeguards only.
+This document is ratified as part of the Kernel v4.0 governance baseline. It establishes the living-governance rules for document status, source conflicts, preservation, and operator approval, subject to the root precedence anchor in `GEMINI.md`.
 
-It does not independently establish the final Sentinel authority hierarchy, execution policy, verification protocol or release policy.
+Ratification does not establish that every repository document is approved, that every historical claim is verified, or that host-platform permissions and enforcement exist. Each document retains its own recorded status, and capability claims must be grounded in actual host evidence.
 
-Those matters require separate review and approval.
+## 8. Ratification and approval record
+
+- **Decision:** RATIFIED — KERNEL v4.0 BASELINE.
+- **Approving authority:** Principal Operator Aditya Vijay Dhange.
+- **Decision date:** 2026-11-12.
+- **Scope:** GOV-001, Version 1.0, including the root source-precedence anchor and the hierarchy stated in Section 3.
+- **Traceability:** Explicit Principal Operator instruction issued for the repository remediation on branch `fix/governance-and-ci-reconciliation`; this branch and its resulting pull request preserve the implementation record.
+- **Conditions:** None beyond the safety, platform, verification, and explicit Level D boundaries stated in this policy.
 
 ---
 
