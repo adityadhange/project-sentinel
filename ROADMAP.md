@@ -183,7 +183,7 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Initialize work-package states from compiler output, distinguishing topological order from actual READY eligibility.
 - Release dependants only when all prerequisites are recorded COMPLETED; propagate failure/blocking downstream while preserving independent branches.
 - Persist task state and transition reasons within the task-pack boundary; report unknown/indeterminate state rather than infer persistence.
-- Update the v4.0 Manager working draft with the compiler-to-state lifecycle contract, while preserving its DRAFT status and existing authority boundaries.
+- The compiler-to-state lifecycle contract was added to the Manager specification in PR #30. The Principal Operator has now ratified the complete Manager v4.0 specification through the governance and CI reconciliation proposal; no runtime activation or host enforcement is implied.
 - Keep READY separate from authorization; preserve role/capability checks, WIP-1, Verifier, Level D and Principal Operator gates.
 - No runtime activation, automatic dispatch, permission changes, canonical governance ratification or production claim.
 - Execute focused tests and record exact results; tests are authored but have not yet been run.
