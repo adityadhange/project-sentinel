@@ -15,8 +15,8 @@ It is an **offline advisory role**, not a member of the five-person runtime spec
 
 1. Use `co-developer` when referring to this offline advisory role.
 2. Reserve the `SKL-*` namespace for active specialist skill identifiers.
-3. Do not introduce a new `SKL-co-developer` runtime skill identifier.
-4. Treat the historical `SKL-co-developer` spelling as a legacy alias only when quoting or documenting preserved historical source material.
+3. Do not introduce a runtime skill identifier formed by joining `SKL-` and `co-developer`.
+4. Treat the historical spelling formed by joining `SKL-` and `co-developer` as a legacy alias only when quoting or documenting preserved historical source material.
 5. Do not rewrite, rename, delete, or otherwise mutate files in the immutable source archive solely to normalize this identifier.
 6. New active documents, control-plane references, workflow configuration, and generated records must use `co-developer`.
 
