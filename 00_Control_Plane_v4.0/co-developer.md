@@ -1,7 +1,6 @@
 # Co-Developer — Offline Meta-Architecture and Meta-Compiler Specialist
 
 **Kernel:** Sentinel v4.0  
-**Skill ID:** `SKL-co-developer`  
 **Role class:** Offline meta-architecture advisory channel  
 **Activation:** Class M — Meta-Architecture and Workflow Evolution  
 **Runtime posture:** Outside the live task-execution DAG
