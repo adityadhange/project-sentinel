@@ -1,7 +1,8 @@
-name: Kernel Core Promotion Preflight (Read-Only)
+# HISTORICAL / ARCHIVED - Kernel v4.0 migration complete
+# Retained for historical reference only. Manual dispatch is intentionally disabled.
+name: HISTORICAL — Kernel Core Promotion Preflight (Retired)
 
-on:
-  workflow_dispatch:
+on: {}
 
 permissions:
   contents: read
