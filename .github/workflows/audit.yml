@@ -22,7 +22,6 @@ jobs:
 
       - name: Run Sentinel Deep Audit
         run: |
-          python - << 'EOF'
           import os
           import re
           import hashlib
@@ -54,11 +53,11 @@ jobs:
 
           def clean_stem(name):
               # Strip chained Markdown extensions/duplicate markers, e.g. .md(1).md.
-              n = re.sub(r'(?:\.md|\(\d+\))+
+              n = re.sub(r'(?:\.md|\(\d+\))+$', '', name, flags=re.IGNORECASE)
+              return re.sub(r'[\s_\-\(\)]+', '', n).lower()
 
           root = Path('.')
           ignored_dirs = {'.git', '.github'}
-
           all_files = [
               f for f in root.rglob('*')
               if f.is_file() and not any(part in ignored_dirs for part in f.parts)
@@ -82,7 +81,6 @@ jobs:
               h = get_sha256(f)
               size_kb = round(f.stat().st_size / 1024, 2)
               chars, lines, preview = get_file_stats(f)
-
               file_info = {
                   'path': rel_path,
                   'name': f.name,
@@ -92,88 +90,52 @@ jobs:
                   'hash': h,
                   'preview': preview
               }
-
               if h:
                   hash_map[h].append(file_info)
+              family_map[clean_stem(f.name)].append(file_info)
 
-              stem = clean_stem(f.name)
-              family_map[stem].append(file_info)
+              if re.search(r'(?:\.md|\(\d+\)){2,}$', f.name, re.IGNORECASE):
+                  extension_glitches.append(rel_path)
+                  if '02_Archive_Legacy' not in f.parts:
+                      active_naming_violations.append(f"file: {rel_path}")
 
-              if re.search(r'(?:\.md|\(\d+\)){2,}
-
-          # 1. Exact 100% Bit-for-Bit Duplicates (Same Hash)
           exact_duplicates = [group for group in hash_map.values() if len(group) > 1]
-
-          # 2. Name Collisions with CONTENT DIVERGENCE (Same Base Name, Different Hash)
           divergent_families = []
-          for stem, group in family_map.items():
+          for group in family_map.values():
               if len(group) > 1:
-                  unique_hashes = set(item['hash'] for item in group if item['hash'])
+                  unique_hashes = {item['hash'] for item in group if item['hash']}
                   if len(unique_hashes) > 1:
                       divergent_families.append(group)
 
           summary_path = os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md')
           with open(summary_path, 'w', encoding='utf-8') as out:
-              out.write("# 🛡️ Project Sentinel — Precision Audit Report\n\n")
+              out.write("# Project Sentinel — Precision Audit Report\n\n")
               out.write(f"- **Total Files Scanned:** {len(all_files)}\n")
-              out.write(f"- **100% Bit-for-Bit Exact Duplicates:** {len(exact_duplicates)} groups\n")
-              out.write(f"- **Divergent Version Families (Same Name, DIFFERENT Content):** {len(divergent_families)} groups\n")
-              out.write(f"- **Naming / Sync Artifacts Detected (chained Markdown extensions):** {len(extension_glitches)}\n")
+              out.write(f"- **Exact Duplicate Groups:** {len(exact_duplicates)}\n")
+              out.write(f"- **Divergent Version Families:** {len(divergent_families)}\n")
+              out.write(f"- **Chained Markdown Extension Artifacts:** {len(extension_glitches)}\n")
               out.write(f"- **Active Naming Violations:** {len(active_naming_violations)}\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 1. 🗑️ 100% Bit-for-Bit Identical Files (Safe to Deduplicate)\n")
-              out.write("> **Guaranteed:** These files have **identical cryptographic SHA-256 hashes**. Their contents are 100% the same.\n\n")
-
-              if exact_duplicates:
-                  for idx, group in enumerate(exact_duplicates, 1):
-                      primary = group[0]
-                      out.write(f"### Group {idx} (Size: {primary['size_kb']} KB | Lines: {primary['lines']})\n")
-                      out.write(f"**Canonical Candidate:** `{primary['path']}`\n\n")
-                      out.write("**Identical Copies:**\n")
-                      for duplicate in group[1:]:
-                          out.write(f"- `{duplicate['path']}`\n")
-                      out.write("\n")
-              else:
-                  out.write("No exact bit-for-bit duplicate files found.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 2. ⚠️ Content Divergence Families (DO NOT DELETE WITHOUT REVIEW)\n")
-              out.write("> **Critical Warning:** These files share similar or identical base names, but **THEIR CONTENT DIFFERS**. They represent different Kernel versions, invariant updates, or edited working drafts.\n\n")
-
-              if divergent_families:
-                  for idx, group in enumerate(divergent_families, 1):
-                      out.write(f"### Family {idx}: `{group[0]['name']}` ({len(group)} divergent versions)\n")
-                      out.write("| File Path | Size (KB) | Lines | Hash (First 8) |\n")
-                      out.write("| :--- | :--- | :--- | :--- |\n")
-                      for item in group:
-                          short_hash = item['hash'][:8] if item['hash'] else "N/A"
-                          out.write(f"| `{item['path']}` | {item['size_kb']} | {item['lines']} | `{short_hash}` |\n")
-
-                      # Measure pairwise text difference between the first two if text
-                      if len(group) >= 2 and group[0]['preview'] and group[1]['preview']:
-                          ratio = round(difflib.SequenceMatcher(None, group[0]['preview'], group[1]['preview']).ratio() * 100, 1)
-                          out.write(f"\n*Estimated content overlap between first two variants: **{ratio}%***\n\n")
-              else:
-                  out.write("No divergent naming collisions detected.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 3. 🏷️ Drive Sync Artifacts (`.md.md`, `(1).md`)\n")
-              if extension_glitches:
-                  out.write("These filenames have Google Drive sync or double-extension glitches:\n\n")
-                  for p in extension_glitches[:50]:
-                      out.write(f"- `{p}`\n")
-                  if len(extension_glitches) > 50:
-                      out.write(f"\n*...and {len(extension_glitches) - 50} more.*\n")
-              else:
-                  out.write("No extension glitches found.\n")
-
-              out.write("\n## 4. Active Directory / File Naming Gate\n")
+              out.write("## Active Directory / File Naming Gate\n")
               if active_naming_violations:
                   for violation in active_naming_violations:
                       out.write(f"- {violation}\n")
               else:
                   out.write("No active-directory naming violations found.\n")
+
+              out.write("\n## Exact Duplicate Groups\n")
+              for index, group in enumerate(exact_duplicates, 1):
+                  out.write(f"### Group {index}\n")
+                  for item in group:
+                      out.write(f"- {item['path']}\n")
+
+              out.write("\n## Divergent Version Families\n")
+              for index, group in enumerate(divergent_families, 1):
+                  out.write(f"### Family {index}: {group[0]['name']}\n")
+                  for item in group:
+                      out.write(f"- {item['path']} ({item['size_kb']} KB)\n")
+                  if len(group) >= 2 and group[0]['preview'] and group[1]['preview']:
+                      ratio = round(difflib.SequenceMatcher(None, group[0]['preview'], group[1]['preview']).ratio() * 100, 1)
+                      out.write(f"- Preview overlap of first two: {ratio}%\n")
 
           if active_naming_violations:
               print("ERROR: active-directory naming violations detected:")
@@ -181,292 +143,3 @@ jobs:
                   print(f" - {violation}")
               raise SystemExit(1)
           print("Active-directory naming gate passed.")
-          EOF
-, '', name, flags=re.IGNORECASE)
-              n = re.sub(r'[\s_\-\(\)]+', '', n).lower()
-              return n
-
-          root = Path('.')
-          ignored_dirs = {'.git', '.github'}
-
-          all_files = [
-              f for f in root.rglob('*')
-              if f.is_file() and not any(part in ignored_dirs for part in f.parts)
-          ]
-
-          hash_map = defaultdict(list)
-          family_map = defaultdict(list)
-          extension_glitches = []
-
-          for f in all_files:
-              rel_path = str(f)
-              h = get_sha256(f)
-              size_kb = round(f.stat().st_size / 1024, 2)
-              chars, lines, preview = get_file_stats(f)
-
-              file_info = {
-                  'path': rel_path,
-                  'name': f.name,
-                  'size_kb': size_kb,
-                  'lines': lines,
-                  'chars': chars,
-                  'hash': h,
-                  'preview': preview
-              }
-
-              if h:
-                  hash_map[h].append(file_info)
-
-              stem = clean_stem(f.name)
-              family_map[stem].append(file_info)
-
-              if re.search(r'(\.md\.md|\(\d+\)\.md|\.md\(\d+\))', f.name, re.IGNORECASE):
-                  extension_glitches.append(rel_path)
-
-          # 1. Exact 100% Bit-for-Bit Duplicates (Same Hash)
-          exact_duplicates = [group for group in hash_map.values() if len(group) > 1]
-
-          # 2. Name Collisions with CONTENT DIVERGENCE (Same Base Name, Different Hash)
-          divergent_families = []
-          for stem, group in family_map.items():
-              if len(group) > 1:
-                  unique_hashes = set(item['hash'] for item in group if item['hash'])
-                  if len(unique_hashes) > 1:
-                      divergent_families.append(group)
-
-          summary_path = os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md')
-          with open(summary_path, 'w', encoding='utf-8') as out:
-              out.write("# 🛡️ Project Sentinel — Precision Audit Report\n\n")
-              out.write(f"- **Total Files Scanned:** {len(all_files)}\n")
-              out.write(f"- **100% Bit-for-Bit Exact Duplicates:** {len(exact_duplicates)} groups\n")
-              out.write(f"- **Divergent Version Families (Same Name, DIFFERENT Content):** {len(divergent_families)} groups\n")
-              out.write(f"- **Naming / Sync Artifacts Detected (`.md.md`, `(1).md`):** {len(extension_glitches)}\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 1. 🗑️ 100% Bit-for-Bit Identical Files (Safe to Deduplicate)\n")
-              out.write("> **Guaranteed:** These files have **identical cryptographic SHA-256 hashes**. Their contents are 100% the same.\n\n")
-
-              if exact_duplicates:
-                  for idx, group in enumerate(exact_duplicates, 1):
-                      primary = group[0]
-                      out.write(f"### Group {idx} (Size: {primary['size_kb']} KB | Lines: {primary['lines']})\n")
-                      out.write(f"**Canonical Candidate:** `{primary['path']}`\n\n")
-                      out.write("**Identical Copies:**\n")
-                      for duplicate in group[1:]:
-                          out.write(f"- `{duplicate['path']}`\n")
-                      out.write("\n")
-              else:
-                  out.write("No exact bit-for-bit duplicate files found.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 2. ⚠️ Content Divergence Families (DO NOT DELETE WITHOUT REVIEW)\n")
-              out.write("> **Critical Warning:** These files share similar or identical base names, but **THEIR CONTENT DIFFERS**. They represent different Kernel versions, invariant updates, or edited working drafts.\n\n")
-
-              if divergent_families:
-                  for idx, group in enumerate(divergent_families, 1):
-                      out.write(f"### Family {idx}: `{group[0]['name']}` ({len(group)} divergent versions)\n")
-                      out.write("| File Path | Size (KB) | Lines | Hash (First 8) |\n")
-                      out.write("| :--- | :--- | :--- | :--- |\n")
-                      for item in group:
-                          short_hash = item['hash'][:8] if item['hash'] else "N/A"
-                          out.write(f"| `{item['path']}` | {item['size_kb']} | {item['lines']} | `{short_hash}` |\n")
-
-                      # Measure pairwise text difference between the first two if text
-                      if len(group) >= 2 and group[0]['preview'] and group[1]['preview']:
-                          ratio = round(difflib.SequenceMatcher(None, group[0]['preview'], group[1]['preview']).ratio() * 100, 1)
-                          out.write(f"\n*Estimated content overlap between first two variants: **{ratio}%***\n\n")
-              else:
-                  out.write("No divergent naming collisions detected.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 3. 🏷️ Drive Sync Artifacts (`.md.md`, `(1).md`)\n")
-              if extension_glitches:
-                  out.write("These filenames have Google Drive sync or double-extension glitches:\n\n")
-                  for p in extension_glitches[:50]:
-                      out.write(f"- `{p}`\n")
-                  if len(extension_glitches) > 50:
-                      out.write(f"\n*...and {len(extension_glitches) - 50} more.*\n")
-              else:
-                  out.write("No extension glitches found.\n")
-
-          EOF
-, f.name, re.IGNORECASE):
-                  extension_glitches.append(rel_path)
-                  if '02_Archive_Legacy' not in f.parts:
-                      active_naming_violations.append(f"file: {rel_path}")
-
-          # 1. Exact 100% Bit-for-Bit Duplicates (Same Hash)
-          exact_duplicates = [group for group in hash_map.values() if len(group) > 1]
-
-          # 2. Name Collisions with CONTENT DIVERGENCE (Same Base Name, Different Hash)
-          divergent_families = []
-          for stem, group in family_map.items():
-              if len(group) > 1:
-                  unique_hashes = set(item['hash'] for item in group if item['hash'])
-                  if len(unique_hashes) > 1:
-                      divergent_families.append(group)
-
-          summary_path = os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md')
-          with open(summary_path, 'w', encoding='utf-8') as out:
-              out.write("# 🛡️ Project Sentinel — Precision Audit Report\n\n")
-              out.write(f"- **Total Files Scanned:** {len(all_files)}\n")
-              out.write(f"- **100% Bit-for-Bit Exact Duplicates:** {len(exact_duplicates)} groups\n")
-              out.write(f"- **Divergent Version Families (Same Name, DIFFERENT Content):** {len(divergent_families)} groups\n")
-              out.write(f"- **Naming / Sync Artifacts Detected (`.md.md`, `(1).md`):** {len(extension_glitches)}\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 1. 🗑️ 100% Bit-for-Bit Identical Files (Safe to Deduplicate)\n")
-              out.write("> **Guaranteed:** These files have **identical cryptographic SHA-256 hashes**. Their contents are 100% the same.\n\n")
-
-              if exact_duplicates:
-                  for idx, group in enumerate(exact_duplicates, 1):
-                      primary = group[0]
-                      out.write(f"### Group {idx} (Size: {primary['size_kb']} KB | Lines: {primary['lines']})\n")
-                      out.write(f"**Canonical Candidate:** `{primary['path']}`\n\n")
-                      out.write("**Identical Copies:**\n")
-                      for duplicate in group[1:]:
-                          out.write(f"- `{duplicate['path']}`\n")
-                      out.write("\n")
-              else:
-                  out.write("No exact bit-for-bit duplicate files found.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 2. ⚠️ Content Divergence Families (DO NOT DELETE WITHOUT REVIEW)\n")
-              out.write("> **Critical Warning:** These files share similar or identical base names, but **THEIR CONTENT DIFFERS**. They represent different Kernel versions, invariant updates, or edited working drafts.\n\n")
-
-              if divergent_families:
-                  for idx, group in enumerate(divergent_families, 1):
-                      out.write(f"### Family {idx}: `{group[0]['name']}` ({len(group)} divergent versions)\n")
-                      out.write("| File Path | Size (KB) | Lines | Hash (First 8) |\n")
-                      out.write("| :--- | :--- | :--- | :--- |\n")
-                      for item in group:
-                          short_hash = item['hash'][:8] if item['hash'] else "N/A"
-                          out.write(f"| `{item['path']}` | {item['size_kb']} | {item['lines']} | `{short_hash}` |\n")
-
-                      # Measure pairwise text difference between the first two if text
-                      if len(group) >= 2 and group[0]['preview'] and group[1]['preview']:
-                          ratio = round(difflib.SequenceMatcher(None, group[0]['preview'], group[1]['preview']).ratio() * 100, 1)
-                          out.write(f"\n*Estimated content overlap between first two variants: **{ratio}%***\n\n")
-              else:
-                  out.write("No divergent naming collisions detected.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 3. 🏷️ Drive Sync Artifacts (`.md.md`, `(1).md`)\n")
-              if extension_glitches:
-                  out.write("These filenames have Google Drive sync or double-extension glitches:\n\n")
-                  for p in extension_glitches[:50]:
-                      out.write(f"- `{p}`\n")
-                  if len(extension_glitches) > 50:
-                      out.write(f"\n*...and {len(extension_glitches) - 50} more.*\n")
-              else:
-                  out.write("No extension glitches found.\n")
-
-          EOF
-, '', name, flags=re.IGNORECASE)
-              n = re.sub(r'[\s_\-\(\)]+', '', n).lower()
-              return n
-
-          root = Path('.')
-          ignored_dirs = {'.git', '.github'}
-
-          all_files = [
-              f for f in root.rglob('*')
-              if f.is_file() and not any(part in ignored_dirs for part in f.parts)
-          ]
-
-          hash_map = defaultdict(list)
-          family_map = defaultdict(list)
-          extension_glitches = []
-
-          for f in all_files:
-              rel_path = str(f)
-              h = get_sha256(f)
-              size_kb = round(f.stat().st_size / 1024, 2)
-              chars, lines, preview = get_file_stats(f)
-
-              file_info = {
-                  'path': rel_path,
-                  'name': f.name,
-                  'size_kb': size_kb,
-                  'lines': lines,
-                  'chars': chars,
-                  'hash': h,
-                  'preview': preview
-              }
-
-              if h:
-                  hash_map[h].append(file_info)
-
-              stem = clean_stem(f.name)
-              family_map[stem].append(file_info)
-
-              if re.search(r'(\.md\.md|\(\d+\)\.md|\.md\(\d+\))', f.name, re.IGNORECASE):
-                  extension_glitches.append(rel_path)
-
-          # 1. Exact 100% Bit-for-Bit Duplicates (Same Hash)
-          exact_duplicates = [group for group in hash_map.values() if len(group) > 1]
-
-          # 2. Name Collisions with CONTENT DIVERGENCE (Same Base Name, Different Hash)
-          divergent_families = []
-          for stem, group in family_map.items():
-              if len(group) > 1:
-                  unique_hashes = set(item['hash'] for item in group if item['hash'])
-                  if len(unique_hashes) > 1:
-                      divergent_families.append(group)
-
-          summary_path = os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md')
-          with open(summary_path, 'w', encoding='utf-8') as out:
-              out.write("# 🛡️ Project Sentinel — Precision Audit Report\n\n")
-              out.write(f"- **Total Files Scanned:** {len(all_files)}\n")
-              out.write(f"- **100% Bit-for-Bit Exact Duplicates:** {len(exact_duplicates)} groups\n")
-              out.write(f"- **Divergent Version Families (Same Name, DIFFERENT Content):** {len(divergent_families)} groups\n")
-              out.write(f"- **Naming / Sync Artifacts Detected (`.md.md`, `(1).md`):** {len(extension_glitches)}\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 1. 🗑️ 100% Bit-for-Bit Identical Files (Safe to Deduplicate)\n")
-              out.write("> **Guaranteed:** These files have **identical cryptographic SHA-256 hashes**. Their contents are 100% the same.\n\n")
-
-              if exact_duplicates:
-                  for idx, group in enumerate(exact_duplicates, 1):
-                      primary = group[0]
-                      out.write(f"### Group {idx} (Size: {primary['size_kb']} KB | Lines: {primary['lines']})\n")
-                      out.write(f"**Canonical Candidate:** `{primary['path']}`\n\n")
-                      out.write("**Identical Copies:**\n")
-                      for duplicate in group[1:]:
-                          out.write(f"- `{duplicate['path']}`\n")
-                      out.write("\n")
-              else:
-                  out.write("No exact bit-for-bit duplicate files found.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 2. ⚠️ Content Divergence Families (DO NOT DELETE WITHOUT REVIEW)\n")
-              out.write("> **Critical Warning:** These files share similar or identical base names, but **THEIR CONTENT DIFFERS**. They represent different Kernel versions, invariant updates, or edited working drafts.\n\n")
-
-              if divergent_families:
-                  for idx, group in enumerate(divergent_families, 1):
-                      out.write(f"### Family {idx}: `{group[0]['name']}` ({len(group)} divergent versions)\n")
-                      out.write("| File Path | Size (KB) | Lines | Hash (First 8) |\n")
-                      out.write("| :--- | :--- | :--- | :--- |\n")
-                      for item in group:
-                          short_hash = item['hash'][:8] if item['hash'] else "N/A"
-                          out.write(f"| `{item['path']}` | {item['size_kb']} | {item['lines']} | `{short_hash}` |\n")
-
-                      # Measure pairwise text difference between the first two if text
-                      if len(group) >= 2 and group[0]['preview'] and group[1]['preview']:
-                          ratio = round(difflib.SequenceMatcher(None, group[0]['preview'], group[1]['preview']).ratio() * 100, 1)
-                          out.write(f"\n*Estimated content overlap between first two variants: **{ratio}%***\n\n")
-              else:
-                  out.write("No divergent naming collisions detected.\n\n")
-
-              out.write("--- \n\n")
-              out.write("## 3. 🏷️ Drive Sync Artifacts (`.md.md`, `(1).md`)\n")
-              if extension_glitches:
-                  out.write("These filenames have Google Drive sync or double-extension glitches:\n\n")
-                  for p in extension_glitches[:50]:
-                      out.write(f"- `{p}`\n")
-                  if len(extension_glitches) > 50:
-                      out.write(f"\n*...and {len(extension_glitches) - 50} more.*\n")
-              else:
-                  out.write("No extension glitches found.\n")
-
-          EOF
