@@ -140,20 +140,25 @@ class TaskStateManager:
             if not isinstance(item, dict):
                 raise ValueError(f"persisted state for {node_id!r} must be an object")
             status = item.get("status")
-            if status not in WORK_STATES:
+            if not isinstance(status, str) or status not in WORK_STATES:
                 raise ValueError(f"invalid persisted work state for {node_id!r}: {status!r}")
             if item.get("mutating") is not package["mutating"]:
                 raise ValueError(f"persisted mutating flag mismatch for {node_id!r}")
             if item.get("owner") != package["owner"]:
                 raise ValueError(f"persisted owner mismatch for {node_id!r}")
+            if package["mutating"] and status == "IN_PROGRESS":
+                active_mutations.append(node_id)
+        for node_id, package in packages.items():
+            status = states[node_id]["status"]
             if status in {"READY", "IN_PROGRESS", "COMPLETED"}:
-                unmet = [dep for dep in package["depends_on"] if states[dep].get("status") != "COMPLETED"]
+                unmet = [
+                    dep for dep in package["depends_on"]
+                    if states[dep]["status"] != "COMPLETED"
+                ]
                 if unmet:
                     raise ValueError(
                         f"persisted {status} package {node_id!r} has incomplete prerequisites: {', '.join(sorted(unmet))}"
                     )
-            if package["mutating"] and status == "IN_PROGRESS":
-                active_mutations.append(node_id)
         if len(active_mutations) > 1:
             raise WIP1LockError(
                 "persisted state violates WIP-1: multiple mutating packages IN_PROGRESS: "
