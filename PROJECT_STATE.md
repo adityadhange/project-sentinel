@@ -4,8 +4,8 @@
 **Observation date:** 2026-11-13 (UTC)
 **Repository:** `adityadhange/project-sentinel`
 **Default branch:** `main`
-**Verified baseline commit:** `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`
-**Baseline commit:** PR #71 merge — “Propose product-focused Sentinel MVP scope”
+**Verified baseline commit:** `5189509082bf90cf9f60a37385ca77feb3ac9c72`
+**Baseline commit:** PR #72 merge — “docs: refresh PROJECT_STATE after PR #71”
 **Snapshot publication:** Proposed through this branch; Draft PR to be opened for Principal Operator review
 **Authority:** Continuity snapshot only. This file does not grant permissions, ratify policy, or authorize execution.
 
@@ -13,19 +13,20 @@
 
 ## 1. Verified repository baseline
 
-- **Observed:** The default branch is `main` at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`, observed on 2026-11-13 UTC.
-- **Observed:** The baseline is the merge commit for PR [#71](https://github.com/adityadhange/project-sentinel/pull/71), which added the proposed `SENTINEL_MVP_SCOPE_PROPOSAL_v1.0.md`.
-- **Observed:** PR [#64](https://github.com/adityadhange/project-sentinel/pull/64) is merged at `11bb2f8711731dac31ca2996b18ae5c05f0cbc56`; its prior project-state refresh is now superseded by PR #71.
-- **Observed:** PR [#71](https://github.com/adityadhange/project-sentinel/pull/71) is merged, and no other repository pull request was open during this refresh.
-- **Observed:** The current main commit has successful Task Pack CI run [43286682340](https://github.com/adityadhange/project-sentinel/actions/runs/43286682340) and successful co-developer identifier consistency audit run [43286682381](https://github.com/adityadhange/project-sentinel/actions/runs/43286682381).
+- **Observed:** The default branch is `main` at `5189509082bf90cf9f60a37385ca77feb3ac9c72`, observed on 2026-11-13 UTC.
+- **Observed:** PR [#72](https://github.com/adityadhange/project-sentinel/pull/72) merged the preceding project-state refresh at this baseline.
+- **Observed:** PR [#71](https://github.com/adityadhange/project-sentinel/pull/71) merged the proposed MVP scope at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`.
+- **Observed:** No repository pull requests were open during this refresh.
+- **Observed:** Current-main Task Pack CI run [43290908623](https://github.com/adityadhange/project-sentinel/actions/runs/43290908623) completed successfully and ran `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
+- **Observed:** Current-main co-developer identifier audit run [43290908720](https://github.com/adityadhange/project-sentinel/actions/runs/43290908720) completed successfully.
 - **Scope limitation:** A successful merge or CI run establishes repository/automation evidence for the recorded scope; it does not establish independent semantic verification, production runtime activation, host permission enforcement, or operational capability beyond the checks actually run.
 
 ## 2. Current pull-request and issue evidence
 
 - **Open pull requests:** None observed during this refresh.
-- **Open issue [#26](https://github.com/adityadhange/project-sentinel/issues/26):** This continuity snapshot refresh; this change is intended to satisfy its file-level refresh objective, subject to Principal Operator review and merge.
-- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** Broader reconciliation of the roadmap, task-pack state files, and append-only handoff log. That work is separate and is not performed by this single-file refresh.
-- **Other open work:** Issues [#65](https://github.com/adityadhange/project-sentinel/issues/65), [#66](https://github.com/adityadhange/project-sentinel/issues/66), [#68](https://github.com/adityadhange/project-sentinel/issues/68), [#69](https://github.com/adityadhange/project-sentinel/issues/69), and [#70](https://github.com/adityadhange/project-sentinel/issues/70) remain open, along with the existing governance/reconciliation issues [#32–#37](https://github.com/adityadhange/project-sentinel/issues/32), [#52–#54](https://github.com/adityadhange/project-sentinel/issues/52), [#12](https://github.com/adityadhange/project-sentinel/issues/12), and [#14](https://github.com/adityadhange/project-sentinel/issues/14). Their open state is not evidence that work has been claimed, started, or completed.
+- **Continuity records:** `ROADMAP.md`, `Task_Packs/SNT-010/STATE.md`, `Task_Packs/SNT-011/STATE.md`, and `HANDOFF_LOG.md` are reconciled to this baseline by the issue #67 change proposed from this branch.
+- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** This documentation-only reconciliation; review and merge remain pending.
+- **Other open work:** Issues [#65](https://github.com/adityadhange/project-sentinel/issues/65), [#66](https://github.com/adityadhange/project-sentinel/issues/66), [#68](https://github.com/adityadhange/project-sentinel/issues/68), [#69](https://github.com/adityadhange/project-sentinel/issues/69), [#70](https://github.com/adityadhange/project-sentinel/issues/70), [#32–#37](https://github.com/adityadhange/project-sentinel/issues/32), [#52–#54](https://github.com/adityadhange/project-sentinel/issues/52), [#12](https://github.com/adityadhange/project-sentinel/issues/12), and [#14](https://github.com/adityadhange/project-sentinel/issues/14) remain open. Their open state is not evidence that work has been claimed, started, or completed.
 
 ## 3. Canonical architecture and authority boundaries
 
@@ -57,18 +58,16 @@ Do not promote a capability merely because its specification exists, code has me
 | Item | Current evidence-backed status | Boundary |
 |---|---|---|
 | Kernel v4.0 control-plane and specialist specifications | Present in `00_Control_Plane_v4.0/` | Documentation presence does not establish host activation or enforcement |
-| SNT-010/SNT-011 reference task-pack work | Present on `main`; current-main Task Pack CI completed successfully | Reference-layer evidence does not establish production dispatch or permission enforcement |
-| Product-focused MVP boundary | Proposed in `SENTINEL_MVP_SCOPE_PROPOSAL_v1.0.md`, merged through PR #71 | The proposal remains subject to operator review/acceptance; it does not authorize implementation or deployment |
-| Level D approval binding | Reference-layer task/work-package binding is present from PR #63 | Atomic consumption, replay protection, host permissions, and end-to-end enforcement remain unproven |
+| SNT-010 deterministic DAG compiler | Merged in PR #27; covered by the successful current-main Task Pack CI run | Isolated reference prototype; no production wiring or runtime activation |
+| SNT-011 intake and lifecycle integration | Merged in PR #30; task/work-package binding strengthened by PR #63; covered by the successful current-main Task Pack CI run | Reference implementation; no host permission enforcement or production dispatch |
+| Product-focused MVP boundary | Proposed in `SENTINEL_MVP_SCOPE_PROPOSAL_v1.0.md`, merged through PR #71 | The proposal does not authorize implementation or deployment |
 | Repository-wide validation | Current recorded CI includes Task Pack CI and the co-developer identifier audit | Broader validation and trigger coverage remain tracked by issue #65 |
 
-## 5. Known stale or separately scoped continuity records
+## 5. Known limitations and separately scoped work
 
-The following are recorded as discrepancies or separate work, not silently corrected by this file:
-
-1. `ROADMAP.md` and `Task_Packs/SNT-011/STATE.md` contain continuity statements that require reconciliation against the current merged state and CI evidence.
-2. `HANDOFF_LOG.md` requires an append-only update for the intervening merged work.
-3. The above three records are explicitly within issue [#67](https://github.com/adityadhange/project-sentinel/issues/67); this issue #26 change updates only `PROJECT_STATE.md`.
+1. The successful Task Pack CI run establishes that the named pytest suites executed successfully; it does not establish independent semantic verification or production operation.
+2. The SNT-010 and SNT-011 task-pack state files describe reviewable reference artifacts, not activated runtime capabilities.
+3. Broader validation, runtime enforcement, independent read-back, and production activation remain tracked by separate issues and are not silently promoted by this documentation update.
 4. Historical statements retained below this section remain historical and are not rewritten to appear current.
 
 ## 6. Archive and deferred-work boundaries
@@ -82,16 +81,15 @@ The following are recorded as discrepancies or separate work, not silently corre
 
 **This snapshot refresh is submitted for Principal Operator review as a Draft PR.**
 
-- Review the exact `PROJECT_STATE.md` diff against the live `main` baseline recorded above.
-- Merge only if the Principal Operator accepts the snapshot.
-- Keep issue #26 open until the review/merge disposition is complete.
-- Continue the broader roadmap, task-pack, and handoff reconciliation through issue #67 rather than treating this file as evidence that those records are already synchronized.
+- Review the exact diff against the live `main` baseline recorded above.
+- Merge only if the Principal Operator accepts the reconciliation.
+- Keep issue #67 open until the review/merge disposition is complete.
 - No additional repository changes are authorized by this snapshot alone.
 
 ---
 
-**Refresh source:** GitHub `main`, baseline `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`; PRs #64 and #71; current-main Task Pack CI run `43286682340`; current-main co-developer identifier audit run `43286682381`; current open issue and pull-request records observed on 2026-11-13 UTC.
-**Prepared as:** A single-file continuity refresh on `docs/refresh-project-state-live-baseline-20261113`.
+**Refresh source:** GitHub `main`, baseline `5189509082bf90cf9f60a37385ca77feb3ac9c72`; PRs #27, #30, #63, #71, and #72; current-main Task Pack CI run `43290908623`; current-main co-developer identifier audit run `43290908720`; current open issue and pull-request records observed on 2026-11-13 UTC.
+**Prepared as:** A multi-record continuity reconciliation on `docs/reconcile-continuity-records-20261113`.
 **Approval status:** DRAFT — AWAITING PRINCIPAL OPERATOR REVIEW AND MERGE.
 
 ## Previous snapshot — retained historical record
