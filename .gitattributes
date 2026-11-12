@@ -1,4 +1,5 @@
-# Keep legacy Word binaries and their embedded media/fonts out of GitHub source ZIP exports.
+# No DOCX files are currently tracked. Keep these protective rules if an explicitly
+# authorized DOCX source-of-record is introduced in a future reviewable change.
 99_Legacy_DOCX_Binaries/** export-ignore
 *.docx export-ignore
 

@@ -1,11 +1,13 @@
-name: Verify DOCX segregation
+name: Verify DOCX repository disposition
 
 on:
   push:
     paths:
+      - "**/*.docx"
       - "99_Legacy_DOCX_Binaries/**"
       - ".gitattributes"
       - ".github/workflows/verify-docx-segregation.yml"
+      - ".github/workflows/convert-docx-to-md.yml"
   workflow_dispatch:
 
 permissions:
@@ -19,28 +21,32 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify preserved inventory and archive exclusion
+      - name: Verify documented DOCX absence and export disposition
         shell: bash
         run: |
           set -euo pipefail
 
-          archived_count=$(find 99_Legacy_DOCX_Binaries -type f -iname '*.docx' | wc -l | tr -d ' ')
-          outside_count=$(find . -path './.git' -prune -o -path './99_Legacy_DOCX_Binaries' -prune -o -type f -iname '*.docx' -print | wc -l | tr -d ' ')
+          if [[ -d 99_Legacy_DOCX_Binaries ]]; then
+            echo "ERROR: 99_Legacy_DOCX_Binaries exists, but no authorized DOCX source-of-record is currently established. Do not restore, relocate, or delete files through this workflow."
+            exit 1
+          fi
 
-          test "$archived_count" -eq 130
-          test "$outside_count" -eq 0
+          mapfile -d '' tracked_docx < <(git ls-files -z -- '*.docx')
+          if (( ${#tracked_docx[@]} != 0 )); then
+            echo "ERROR: DOCX files are tracked without an approved source-of-record disposition:"
+            printf '  %s\n' "${tracked_docx[@]}"
+            exit 1
+          fi
+
           grep -qxF '99_Legacy_DOCX_Binaries/** export-ignore' .gitattributes
           grep -qxF '*.docx export-ignore' .gitattributes
 
           archive=$(mktemp --suffix=.tar)
           trap 'rm -f "$archive"' EXIT
           git archive --format=tar HEAD > "$archive"
-
-          # Git may retain the empty top-level directory entry; no files or nested
-          # directory entries from the excluded archive may appear in the export.
-          if tar -tf "$archive" | grep -E '(^|/)99_Legacy_DOCX_Binaries/.+|\.docx$'; then
-            echo "ERROR: DOCX archive contents were not excluded"
+          if tar -tf "$archive" | grep -E '(^|/)99_Legacy_DOCX_Binaries(/|$)|\.docx$'; then
+            echo "ERROR: DOCX files or the retired archive root appear in the Git export."
             exit 1
           fi
 
-          echo "PASS: $archived_count DOCX preserved; none outside archive; no DOCX/archive contents in Git archive."
+          echo "PASS: no DOCX files are tracked, the retired archive root is absent, and the protective export-ignore rules remain present."

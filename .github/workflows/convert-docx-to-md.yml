@@ -1,10 +1,12 @@
-name: RETIRED - DOCX conversion (preserve originals)
+name: RETIRED - DOCX conversion (no source files tracked)
 
 on:
   workflow_dispatch:
 
 # Retired because the previous workflow deleted source DOCX files after conversion.
-# Originals are now preserved under 99_Legacy_DOCX_Binaries/.
+# The downloaded legacy DOCX binaries were explicitly removed from this repository
+# by commit 4b24eea on 2026-11-12. Their preservation status outside this repository
+# is unverified. Do not restore, delete, relocate, or convert DOCX files here.
 permissions:
   contents: read
 
@@ -13,4 +15,4 @@ jobs:
     if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "This workflow is retired. DOCX originals are preserved; do not delete them."
+      - run: echo "This workflow is retired. No DOCX source-of-record is currently tracked."
