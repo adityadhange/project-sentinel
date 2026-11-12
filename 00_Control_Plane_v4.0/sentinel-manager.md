@@ -325,4 +325,4 @@ The four epistemic tags defined in Preamble §2 are mandatory on every material 
 
 This specification was prepared against the v4.0 normalized DPR, v4.0 shared governance contract, v4.0 capability-permissions matrix, the historical v3.6 Manager, DPR, Verifier and guardrail sources, and the approved Manager reconciliation dispositions.
 
-See [MANAGER-RECONCILIATION-RECORD.md](../02%20-%20MIGRATION%20%26%20RECONCILIATION/03%20-%20Duplicate%20%26%20Version%20Reconciliation/MANAGER-RECONCILIATION-RECORD.md) for source provenance, behavioural findings, open issues and disposition mapping.
+See [MANAGER-RECONCILIATION-RECORD.md](../02_Archive_Legacy/migration_reconciliation_archive/03%20-%20Duplicate%20%26%20Version%20Reconciliation/MANAGER-RECONCILIATION-RECORD.md) for source provenance, behavioural findings, open issues and disposition mapping.
