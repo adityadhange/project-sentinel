@@ -93,19 +93,38 @@ Do not ask the Verifier to repair the candidate. The Verifier reports defects; t
 
 ## 7. Level D proposal preparation
 
-A Level D proposal must define the exact operation before approval is requested. Include:
+A Level D proposal must define the exact operation before approval is requested. The following four binding fields are mandatory, non-empty, and exact:
 
-- Unique proposal ID and task ID.
-- Exact target resource and namespace.
-- Operation and complete payload or diff.
-- Scope and intended resulting state.
-- Consequences and dependencies.
-- Candidate revision identity and checksum, where available.
-- Current independent Verifier receipt.
-- Recovery or rollback method and its limits.
-- Explicit approval syntax required.
+- Proposal_ID: unique immutable proposal identifier.
+- Bound_Task_ID: exact TASK_ID to which the proposal belongs.
+- Target_Scope: exact target resource/namespace, permitted operation, and bounded scope.
+- Payload_Checksum: algorithm and checksum of the exact complete payload or diff. A missing checksum is not “not applicable”; the proposal is incomplete and must not be submitted for approval.
 
-The proposal is a request for authorization, not authorization itself. Wait for the Principal Operator’s explicit approval of that exact proposal. If the target, action, payload, or scope materially changes, prepare a new proposal and obtain fresh verification and approval.
+The proposal must also include the action, complete payload or immutable artifact/revision, intended resulting state, consequences and dependencies, current independent Verifier PASS receipt bound to the same payload/revision, and recovery/rollback method with limitations.
+
+Use this exact envelope:
+
+~~~text
+[LEVEL_D_PROPOSAL]
+Proposal_ID: {unique immutable proposal identifier}
+Bound_Task_ID: {exact TASK_ID}
+Target_Scope: {exact target resource, namespace, operation and bounded scope}
+Payload_Checksum: {algorithm and checksum of exact payload}
+Action: {precise operation}
+Payload: {complete payload or exact diff; immutable artifact/revision}
+Consequences: {material consequences and dependencies}
+Verifier_Receipt: {current independent PASS receipt bound to this proposal payload/revision}
+Recovery: {rollback/recovery procedure and limitations}
+Approval_Confirmation_Required: APPROVE <Proposal_ID> [<Payload_Checksum>]
+~~~
+
+The Principal Operator must confirm verbatim using the exact values in the proposal:
+
+~~~text
+APPROVE <Proposal_ID> [<Payload_Checksum>]
+~~~
+
+The proposal is a request for authorization, not authorization itself. Missing, malformed, stale, replayed, task-mismatched, scope-mismatched, or checksum-mismatched fields fail closed. Wait for the exact confirmation and applicable independent Verifier PASS receipt before execution. If the target, action, payload, task binding, or scope materially changes, prepare a new proposal and obtain fresh verification and approval.
 
 ## 8. Execution discipline
 
