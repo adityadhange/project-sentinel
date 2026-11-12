@@ -4,6 +4,6 @@
   "private": true,
   "description": "Project Sentinel Architecture, Governance, and Control Plane Specifications",
   "scripts": {
-    "audit:structure": "node -e \"const fs = require('fs'); const req = ['GEMINI.md', '00_Control_Plane_v4.0/sentinel-manager.md', '01_Governance_Rules/SOURCE_OF_TRUTH.md']; req.forEach(f => { if(!fs.existsSync(f)) { console.error('Missing: ' + f); process.exit(1); } }); console.log('Control plane structure intact.');\""
+    "audit:structure": "node scripts/audit-structure.js"
   }
 }
