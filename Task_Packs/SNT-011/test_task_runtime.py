@@ -54,6 +54,50 @@ class IntakeStateTests(unittest.TestCase):
         state.start("mutate", approval_record=record, approval_request=request)
         self.assertEqual(state.states["mutate"]["status"], "IN_PROGRESS")
 
+    def test_mutating_start_rejects_approval_not_bound_to_active_task_and_package(self):
+        base = {
+            "task_id": "TASK-BOUND",
+            "proposal_id": "PROP-BOUND",
+            "target": "work-package:mutate",
+            "scope": {"work_package": "mutate"},
+            "action": "overwrite",
+            "payload_revision": "rev-1",
+            "payload_digest": hashlib.sha256(b"bound-payload").hexdigest(),
+            "digest_algorithm": "sha256",
+            "expected_state": {"revision": "rev-1"},
+            "rollback_path": "restore-rev-0",
+            "verification_receipt_id": "REC-BOUND",
+            "verification_receipt_revision": "rev-1",
+        }
+        invalid_bindings = (
+            ("task_id", "OTHER-TASK", "active intake task"),
+            ("target", "work-package:other", "active work package"),
+            ("scope", {"work_package": "other"}, "active work package"),
+        )
+        for field, value, message in invalid_bindings:
+            with self.subTest(field=field):
+                state = TaskStateManager({
+                    "task_id": "TASK-BOUND",
+                    "payload": "mutation",
+                    "work_packages": [{"id": "mutate", "depends_on": [], "mutating": True}],
+                })
+                fields = dict(base)
+                fields[field] = value
+                record = ApprovalRecord(
+                    approval_id="APR-BOUND",
+                    authority_id="principal-operator",
+                    issued_at="2020-01-01T00:00:00Z",
+                    **fields,
+                )
+                request = ApprovalRequest(
+                    **fields,
+                    payload_bytes=b"bound-payload",
+                    verification_result="PASS",
+                )
+                with self.assertRaisesRegex(ValueError, message):
+                    state.start("mutate", approval_record=record, approval_request=request)
+                self.assertEqual(state.states["mutate"]["status"], "READY")
+
     def test_wip1_rejects_second_concurrent_mutating_package(self):
         data = {
             "task_id": "TASK-WIP1", "payload": "two mutations",
