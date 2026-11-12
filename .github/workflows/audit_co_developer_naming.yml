@@ -7,6 +7,10 @@ on:
       - '**/*.txt'
       - '**/*.yml'
       - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.toml'
+      - '**/*.py'
+      - '**/*.sh'
       - '.github/workflows/audit_co_developer_naming.yml'
   pull_request:
     paths:
@@ -14,6 +18,10 @@ on:
       - '**/*.txt'
       - '**/*.yml'
       - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.toml'
+      - '**/*.py'
+      - '**/*.sh'
       - '.github/workflows/audit_co_developer_naming.yml'
   workflow_dispatch:
 
@@ -43,7 +51,7 @@ jobs:
 
           legacy = "SKL-" + "co-developer"
           canonical = "co-developer"
-          archive_prefix = "01 - SOURCE ARCHIVE/"
+          archive_prefix = "02_Archive_Legacy/"
           extensions = {".md", ".txt", ".yml", ".yaml", ".json", ".toml", ".py", ".sh"}
           tracked = subprocess.check_output(
               ["git", "ls-files", "-z"], text=True

@@ -99,7 +99,9 @@ The Verifier supplies an evidence-based receipt; it does not grant human approva
 
 ## 9. Post-mutation read-back
 
-After an authorized persistent mutation, independently retrieve the resulting target state using only an authorized read-only capability. Compare the observed state with the approved expected state and record a separate post-mutation receipt.
+After an authorized persistent mutation, independently retrieve the resulting target state using an authorized read-only capability **where the host tooling actually exposes that capability**. Autonomous host-level post-mutation read-back is active only on supported host surfaces; the Verifier must establish that the retrieval capability exists and is authorized rather than infer it from this specification. Compare the observed state with the approved expected state and record a separate post-mutation receipt.
+
+**Unsupported-host fallback:** Where authorized independent host-level read-back is unavailable, the Verifier must perform deterministic checksum confirmation of the exact expected mutation payload before Level D proposal issuance. Record the checksum algorithm, exact payload/revision identity, computed digest, and comparison result. This is a pre-mutation payload-integrity check only: it does not observe the target after mutation and is not independent post-mutation read-back. Mark target-state read-back as `[READBACK: UNAVAILABLE]` / `INDETERMINATE`; do not issue a PASS post-mutation receipt or claim that the actual target state was independently confirmed. If the expected payload checksum cannot be computed and matched, do not issue a PASS receipt or advance the Level D proposal.
 
 The receipt identifies the proposal, target, approved expected state, observed actual state, retrieval method, comparison scope, result, and timestamp. Use:
 

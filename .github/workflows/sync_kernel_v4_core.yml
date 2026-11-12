@@ -26,22 +26,22 @@ jobs:
           # These are the source mappings used by the former automated sync.
           # This preflight never copies files or writes to the repository.
           mappings = [
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/01-sentinel-manager-v3.6.0.md',
-               '00_Sentinel_Control_Plane/sentinel-manager.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/07-verifier-records-officer-v3.6.0.md',
-               '00_Sentinel_Control_Plane/verifier-officer.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md',
-               '00_Sentinel_Control_Plane/RUL-Shared_Governance_Contract.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1)(2).md',
-               '00_Sentinel_Control_Plane/RUL-Capability_Permissions_Matrix.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/06-assembly-operator-v3.6.0.md',
-               '01_Execution_Subsystem/operator.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/04-researcher-v3.6.0.md',
-               '01_Execution_Subsystem/researcher.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/05_critical-analyst (Kernel v3.5.0 Ratified)(4).md',
-               '01_Execution_Subsystem/critical-analyst.md'),
-              ('01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.6/08_co-developer (Kernel v3.6.0 Ratified).md(1).md',
-               '05_System_Evolution/co-developer.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/01-sentinel-manager-v3.6.0.md',
+               '00_Control_Plane_v4.0/sentinel-manager.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/07-verifier-records-officer-v3.6.0.md',
+               '00_Control_Plane_v4.0/verifier-officer.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md',
+               '00_Control_Plane_v4.0/RUL-Shared_Governance_Contract.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1).md',
+               '00_Control_Plane_v4.0/RUL-Capability_Permissions_Matrix.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/06-assembly-operator-v3.6.0.md',
+               '00_Control_Plane_v4.0/operator.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/04-researcher-v3.6.0.md',
+               '00_Control_Plane_v4.0/researcher.md'),
+              ('02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_critical-analyst (Kernel v3.5.0 Ratified).md',
+               '00_Control_Plane_v4.0/critical-analyst.md'),
+              ('02_Archive_Legacy/v3.6_transition_source/08_co-developer (Kernel v3.6.0 Ratified).md(1).md',
+               '00_Control_Plane_v4.0/co-developer.md'),
           ]
 
           results = []

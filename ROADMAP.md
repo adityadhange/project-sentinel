@@ -1,11 +1,11 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
 **Document status:** ACTIVE — Principal Operator-approved coordination register  
-**Version:** 1.8  
-**Last refreshed:** 2026-11-11  
+**Version:** 1.9  
+**Last refreshed:** 2026-11-12  
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
-**Baseline observed before this update:** `fc2c895c8e579be99e8333ca1d3903581bd75c3b`  
+**Baseline observed before this update:** `b6713f48eaa06cddc5059497b340ef08b4628635`  
 **Historical baseline at initial roadmap creation:** `4ffd9172dca5551fb30c7dafde3541d44767167f`  
 **Purpose:** One authoritative queue for project work, with one accountable AI owner per active task.
 
@@ -101,7 +101,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 
 ## 3. Roadmap and task register
 
-**Assignment state:** Claude (`SNT-004`) and Microsoft Copilot (`SNT-008`) remain on operator hold. Gemini recovery (`SNT-009`) is parked by the Principal Operator's 2026-11-11 direction to focus on Sentinel core progress. SNT-010 was merged to `main` in PR #27. SNT-011's integration implementation and Manager working-draft contract were merged into the SNT-010 staging branch via PR #29; PR #30 is required to bring those changes into `main`.
+**Assignment state:** Claude (`SNT-004`) and Microsoft Copilot (`SNT-008`) remain on operator hold. Gemini recovery (`SNT-009`) is parked by the Principal Operator's 2026-11-11 direction to focus on Sentinel core progress. SNT-010 was merged to `main` in PR #27. SNT-011's integration implementation was brought into `main` by PR #30 (merged 2026-11-11); PRs #44–47 subsequently established the current Kernel v4.0 directory, specialist, and root Gemini control-plane baseline.
 
 | ID | Priority | Task | Proposed owner | Status | Depends on |
 |---|---|---|---|---|---|
@@ -115,7 +115,7 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-008` | P1 | Microsoft Copilot roadmap intelligence and task-coordination recommendations. | Microsoft Copilot | BLOCKED — OPERATOR HOLD | Operator decision to resume; direct GitHub access unavailable |
 | `SNT-009` | P1 | Restore reliable, zero-cost Gemini Plan Only operation: pin a free-tier-capable stable model and CLI version, add actionable failure classification, then perform one controlled live test. Do not alter the Phase 2 execution workflow. | ChatGPT | BLOCKED — OPERATOR HOLD (PARKED) | Resume only on a new operator instruction; no paid API or secret changes |
 | `SNT-010` | P1 | Build a bounded, executable Sentinel task-pack prototype for deterministic DAG compilation: identify cycle components, block downstream dependants, and preserve independent runnable branches. No production wiring or workflow changes. | ChatGPT | REVIEW — merged to main via PR #27; tests not yet executed | None; isolated prototype only |
-| `SNT-011` | P1 | Connect structured task intake and persistent work-package lifecycle state to the SNT-010 dependency compiler; preserve Sentinel authority and Optimus execution boundaries. No production activation or permission changes. | ChatGPT | REVIEW — merged to SNT-010 staging branch via PR #29; PR #30 to main pending; tests not executed | SNT-010 merged to main |
+| `SNT-011` | P1 | Connect structured task intake and persistent work-package lifecycle state to the SNT-010 dependency compiler; preserve Sentinel authority and Optimus execution boundaries. No production activation or permission changes. | ChatGPT | REVIEW — integration merged to `main` via PR #30; tests not yet evidenced as executed | SNT-010 merged to main |
 
 
 
@@ -183,11 +183,11 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Initialize work-package states from compiler output, distinguishing topological order from actual READY eligibility.
 - Release dependants only when all prerequisites are recorded COMPLETED; propagate failure/blocking downstream while preserving independent branches.
 - Persist task state and transition reasons within the task-pack boundary; report unknown/indeterminate state rather than infer persistence.
-- Update the v4.0 Manager working draft with the compiler-to-state lifecycle contract, while preserving its DRAFT status and existing authority boundaries.
+- The compiler-to-state lifecycle contract was added to the Manager specification in PR #30. The Principal Operator has now ratified the complete Manager v4.0 specification through the governance and CI reconciliation proposal; no runtime activation or host enforcement is implied.
 - Keep READY separate from authorization; preserve role/capability checks, WIP-1, Verifier, Level D and Principal Operator gates.
 - No runtime activation, automatic dispatch, permission changes, canonical governance ratification or production claim.
 - Execute focused tests and record exact results; tests are authored but have not yet been run.
-- Merge the staged integration and Manager specification changes into `main` through PR #30 before treating the work as present on the default branch.
+- PR #30 merged the staged integration and Manager lifecycle specification into `main`. This confirms repository presence only; it does not imply runtime activation, permission enforcement, or test completion.
 
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
@@ -231,7 +231,7 @@ This table is the live lock register. A task may have only one active owner.
 
 | Task ID | Owner | Status | Claimed at | Scope lock / handover |
 |---|---|---|---|---|
-| `SNT-011` | ChatGPT | ACTIVE | 2026-11-11 — resumed after SNT-010 merge | Intake/state integration and Manager lifecycle contract; PR #30 to main pending |
+| — | — | NONE | — | No active ownership lock. SNT-011's integration is present on `main` via merged PR #30; further work requires a new explicit task claim. |
 
 When a task becomes active, replace the `None` row with one row for that task. Do not create multiple active owners for the same task.
 
@@ -264,6 +264,8 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - Keep task scopes bounded. Split a task only when necessary, with distinct non-overlapping IDs and dependencies.
 
 ### Change log
+
+- **2026-11-12 — v1.9:** Reconciled the live `main` baseline at `b6713f48eaa06cddc5059497b340ef08b4628635`; recorded PR #30 and PRs #44–47 as merged; released the stale SNT-011 active ownership lock while retaining its review/test status; identified the ratified Kernel v4.0 control-plane baseline. No runtime activation or test completion is inferred.
 
 - **2026-11-11 — v1.0:** Initial roadmap and exclusive task-ownership protocol. Baseline refreshed after PR #19 merge. Proposed assignments are not accepted claims; no task is active.
 - **2026-11-11 — v1.1:** Added `SNT-008` for Microsoft Copilot’s zero-cost manual Mode M peer review. The task is `READY`, not active; no owner claim or repository access is implied.
