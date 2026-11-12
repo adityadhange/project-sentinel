@@ -1,8 +1,10 @@
+import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
-from task_runtime import TaskStateManager, prepare_intake
+from task_runtime import TaskStateManager, WIP1LockError, prepare_intake
 from approval_acceptance import ApprovalRecord, ApprovalRequest
 
 
@@ -39,7 +41,8 @@ class IntakeStateTests(unittest.TestCase):
         fields = {
             "task_id": "TASK-001", "proposal_id": "PROP-001", "target": "target.md",
             "scope": {"path": "target.md"}, "action": "overwrite", "payload_revision": "rev-1",
-            "payload_digest": "digest-1", "expected_state": {"revision": "rev-1"},
+            "payload_digest": hashlib.sha256(b"runtime-payload").hexdigest(),
+            "digest_algorithm": "sha256", "expected_state": {"revision": "rev-1"},
             "rollback_path": "restore-rev-0", "verification_receipt_id": "REC-001",
             "verification_receipt_revision": "rev-1",
         }
@@ -47,9 +50,69 @@ class IntakeStateTests(unittest.TestCase):
             approval_id="APR-001", authority_id="principal-operator",
             issued_at="2020-01-01T00:00:00Z", **fields,
         )
-        request = ApprovalRequest(**fields, verification_result="PASS")
+        request = ApprovalRequest(**fields, payload_bytes=b"runtime-payload", verification_result="PASS")
         state.start("mutate", approval_record=record, approval_request=request)
         self.assertEqual(state.states["mutate"]["status"], "IN_PROGRESS")
+
+    def test_wip1_rejects_second_concurrent_mutating_package(self):
+        data = {
+            "task_id": "TASK-WIP1", "payload": "two mutations",
+            "work_packages": [
+                {"id": "mutate-a", "depends_on": [], "mutating": True},
+                {"id": "mutate-b", "depends_on": [], "mutating": True},
+            ],
+        }
+        state = TaskStateManager(data)
+        fields = {
+            "task_id": "TASK-WIP1", "proposal_id": "PROP-WIP1", "target": "target.bin",
+            "scope": {"path": "target.bin"}, "action": "overwrite",
+            "payload_revision": "rev-1",
+            "payload_digest": hashlib.sha256(b"runtime-payload").hexdigest(),
+            "digest_algorithm": "sha256", "expected_state": {"revision": "rev-1"},
+            "rollback_path": "restore", "verification_receipt_id": "REC-WIP1",
+            "verification_receipt_revision": "rev-1",
+        }
+        record = ApprovalRecord(
+            approval_id="APR-WIP1", authority_id="principal-operator",
+            issued_at="2020-01-01T00:00:00Z", **fields,
+        )
+        request = ApprovalRequest(**fields, payload_bytes=b"runtime-payload", verification_result="PASS")
+        state.start("mutate-a", approval_record=record, approval_request=request)
+        with self.assertRaises(WIP1LockError):
+            state.start("mutate-b", approval_record=record, approval_request=request)
+        self.assertEqual(state.states["mutate-b"]["status"], "READY")
+
+    def test_level_d_package_requires_approval_even_when_mutating_flag_is_false(self):
+        data = {
+            "task_id": "TASK-LEVEL-D", "payload": "level d",
+            "work_packages": [
+                {"id": "level-d", "depends_on": [], "mutating": False, "level_d_required": True},
+            ],
+        }
+        state = TaskStateManager(data)
+        with self.assertRaisesRegex(ValueError, "requires an explicit approval"):
+            state.start("level-d")
+        self.assertEqual(state.states["level-d"]["status"], "READY")
+
+    def test_load_rejects_invalid_persisted_work_state(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            TaskStateManager(manifest(), path)
+            data = json.loads(path.read_text(encoding="utf-8"))
+            data["states"]["research"]["status"] = "RUNNING"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "invalid persisted work state"):
+                TaskStateManager.load(path)
+
+    def test_load_rejects_persisted_ready_state_with_incomplete_prerequisite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            TaskStateManager(manifest(), path)
+            data = json.loads(path.read_text(encoding="utf-8"))
+            data["states"]["analysis"]["status"] = "READY"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "incomplete prerequisites"):
+                TaskStateManager.load(path)
 
     def test_intake_compiles_and_initializes_ready_vs_pending(self):
         state = TaskStateManager(manifest())

@@ -55,6 +55,7 @@ class ApprovalRecord:
     verification_receipt_revision: str
     issued_at: str
     expires_at: str | None = None
+    digest_algorithm: str = "sha256"
     decision: str = "APPROVED"
     lifecycle: str = "UNUSED"
     revoked_at: str | None = None
@@ -69,6 +70,7 @@ class ApprovalRecord:
             "action": self.action,
             "payload_revision": self.payload_revision,
             "payload_digest": self.payload_digest,
+            "digest_algorithm": self.digest_algorithm,
             "expected_state": self.expected_state,
             "rollback_path": self.rollback_path,
             "verification_receipt_id": self.verification_receipt_id,
@@ -92,7 +94,16 @@ class ApprovalRequest:
     rollback_path: str
     verification_receipt_id: str
     verification_receipt_revision: str
-    verification_result: str
+    payload_bytes: bytes
+    verification_result: str = "PENDING"
+    digest_algorithm: str = "sha256"
+
+    def computed_payload_digest(self) -> str:
+        if self.digest_algorithm != "sha256":
+            raise ValueError(f"unsupported digest algorithm: {self.digest_algorithm}")
+        if not isinstance(self.payload_bytes, bytes):
+            raise TypeError("payload_bytes must be bytes")
+        return hashlib.sha256(self.payload_bytes).hexdigest()
 
     def binding_fields(self) -> dict[str, Any]:
         return {
@@ -103,6 +114,7 @@ class ApprovalRequest:
             "action": self.action,
             "payload_revision": self.payload_revision,
             "payload_digest": self.payload_digest,
+            "digest_algorithm": self.digest_algorithm,
             "expected_state": self.expected_state,
             "rollback_path": self.rollback_path,
             "verification_receipt_id": self.verification_receipt_id,
@@ -144,6 +156,15 @@ def validate_approval(
         reasons.append("APPROVAL_NOT_VERIFIED")
     if request.verification_result != "PASS":
         reasons.append("APPROVAL_NOT_VERIFIED")
+    try:
+        actual_digest = request.computed_payload_digest()
+    except (TypeError, ValueError):
+        actual_digest = None
+        reasons.append("APPROVAL_UNSUPPORTED")
+    if actual_digest is not None and actual_digest != request.payload_digest:
+        reasons.append("APPROVAL_MISMATCH")
+    if record.digest_algorithm != "sha256" or request.digest_algorithm != "sha256":
+        reasons.append("APPROVAL_UNSUPPORTED")
     if record.binding_fields() != request.binding_fields():
         reasons.append("APPROVAL_MISMATCH")
 
@@ -174,7 +195,7 @@ class DeliverableSubmission:
     producer_id: str
     coordinator_id: str
     verifier_id: str
-    verification_result: str
+    verification_result: str = "PENDING"
     present_fields: frozenset[str] = frozenset()
     evidence_refs: frozenset[str] = frozenset()
     approval: ApprovalRecord | None = None

@@ -8,6 +8,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import tempfile
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
@@ -28,6 +29,10 @@ compile_dag = _load_compiler()
 
 WORK_STATES = {"PENDING", "READY", "IN_PROGRESS", "BLOCKED", "COMPLETED", "FAILED", "CANCELLED"}
 TERMINAL_STATES = {"COMPLETED", "FAILED", "CANCELLED"}
+
+
+class WIP1LockError(RuntimeError):
+    """Raised when a second mutating work package attempts to acquire WIP-1."""
 
 
 def prepare_intake(manifest: dict[str, Any]) -> dict[str, Any]:
@@ -63,15 +68,19 @@ def prepare_intake(manifest: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"depends_on for {node_id!r} must be a list")
         owner = item.get("owner")
         mutating = item.get("mutating", False)
+        level_d_required = item.get("level_d_required", False)
         if owner is not None and (not isinstance(owner, str) or not owner.strip()):
             raise ValueError(f"owner for {node_id!r} must be a non-empty string when supplied")
         if not isinstance(mutating, bool):
             raise ValueError(f"mutating for {node_id!r} must be a boolean")
+        if not isinstance(level_d_required, bool):
+            raise ValueError(f"level_d_required for {node_id!r} must be a boolean")
         normalized[node_id] = {
             "id": node_id,
             "depends_on": deps,
             "owner": owner,
             "mutating": mutating,
+            "level_d_required": level_d_required,
         }
 
     graph = {node_id: item["depends_on"] for node_id, item in normalized.items()}
@@ -116,10 +125,46 @@ class TaskStateManager:
     def load(cls, path: str | Path) -> "TaskStateManager":
         path = Path(path)
         data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict) or not isinstance(data.get("manifest"), dict):
+            raise ValueError("persisted state must contain a valid manifest")
         instance = cls.__new__(cls)
         instance.intake = prepare_intake(data["manifest"])
         instance.state_path = path
-        instance.states = data["states"]
+        states = data.get("states")
+        packages = instance.intake["work_packages"]
+        if not isinstance(states, dict) or set(states) != set(packages):
+            raise ValueError("persisted states must exactly match the manifest work packages")
+        active_mutations = []
+        for node_id, package in packages.items():
+            item = states[node_id]
+            if not isinstance(item, dict):
+                raise ValueError(f"persisted state for {node_id!r} must be an object")
+            status = item.get("status")
+            if not isinstance(status, str) or status not in WORK_STATES:
+                raise ValueError(f"invalid persisted work state for {node_id!r}: {status!r}")
+            if item.get("mutating") is not package["mutating"]:
+                raise ValueError(f"persisted mutating flag mismatch for {node_id!r}")
+            if item.get("owner") != package["owner"]:
+                raise ValueError(f"persisted owner mismatch for {node_id!r}")
+            if package["mutating"] and status == "IN_PROGRESS":
+                active_mutations.append(node_id)
+        for node_id, package in packages.items():
+            status = states[node_id]["status"]
+            if status in {"READY", "IN_PROGRESS", "COMPLETED"}:
+                unmet = [
+                    dep for dep in package["depends_on"]
+                    if states[dep]["status"] != "COMPLETED"
+                ]
+                if unmet:
+                    raise ValueError(
+                        f"persisted {status} package {node_id!r} has incomplete prerequisites: {', '.join(sorted(unmet))}"
+                    )
+        if len(active_mutations) > 1:
+            raise WIP1LockError(
+                "persisted state violates WIP-1: multiple mutating packages IN_PROGRESS: "
+                + ", ".join(sorted(active_mutations))
+            )
+        instance.states = states
         instance._refresh()
         return instance
 
@@ -150,9 +195,24 @@ class TaskStateManager:
             "states": self.states,
             "task_status": self.task_status,
         }
-        temporary = self.state_path.with_suffix(self.state_path.suffix + ".tmp")
-        temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        os.replace(temporary, self.state_path)
+        temporary_path = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=self.state_path.parent,
+                prefix=f".{self.state_path.name}.",
+                suffix=".tmp",
+                delete=False,
+            ) as temporary:
+                temporary.write(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+                temporary.flush()
+                os.fsync(temporary.fileno())
+                temporary_path = Path(temporary.name)
+            os.replace(temporary_path, self.state_path)
+        finally:
+            if temporary_path is not None and temporary_path.exists():
+                temporary_path.unlink()
 
     def snapshot(self) -> dict[str, Any]:
         return {
@@ -179,6 +239,16 @@ class TaskStateManager:
         if item["status"] != "READY":
             raise ValueError(f"{node_id!r} is not READY (current state: {item['status']})")
         if item["mutating"]:
+            active_mutations = [
+                other_id for other_id, other in self.states.items()
+                if other_id != node_id and other["mutating"] and other["status"] == "IN_PROGRESS"
+            ]
+            if active_mutations:
+                raise WIP1LockError(
+                    f"WIP-1 lock held by mutating package(s): {', '.join(sorted(active_mutations))}"
+                )
+        package = self.intake["work_packages"][node_id]
+        if item["mutating"] or package["level_d_required"]:
             if approval_record is None or approval_request is None:
                 raise ValueError(
                     f"{node_id!r} is mutating and requires an explicit approval record and verification request"
@@ -192,7 +262,7 @@ class TaskStateManager:
                 raise ValueError(
                     f"{node_id!r} approval validation failed closed: {', '.join(reasons)}"
                 )
-        unmet = [dep for dep in self.intake["work_packages"][node_id]["depends_on"]
+        unmet = [dep for dep in package["depends_on"]
                  if self.states[dep]["status"] != "COMPLETED"]
         if unmet:
             raise ValueError(f"{node_id!r} has incomplete prerequisites: {', '.join(sorted(unmet))}")
