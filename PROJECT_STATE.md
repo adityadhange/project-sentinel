@@ -4,29 +4,29 @@
 **Observation date:** 2026-11-13 (UTC)
 **Repository:** `adityadhange/project-sentinel`
 **Default branch:** `main`
-**Verified baseline commit:** `5189509082bf90cf9f60a37385ca77feb3ac9c72`
-**Baseline commit:** PR #72 merge — “docs: refresh PROJECT_STATE after PR #71”
-**Snapshot publication:** Proposed through this branch; Draft PR to be opened for Principal Operator review
+**Verified baseline commit:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
+**Baseline commit:** PR #74 merge — “ci: reconcile DOCX repository disposition”
+**Snapshot publication:** Follow-up continuity reconciliation proposed through a Draft PR for issue #67; Principal Operator review and merge remain pending
 **Authority:** Continuity snapshot only. This file does not grant permissions, ratify policy, or authorize execution.
 
 > This section records the live GitHub state observed for this refresh. The historical snapshot below is retained for provenance and must not be treated as current where it conflicts with this section. The repository may advance after this observation; refresh GitHub before relying on it later.
 
 ## 1. Verified repository baseline
 
-- **Observed:** The default branch is `main` at `5189509082bf90cf9f60a37385ca77feb3ac9c72`, observed on 2026-11-13 UTC.
-- **Observed:** PR [#72](https://github.com/adityadhange/project-sentinel/pull/72) merged the preceding project-state refresh at this baseline.
+- **Observed:** The default branch is `main` at `c5f8cc81c001157e983f054a292b929ad0e392f9`, observed on 2026-11-13 UTC immediately before this follow-up reconciliation.
+- **Observed:** PR [#73](https://github.com/adityadhange/project-sentinel/pull/73) merged the first continuity-record reconciliation at `2bc3ec563ebb5fc3370b027cbc51397288a8853b`; PR [#74](https://github.com/adityadhange/project-sentinel/pull/74) then merged at this baseline (`c5f8cc81c001157e983f054a292b929ad0e392f9`).
 - **Observed:** PR [#71](https://github.com/adityadhange/project-sentinel/pull/71) merged the proposed MVP scope at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`.
-- **Observed:** No repository pull requests were open during this refresh.
-- **Observed:** Current-main Task Pack CI run [43290908623](https://github.com/adityadhange/project-sentinel/actions/runs/43290908623) completed successfully and ran `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
-- **Observed:** Current-main co-developer identifier audit run [43290908720](https://github.com/adityadhange/project-sentinel/actions/runs/43290908720) completed successfully.
+- **Observed:** No repository pull requests were open at this observed baseline.
+- **Observed:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) completed successfully and ran `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
+- **Observed:** Observed-main co-developer identifier audit run [43293248664](https://github.com/adityadhange/project-sentinel/actions/runs/43293248664), DOCX disposition run [43293248578](https://github.com/adityadhange/project-sentinel/actions/runs/43293248578), and XLSX segregation run [43293248591](https://github.com/adityadhange/project-sentinel/actions/runs/43293248591) completed successfully.
 - **Scope limitation:** A successful merge or CI run establishes repository/automation evidence for the recorded scope; it does not establish independent semantic verification, production runtime activation, host permission enforcement, or operational capability beyond the checks actually run.
 
 ## 2. Current pull-request and issue evidence
 
 - **Open pull requests:** None observed during this refresh.
-- **Continuity records:** `ROADMAP.md`, `Task_Packs/SNT-010/STATE.md`, `Task_Packs/SNT-011/STATE.md`, and `HANDOFF_LOG.md` are reconciled to this baseline by the issue #67 change proposed from this branch.
-- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** This documentation-only reconciliation; review and merge remain pending.
-- **Other open work:** Issues [#65](https://github.com/adityadhange/project-sentinel/issues/65), [#66](https://github.com/adityadhange/project-sentinel/issues/66), [#68](https://github.com/adityadhange/project-sentinel/issues/68), [#69](https://github.com/adityadhange/project-sentinel/issues/69), [#70](https://github.com/adityadhange/project-sentinel/issues/70), [#32–#37](https://github.com/adityadhange/project-sentinel/issues/32), [#52–#54](https://github.com/adityadhange/project-sentinel/issues/52), [#12](https://github.com/adityadhange/project-sentinel/issues/12), and [#14](https://github.com/adityadhange/project-sentinel/issues/14) remain open. Their open state is not evidence that work has been claimed, started, or completed.
+- **Continuity records:** `ROADMAP.md`, `Task_Packs/SNT-010/STATE.md`, `Task_Packs/SNT-011/STATE.md`, and `HANDOFF_LOG.md` are updated to this observed baseline by the follow-up issue #67 reconciliation proposed from this branch. PR #73's earlier merge is not treated as completion of this follow-up.
+- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** Final follow-up to reconcile the records with the post-PR-74 baseline and explain the pre-merge/self-reference boundary; this Draft PR requires Principal Operator review and merge.
+- **Other open work:** Issues [#12](https://github.com/adityadhange/project-sentinel/issues/12), [#14](https://github.com/adityadhange/project-sentinel/issues/14), [#28](https://github.com/adityadhange/project-sentinel/issues/28), [#32–#37](https://github.com/adityadhange/project-sentinel/issues/32), [#52–#54](https://github.com/adityadhange/project-sentinel/issues/52), and [#65–#70](https://github.com/adityadhange/project-sentinel/issues/65) remain open at the observed baseline. Their open state is not evidence that work has been claimed, started, or completed. Their open state is not evidence that work has been claimed, started, or completed.
 
 ## 3. Canonical architecture and authority boundaries
 
@@ -79,17 +79,17 @@ Do not promote a capability merely because its specification exists, code has me
 
 ## 7. Current disposition and next authorized action
 
-**This snapshot refresh is submitted for Principal Operator review as a Draft PR.**
+**This follow-up snapshot refresh is submitted for Principal Operator review as a Draft PR addressing issue #67.**
 
 - Review the exact diff against the live `main` baseline recorded above.
 - Merge only if the Principal Operator accepts the reconciliation.
-- Keep issue #67 open until the review/merge disposition is complete.
+- Keep issue #67 open until the Principal Operator has reviewed and merged the follow-up PR and the acceptance criteria have been checked.
 - No additional repository changes are authorized by this snapshot alone.
 
 ---
 
-**Refresh source:** GitHub `main`, baseline `5189509082bf90cf9f60a37385ca77feb3ac9c72`; PRs #27, #30, #63, #71, and #72; current-main Task Pack CI run `43290908623`; current-main co-developer identifier audit run `43290908720`; current open issue and pull-request records observed on 2026-11-13 UTC.
-**Prepared as:** A multi-record continuity reconciliation on `docs/reconcile-continuity-records-20261113`.
+**Refresh source:** GitHub `main`, baseline `c5f8cc81c001157e983f054a292b929ad0e392f9`; PRs #73 and #74; observed-main Task Pack CI run `43293248622`, identifier audit `43293248664`, DOCX disposition `43293248578`, and XLSX segregation `43293248591`; current open issue and pull-request records observed on 2026-11-13 UTC.
+**Prepared as:** A follow-up multi-record continuity reconciliation on `docs/finalize-issue-67-continuity-20261113`.
 **Approval status:** DRAFT — AWAITING PRINCIPAL OPERATOR REVIEW AND MERGE.
 
 ## Previous snapshot — retained historical record

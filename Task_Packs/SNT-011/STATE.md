@@ -8,8 +8,8 @@
 - **Scope:** Intake validation, DAG invocation, initial state derivation, lifecycle transitions, persistence, readiness/block propagation, v4.0 Manager working-draft contract update
 - **Completed:** Integration adapter, state manager, Manager working-draft lifecycle contract, documentation, focused unit tests, and task/work-package approval binding added through PR #63
 - **Merge commit:** `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`
-- **Observed main baseline:** `5189509082bf90cf9f60a37385ca77feb3ac9c72`
-- **Test evidence:** Current-main Task Pack CI run [43290908623](https://github.com/adityadhange/project-sentinel/actions/runs/43290908623) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
+- **Observed main baseline:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
+- **Test evidence:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
 - **Not included:** Runtime skill activation, agent dispatch, permissions, WIP-1 enforcement, Level D host enforcement, canonical governance ratification, or production activation
 - **Next action:** Principal Operator review of the merged reference implementation; any runtime wiring or host enforcement requires separate authorization and evidence.
 - **Known limitations:** The reference implementation does not authenticate the approving human, enforce host permissions, provide atomic replay protection across all execution paths, or establish independent post-mutation read-back. Successful CI is not production evidence.
