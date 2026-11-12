@@ -48,6 +48,7 @@ The task-level derived status is `ACTIVE` when any package is READY or IN_PROGRE
 - Optimus specialists execute only work packages assigned to them.
 - This module records a Manager-authorized start; it does not authenticate the caller or enforce a platform permission.
 - READY means dependency-eligible, not automatically authorized. Scope, owner, WIP-1, capability, evidence and governance checks remain mandatory.
+- For mutating or Level D starts, the supplied approval request must bind to the active intake `task_id`, the exact `work-package:<id>` target, and `scope.work_package == <id>`; a valid approval for another task or package is rejected before the state transition.
 - Level D approval, verifier receipts, mutation execution and independent read-back remain outside this module and are not bypassed.
 - The module does not dispatch agents, invoke external services, modify canonical skills or alter permissions/workflows.
 - The v4.0 Manager file remains a working draft; this task pack does not ratify it.
