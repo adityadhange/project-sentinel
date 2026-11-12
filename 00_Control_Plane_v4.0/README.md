@@ -2,7 +2,7 @@
 
 **Status:** RATIFIED — KERNEL v4.0
 
-This directory is the active Kernel v4.0 control plane. The Manager and the five specialist-role specifications are active here; none of these active role specifications is awaiting promotion from `02_Archive_Legacy/`.
+This directory is the active Kernel v4.0 control plane. The Manager and the five specialist-role specifications are active here. Their active specifications are maintained in this directory; `02_Archive_Legacy/` contains historical material only.
 
 1. `sentinel-manager.md` — active Sentinel intake, classification, coordination, state tracking, WIP-1 and Level D gatekeeping.
 2. `verifier-officer.md` — active independent evidence, quantitative, acceptance and post-mutation verification contract.
