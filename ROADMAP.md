@@ -1,11 +1,11 @@
 # Project Sentinel — Roadmap and Exclusive Task Register
 
 **Document status:** ACTIVE — Principal Operator-approved coordination register  
-**Version:** 1.9  
-**Last refreshed:** 2026-11-12  
+**Version:** 2.0
+**Last refreshed:** 2026-11-13
 **Repository:** `adityadhange/project-sentinel`  
 **Default branch:** `main`  
-**Baseline observed before this update:** `b6713f48eaa06cddc5059497b340ef08b4628635`  
+**Baseline observed before this update:** `5189509082bf90cf9f60a37385ca77feb3ac9c72`
 **Historical baseline at initial roadmap creation:** `4ffd9172dca5551fb30c7dafde3541d44767167f`  
 **Purpose:** One authoritative queue for project work, with one accountable AI owner per active task.
 
@@ -86,14 +86,14 @@ A reviewer checks the evidence. The Principal Operator determines acceptance.
 
 Observed immediately before this roadmap update:
 
-- `main` head: `7e8d1863559d11dc1e028c177a26de68565e0d12` (refreshed 2026-11-11). 
-- The initial roadmap baseline `4ffd9172dca5551fb30c7dafde3541d44767167f` is historical; it is not the current repository head.
-- PR #19 has been merged. It reconciles the Verifier read-back proposal and the MAPCA free-first access addendum, including the Gemini execution workflow's Mode W classification.
-- PR #16 was merged in commit `4ae036bedd342a1527c57de57161c065608104b2`; it adds an Anthropic API-dependent Claude workflow requiring `ANTHROPIC_API_KEY`. This is not required for Claude Free. No secret presence, workflow execution, or paid API use is inferred from the merge.
-- The current `PROJECT_STATE.md` is stale relative to the November 10 MAPCA / Verifier work and must not be treated as the current work queue.
-- Gemini Plan Only run logs show an initial workspace-trust failure on the first attempt, followed by HTTP 503 `UNAVAILABLE` and HTTP 429 `RESOURCE_EXHAUSTED` on later attempts. The 429 explicitly identifies the free-tier daily quota for `gemini-3.8-flash` (limit 20 requests/day) as exhausted. This is a quota/service-capacity failure, not evidence of a GitHub permission failure.
-- Later workflow runs marked `skipped` had no job steps, consistent with the issue-comment filter rejecting comments that did not match the owner-authored `@gemini-cli plan:` trigger. They are not counted as Gemini model failures.
-- The Verifier read-back proposal is a design proposal, not evidence that read-back tests have been executed or authorized.
+- `main` head: `5189509082bf90cf9f60a37385ca77feb3ac9c72` (refreshed 2026-11-13 UTC).
+- PR #72 merged the preceding `PROJECT_STATE.md` refresh; this reconciliation updates the snapshot again to the resulting baseline.
+- PR #71 merged the proposed MVP scope at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`; the proposal remains a scope artifact and does not authorize implementation or deployment.
+- PR #27 merged SNT-010 at `fc2c895c8e579be99e8333ca1d3903581bd75c3b`; PR #30 merged SNT-011 at `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`; PR #63 strengthened SNT-011 task/work-package approval binding.
+- Current-main Task Pack CI run `43290908623` completed successfully and executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`. This proves the named CI test run completed successfully, not independent verification or production operation.
+- Current-main co-developer identifier audit run `43290908720` completed successfully.
+- No repository pull requests were open during this refresh. Issue #67 is the active documentation reconciliation represented by this proposed change; its review and merge remain pending.
+- The Verifier read-back proposal remains a design proposal, not evidence that read-back tests have been executed or authorized.
 
 These are dated observations. Refresh GitHub before relying on PR or branch state in a later session.
 
@@ -114,8 +114,8 @@ These are dated observations. Refresh GitHub before relying on PR or branch stat
 | `SNT-007` | P2 | Run the first bounded MAPCA pilot only after peer-review protocol, access modes, and operator gates are accepted. | To be assigned | BACKLOG | SNT-001 through SNT-006 as applicable |
 | `SNT-008` | P1 | Microsoft Copilot roadmap intelligence and task-coordination recommendations. | Microsoft Copilot | BLOCKED — OPERATOR HOLD | Operator decision to resume; direct GitHub access unavailable |
 | `SNT-009` | P1 | Restore reliable, zero-cost Gemini Plan Only operation: pin a free-tier-capable stable model and CLI version, add actionable failure classification, then perform one controlled live test. Do not alter the Phase 2 execution workflow. | ChatGPT | BLOCKED — OPERATOR HOLD (PARKED) | Resume only on a new operator instruction; no paid API or secret changes |
-| `SNT-010` | P1 | Build a bounded, executable Sentinel task-pack prototype for deterministic DAG compilation: identify cycle components, block downstream dependants, and preserve independent runnable branches. No production wiring or workflow changes. | ChatGPT | REVIEW — merged to main via PR #27; tests not yet executed | None; isolated prototype only |
-| `SNT-011` | P1 | Connect structured task intake and persistent work-package lifecycle state to the SNT-010 dependency compiler; preserve Sentinel authority and Optimus execution boundaries. No production activation or permission changes. | ChatGPT | REVIEW — integration merged to `main` via PR #30; tests not yet evidenced as executed | SNT-010 merged to main |
+| `SNT-010` | P1 | Build a bounded, executable Sentinel task-pack prototype for deterministic DAG compilation: identify cycle components, block downstream dependants, and preserve independent runnable branches. No production wiring or workflow changes. | ChatGPT | REVIEW — merged to main via PR #27; current-main Task Pack CI run #43290908623 passed | None; isolated prototype only |
+| `SNT-011` | P1 | Connect structured task intake and persistent work-package lifecycle state to the SNT-010 dependency compiler; preserve Sentinel authority and Optimus execution boundaries. No production activation or permission changes. | ChatGPT | REVIEW — merged to `main` via PR #30; current-main Task Pack CI run #43290908623 passed | SNT-010 merged to main |
 
 
 
@@ -170,13 +170,13 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - Perform one controlled live Plan Only test after the Draft PR is merged. A model/quota failure is recorded as BLOCKED, not hidden or retried in a loop.
 - Record exact run ID, model/CLI versions, result, and any comment posted. No repository writes by Plan Only are permitted.
 
-**SNT-010 — Deterministic DAG compiler prototype (ChatGPT; ACTIVE)**
+**SNT-010 — Deterministic DAG compiler prototype (ChatGPT; REVIEW)**
 - Implement a standard-library Python module under `Task_Packs/SNT-010/` that accepts a node-to-prerequisites map.
 - Report strongly connected cycle components, all cyclic nodes, downstream blocked nodes, and a stable topological order for independent runnable branches.
 - Reject malformed inputs and unknown prerequisite IDs explicitly; never silently remove dependencies.
 - Include a small focused `unittest` suite and a CLI that reads a JSON envelope from stdin.
 - Mark the task-pack artifact as a non-authoritative prototype. Do not wire it into runtime skills, workflows, permissions, or canonical governance documents.
-- Deliver a Draft PR for operator review; no merge or production activation.
+- PR #27 merged the isolated prototype to `main`; current-main Task Pack CI run #43290908623 passed. No production activation or integration is claimed.
 
 **SNT-011 — Task intake and lifecycle integration (ChatGPT; REVIEW — SNT-010 accepted)**
 - Define the Manager's intake manifest and connect it to the single SNT-010 dependency compiler; do not duplicate graph validation or cycle detection.
@@ -186,8 +186,8 @@ Both providers returned `FAILED` for direct private-repository access. Per the P
 - The compiler-to-state lifecycle contract was added to the Manager specification in PR #30. The Principal Operator has now ratified the complete Manager v4.0 specification through the governance and CI reconciliation proposal; no runtime activation or host enforcement is implied.
 - Keep READY separate from authorization; preserve role/capability checks, WIP-1, Verifier, Level D and Principal Operator gates.
 - No runtime activation, automatic dispatch, permission changes, canonical governance ratification or production claim.
-- Execute focused tests and record exact results; tests are authored but have not yet been run.
-- PR #30 merged the staged integration and Manager lifecycle specification into `main`. This confirms repository presence only; it does not imply runtime activation, permission enforcement, or test completion.
+- Current-main Task Pack CI run [43290908623](https://github.com/adityadhange/project-sentinel/actions/runs/43290908623) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully. This is test execution evidence, not independent verification or production evidence.
+- PR #30 merged the staged integration and Manager lifecycle specification into `main`; PR #63 later added task/work-package approval binding. These merges and the successful CI run do not imply runtime activation, host permission enforcement, or production dispatch.
 
 **SNT-006 — Reconciliation**
 - Compare only completed peer reports.
@@ -264,6 +264,7 @@ No handover is complete until the incoming owner explicitly accepts the task.
 - Keep task scopes bounded. Split a task only when necessary, with distinct non-overlapping IDs and dependencies.
 
 ### Change log
+- **2026-11-13 — v2.0:** Reconciled `main` at `5189509082bf90cf9f60a37385ca77feb3ac9c72`; recorded PR #72, PRs #27/#30/#63 evidence, current-main Task Pack CI run `43290908623`, and identifier audit run `43290908720`; corrected SNT-010/SNT-011 review and test status. No runtime activation, host permission enforcement, or independent verification is inferred.
 
 - **2026-11-12 — v1.9:** Reconciled the live `main` baseline at `b6713f48eaa06cddc5059497b340ef08b4628635`; recorded PR #30 and PRs #44–47 as merged; released the stale SNT-011 active ownership lock while retaining its review/test status; identified the ratified Kernel v4.0 control-plane baseline. No runtime activation or test completion is inferred.
 
