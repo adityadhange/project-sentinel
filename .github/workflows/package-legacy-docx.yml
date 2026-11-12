@@ -1,0 +1,42 @@
+name: Package legacy DOCX binaries
+
+on:
+  push:
+    branches:
+      - chore/segregate-legacy-docx
+    paths:
+      - '99_Legacy_DOCX_Binaries/**'
+      - '.github/workflows/package-legacy-docx.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out segregation branch
+        uses: actions/checkout@v4
+        with:
+          ref: chore/segregate-legacy-docx
+
+      - name: Verify and package all archived DOCX files
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=$(find 99_Legacy_DOCX_Binaries -type f -iname '*.docx' | wc -l)
+          echo "Found $count archived DOCX files"
+          test "$count" -eq 130
+          zip -qr legacy-docx-binaries.zip 99_Legacy_DOCX_Binaries/
+          zipped=$(unzip -Z1 legacy-docx-binaries.zip | grep -E '\.docx$' | wc -l)
+          echo "Packaged $zipped DOCX files"
+          test "$zipped" -eq 130
+
+      - name: Upload downloadable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-docx-binaries
+          path: legacy-docx-binaries.zip
+          if-no-files-found: error
+          retention-days: 7
