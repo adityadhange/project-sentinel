@@ -3,7 +3,7 @@
 **Status:** RATIFIED  
 **Scope:** Ratified repository-wide working guidance for AI agents.
 
-`GEMINI.md` is the repository root authority anchor and defines the active control-plane boundaries and precedence. Living governance policies are located in `01_Governance_Rules/`. These instructions are a proposed continuity aid; they do not amend those sources or grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
+`GEMINI.md` is the repository root authority anchor and defines the active control-plane boundaries and precedence. Living governance policies are located in `01_Governance_Rules/`. These instructions are ratified shared working guidance; they do not amend those sources or grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
 
 ## 1. Establish the repository facts before acting
 
