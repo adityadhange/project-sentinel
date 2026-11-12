@@ -25,9 +25,10 @@ Authority must be established through an explicit approval process.
 
 Every document entering the repository must have an identifiable status.
 
-The initial classifications are:
+The controlled status taxonomy is:
 
-- **APPROVED:** Formally accepted by the authorised operator.
+- **RATIFIED:** Formally adopted by an explicit Principal Operator ratification disposition, recorded with scope and traceability; binding within that approved scope.
+- **APPROVED:** Formally accepted by the authorised operator; binding within the approved scope.
 - **UNDER REVIEW:** Being examined; not yet authoritative.
 - **CANDIDATE:** Proposed for adoption or integration.
 - **HISTORICAL:** Retained for reference; not active authority.
@@ -42,11 +43,12 @@ The root `GEMINI.md` is the repository's **root source-precedence anchor**. Its 
 
 The approved precedence order is:
 
+0. **Root authority anchor — `GEMINI.md` (ROOT-GEMINI-001, Version 4.0.0, RATIFIED).** It defines and controls this precedence hierarchy.
 1. **Explicit current Principal Operator instruction**, within applicable safety and platform limits.
-2. **Applicable living governance policy** in `01_Governance_Rules/`.
+2. **Binding living governance policy** in `01_Governance_Rules/`, limited to documents individually marked `RATIFIED` or `APPROVED`; drafts and proposals are non-authoritative.
 3. **Ratified Kernel v4.0 invariants and canonical specifications** in `00_Control_Plane_v4.0/`.
-4. **Task-specific instructions and artifacts** within the authorized task pack.
-5. **Historical or archived material**, which is context only and never overrides active authority.
+4. **Task-specific instructions and artifacts** within the authorized task pack, subordinate to Levels 0–3.
+5. **Historical or archived material** in `02_Archive_Legacy/`, which is context only and never overrides active authority.
 
 Where two active authoritative sources conflict, do not silently choose, merge, or synthesize a new rule. Identify the exact conflicting provisions and source locations, preserve both references, halt the affected action, and request the required Principal Operator governance disposition. Historical or archived material cannot override an active source merely because it is older, newer, more detailed, or described as canonical.
 
@@ -101,6 +103,7 @@ Ratification does not establish that every repository document is approved, that
 
 - **Decision:** RATIFIED — KERNEL v4.0 BASELINE.
 - **Approving authority:** Principal Operator Aditya Vijay Dhange.
+- **Baseline ratification disposition:** The Principal Operator expressly ratified GOV-001 as part of the Kernel v4.0 baseline; this recorded disposition is the source of its RATIFIED status and binding scope.
 - **Decision date:** 2026-11-12.
 - **Scope:** GOV-001, Version 1.0, including the root source-precedence anchor and the hierarchy stated in Section 3.
 - **Traceability:** Explicit Principal Operator instruction issued for the repository remediation on branch `fix/governance-and-ci-reconciliation`; this branch and its resulting pull request preserve the implementation record.

@@ -1,5 +1,7 @@
 # Researcher — Primary Evidence and Source-Routing Specialist
 
+**Status:** RATIFIED — KERNEL v4.0
+
 **Kernel:** Sentinel v4.0  
 **Skill ID:** `SKL-researcher`  
 **Role class:** Read-only evidentiary specialist  

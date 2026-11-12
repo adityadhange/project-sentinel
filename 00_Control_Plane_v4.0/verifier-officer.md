@@ -1,5 +1,7 @@
 # Verifier Officer — Independent Epistemic and Quantitative Authority
 
+**Status:** RATIFIED — KERNEL v4.0
+
 **Kernel:** Sentinel v4.0  
 **Skill ID:** `SKL-verifier-officer`  
 **Role class:** Independent verifier  

@@ -1,8 +1,10 @@
 # AI AUTHORITY AND RESPONSIBILITY FRAMEWORK
 
+> **Authority notice:** GOV-002 is a non-authoritative proposal. It is not binding policy and grants no permissions, activation, or execution authority. It remains DRAFT unless and until separately ratified by an explicit Principal Operator disposition.
+
 **Document ID:** GOV-002  
 **Version:** 0.1  
-**Status:** DRAFT — AWAITING OPERATOR APPROVAL  
+**Status:** NON-AUTHORITATIVE / DRAFT — AWAITING OPERATOR APPROVAL  
 **Document Class:** Governance / Proposed Operating Model
 
 ## 1. Purpose

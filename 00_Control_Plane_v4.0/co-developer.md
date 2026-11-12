@@ -1,5 +1,7 @@
 # Co-Developer — Offline Meta-Architecture and Meta-Compiler Specialist
 
+**Status:** RATIFIED — KERNEL v4.0
+
 **Kernel:** Sentinel v4.0  
 **Role class:** Offline meta-architecture advisory channel  
 **Activation:** Class M — Meta-Architecture and Workflow Evolution  

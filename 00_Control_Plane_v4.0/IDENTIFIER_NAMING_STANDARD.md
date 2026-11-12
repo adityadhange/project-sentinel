@@ -1,6 +1,6 @@
 # Specialist Identifier Naming Standard
 
-**Status:** Operator-confirmed naming decision  
+**Status:** RATIFIED — KERNEL v4.0
 **Applies to:** Active Sentinel control-plane documents and future architecture specifications
 
 ## Canonical identity
@@ -28,6 +28,6 @@ This decision resolves the identifier question only. It does not resolve or expa
 
 ## Enforcement
 
-The GitHub Actions workflow `audit_co_developer_naming.yml` checks tracked text files. It fails when the legacy alias appears outside `01 - SOURCE ARCHIVE/`, and reports preserved historical occurrences without modifying them.
+The GitHub Actions workflow `audit_co_developer_naming.yml` checks tracked text files. It fails when the legacy alias appears outside `02_Archive_Legacy/`, and reports preserved historical occurrences without modifying them.
 
 Historical occurrences are intentionally visible in the audit report. Their presence is not a failure while they remain confined to the source archive.
