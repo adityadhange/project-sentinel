@@ -35,9 +35,12 @@ jobs:
           archive=$(mktemp --suffix=.tar)
           trap 'rm -f "$archive"' EXIT
           git archive --format=tar HEAD > "$archive"
-          if tar -tf "$archive" | grep -Ei '(^|/)99_Legacy_DOCX_Binaries/|\.docx$'; then
-            echo "ERROR: DOCX archive exclusion failed"
+
+          # Git may retain the empty top-level directory entry; no files or nested
+          # directory entries from the excluded archive may appear in the export.
+          if tar -tf "$archive" | grep -E '(^|/)99_Legacy_DOCX_Binaries/.+|\.docx$'; then
+            echo "ERROR: DOCX archive contents were not excluded"
             exit 1
           fi
 
-          echo "PASS: $archived_count DOCX preserved; none outside archive; Git archive excludes them."
+          echo "PASS: $archived_count DOCX preserved; none outside archive; no DOCX/archive contents in Git archive."
