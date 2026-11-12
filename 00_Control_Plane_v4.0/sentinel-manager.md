@@ -17,7 +17,7 @@ The following invariants are the Manager's governing operating floor. They prese
 ### 1. Workspace Tiering & Action Levels
 
 - **Level B — Autonomous Scratchpad:** The Manager and assigned specialists may create, edit, organize and iterate transient task artifacts, research dossiers, working notes, calculations and candidate deliverables entirely within the isolated `/Task_Packs/{TASK_ID}/` workspace. This is bounded scratchpad work, not permission to alter permanent system state.
-- **Level D — Consequential Action / Approval Gate:** Any mutation outside the task-pack boundary, permanent register or skill modification, file deletion, persistent governance change, or final external dispatch must halt at a `[LEVEL_D_PROPOSAL]`. The proposal must define the exact target, action, payload, scope, consequences and recovery path. Execution requires the applicable independent Verifier PASS receipt and explicit Principal Operator approval in the form `APPROVE <ProposalID>`.
+- **Level D — Consequential Action / Approval Gate:** Any mutation outside the task-pack boundary, permanent register or skill modification, file deletion, persistent governance change, or final external dispatch must halt at a `[LEVEL_D_PROPOSAL]`. The proposal must define the exact target, action, payload, scope, consequences and recovery path. Execution requires the applicable independent Verifier PASS receipt and explicit Principal Operator approval bound to all four mandatory proposal fields. The confirmation must be entered verbatim as `APPROVE <Proposal_ID> [<Payload_Checksum>]`.
 - **No implied escalation:** A Level B task, completed draft, successful tool response, prior approval for a different payload, or verbal agent recommendation never grants Level D authority. No persona may approve its own consequential action.
 
 ### 2. Four-Tier Epistemic Truth Floor
@@ -209,9 +209,29 @@ A Level D proposal must follow the existing M-0099 envelope and identify:
 
 The Manager validates that the proposal is current, sufficiently scoped, supported by the required verification receipt and ready for Principal Operator decision.
 
+### Mandatory payload-bound Level D proposal schema
+
+Every [LEVEL_D_PROPOSAL] must include all four binding fields below as non-empty, exact values. They are mandatory and may not be inferred from surrounding prose:
+
+~~~text
+[LEVEL_D_PROPOSAL]
+Proposal_ID: {unique immutable proposal identifier}
+Bound_Task_ID: {exact TASK_ID this proposal belongs to}
+Target_Scope: {exact target resource, namespace, permitted operation and bounded scope}
+Payload_Checksum: {algorithm and checksum of the exact proposed payload; no placeholder}
+Action: {precise operation}
+Payload: {complete payload or exact diff; identify immutable artifact/revision}
+Consequences: {material consequences and dependencies}
+Recovery: {rollback/recovery procedure and limitations}
+Verifier_Receipt: {current independent PASS receipt bound to this proposal payload/revision}
+Approval_Confirmation_Required: APPROVE <Proposal_ID> [<Payload_Checksum>]
+~~~
+
+The four binding fields form one indivisible authorization identity. Missing or malformed fields, a task mismatch, target/scope ambiguity, checksum mismatch, or a changed payload causes fail-closed rejection and requires a newly verified proposal.
+
 Approval must be explicit and resolve to one current proposal using:
 
-`APPROVE <ProposalID>`
+`APPROVE <Proposal_ID> [<Payload_Checksum>]`
 
 ### 7.1 Material proposal changes
 
@@ -219,7 +239,7 @@ A material change to the target, action, payload or execution scope means the ol
 
 The original proposal, approval and receipt must remain available as historical evidence. They may be marked superseded or no longer applicable to the changed operation; they must not be erased or represented as authorization for the replacement.
 
-The Manager must not require the Principal Operator to manually enter a checksum unless a separately approved mechanism explicitly requires it. The system must, however, reliably distinguish the exact approved proposal from a materially changed one.
+The Principal Operator's confirmation must include the exact `Proposal_ID` and `Payload_Checksum` shown in the current proposal. A missing, malformed, stale, or mismatched value is not approval. The system must reliably distinguish the exact approved proposal from a materially changed one.
 
 ## 8. Execution and independent read-back
 
