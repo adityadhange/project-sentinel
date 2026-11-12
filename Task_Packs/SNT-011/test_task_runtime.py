@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 from task_runtime import TaskStateManager, prepare_intake
+from approval_acceptance import ApprovalRecord, ApprovalRequest
 
 
 def manifest():
@@ -19,6 +20,37 @@ def manifest():
 
 
 class IntakeStateTests(unittest.TestCase):
+    def test_mutating_start_fails_closed_without_approval(self):
+        data = {
+            "task_id": "SNT-MUTATE", "payload": "mutation",
+            "work_packages": [{"id": "mutate", "depends_on": [], "mutating": True}],
+        }
+        state = TaskStateManager(data)
+        with self.assertRaisesRegex(ValueError, "requires an explicit approval"):
+            state.start("mutate")
+        self.assertEqual(state.states["mutate"]["status"], "READY")
+
+    def test_mutating_start_requires_matching_pass_receipt(self):
+        data = {
+            "task_id": "TASK-001", "payload": "mutation",
+            "work_packages": [{"id": "mutate", "depends_on": [], "mutating": True}],
+        }
+        state = TaskStateManager(data)
+        fields = {
+            "task_id": "TASK-001", "proposal_id": "PROP-001", "target": "target.md",
+            "scope": {"path": "target.md"}, "action": "overwrite", "payload_revision": "rev-1",
+            "payload_digest": "digest-1", "expected_state": {"revision": "rev-1"},
+            "rollback_path": "restore-rev-0", "verification_receipt_id": "REC-001",
+            "verification_receipt_revision": "rev-1",
+        }
+        record = ApprovalRecord(
+            approval_id="APR-001", authority_id="principal-operator",
+            issued_at="2020-01-01T00:00:00Z", **fields,
+        )
+        request = ApprovalRequest(**fields, verification_result="PASS")
+        state.start("mutate", approval_record=record, approval_request=request)
+        self.assertEqual(state.states["mutate"]["status"], "IN_PROGRESS")
+
     def test_intake_compiles_and_initializes_ready_vs_pending(self):
         state = TaskStateManager(manifest())
         self.assertEqual(state.states["research"]["status"], "READY")

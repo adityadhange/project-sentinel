@@ -45,6 +45,10 @@ def request(**overrides):
 
 
 class ApprovalTests(unittest.TestCase):
+    def test_approval_request_requires_explicit_verification_receipt(self):
+        with self.assertRaises(TypeError):
+            ApprovalRequest(**approval().binding_fields())
+
     def test_exact_task_bound_approval_is_allowed(self):
         allowed, reasons = validate_approval(approval(), request(), now=NOW)
         self.assertTrue(allowed)
@@ -74,6 +78,13 @@ class ApprovalTests(unittest.TestCase):
 
 
 class AcceptanceTests(unittest.TestCase):
+    def test_submission_requires_explicit_verification_result(self):
+        with self.assertRaises(TypeError):
+            DeliverableSubmission(
+                task_id="TASK-001", deliverable_id="DEL-001", revision="rev-1",
+                producer_id="operator", coordinator_id="manager", verifier_id="verifier"
+            )
+
     def contract(self, level_d_required=False):
         return DeliverableContract(
             task_id="TASK-001",

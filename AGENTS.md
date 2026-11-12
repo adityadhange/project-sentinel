@@ -3,7 +3,7 @@
 **Status:** DRAFT — AWAITING OPERATOR APPROVAL  
 **Scope:** Proposed repository-wide working guidance for AI agents.
 
-These instructions are a proposed continuity aid. They do not activate or amend the governance documents in `00 - GOVERNANCE AND RULES/`, which remain subject to their recorded approval status. They do not grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
+`GEMINI.md` is the repository root authority anchor and defines the active control-plane boundaries and precedence. Living governance policies are located in `01_Governance_Rules/`. These instructions are a proposed continuity aid; they do not amend those sources or grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
 
 ## 1. Establish the repository facts before acting
 
@@ -14,7 +14,8 @@ At the beginning of each session:
 3. Check the current default-branch head and relevant open pull requests in GitHub.
 4. Read this file and, if present, `PROJECT_STATE.md` and `HANDOFF_LOG.md`.
 5. Compare recorded branch/commit references with live GitHub state. Mark stale, incomplete, or conflicting information; do not silently treat an old snapshot as current.
-6. Read the specific source documents needed for the assigned task. Historical archive records are not automatically current instructions or approved policy.
+6. Read [`GEMINI.md`](GEMINI.md) as the repository root authority anchor and consult [`01_Governance_Rules/`](01_Governance_Rules/) for applicable living governance policies.
+7. Read the specific source documents needed for the assigned task. Historical archive records are not automatically current instructions or approved policy.
 
 If a referenced state or handoff file does not yet exist, report that fact. Do not invent its contents.
 

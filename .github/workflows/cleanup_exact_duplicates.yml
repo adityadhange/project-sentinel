@@ -6,7 +6,7 @@ on:
       dry_run:
         description: 'Dry Run (Preview only, do not delete)'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write
@@ -74,12 +74,17 @@ jobs:
               return score
 
           root = Path('.')
-          ignored_dirs = {'.git', '.github'}
+          archive_root = root / "02_Archive_Legacy"
+          archive_resolved = archive_root.resolve()
 
+          # Hard boundary: enumerate only regular files inside the legacy archive.
+          # Skip symlinks so an archive entry cannot redirect deletion elsewhere.
           all_files = [
-              f for f in root.rglob('*')
-              if f.is_file() and not any(part in ignored_dirs for part in f.parts)
-          ]
+              f for f in archive_root.rglob("*")
+              if f.is_file()
+              and not f.is_symlink()
+              and archive_resolved in f.resolve().parents
+          ] if archive_root.is_dir() else []
 
           hash_map = defaultdict(list)
           for f in all_files:
@@ -92,7 +97,7 @@ jobs:
                   hash_map[h].append(str(f))
 
           exact_groups = [paths for paths in hash_map.values() if len(paths) > 1]
-          is_dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+          is_dry_run = os.environ.get("DRY_RUN", "true").lower() == "true"
 
           total_deleted = 0
           summary_lines = []
@@ -126,8 +131,13 @@ jobs:
 
           if not is_dry_run and files_to_remove:
               for file_path in files_to_remove:
-                  if os.path.exists(file_path):
-                      os.remove(file_path)
+                  candidate = Path(file_path)
+                  # Re-check immediately before unlinking; fail closed if the
+                  # path escaped the archive boundary or became a symlink.
+                  if candidate.is_symlink() or archive_resolved not in candidate.resolve().parents:
+                      raise RuntimeError(f"refusing out-of-archive deletion: {file_path}")
+                  if candidate.exists():
+                      candidate.unlink()
 
               with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
                   f.write(f"deleted_count={total_deleted}\n")

@@ -5,7 +5,7 @@
 **Status:** OPEN — BASELINE STAGED; acceptance and enforcement evidence remain outstanding  
 **Architecture invariant:** Sentinel is the sole governing kernel; Optimus is a subordinate orchestration subsystem.  
 **Synthetic specification dry-run reference:** TASK-2026-RP04B-ACCEPTANCE  
-**Supplied checksum identifier:** SHA256-4D9A11C8E03B7F21
+**Supplied checksum identifier:** SIM-DIGEST-RP04B
 
 ## 1. Purpose and evidence rules
 
@@ -36,7 +36,7 @@ A row may carry more than one state where the evidence differs by layer. SPECIFI
 
 | GitHub issue / requirement | Governing control and repository location | RP-04B evidence relationship | Traceability disposition and remaining boundary |
 |---|---|---|---|
-| **#32 — SNT-TO-01: Evidence-backed RP-04B test-cycle disposition** | This matrix records test identity, reported outcome, evidence provenance, and gaps. Manager §6 (deliverable acceptance and verification), §6.1 (receipt binding), and §7 (Level D gate) in 00_Control_Plane_v4.0/sentinel-manager.md. | TASK-2026-RP04B-ACCEPTANCE; supplied checksum identifier SHA256-4D9A11C8E03B7F21; synthetic specification dry run only. The reference is a synthetic specification dry run of the Strike-1 rejection/acceptance scenario, not a live host test. | **OPEN — BASELINE STAGED. SPECIFIED; dry-run reference only.** This matrix makes the reported disposition traceable. Raw test inventory, fixtures, event transcript, and independently recomputed checksum remain **GAP / NOT PROVEN** in this PR. |
+| **#32 — SNT-TO-01: Evidence-backed RP-04B test-cycle disposition** | This matrix records test identity, reported outcome, evidence provenance, and gaps. Manager §6 (deliverable acceptance and verification), §6.1 (receipt binding), and §7 (Level D gate) in 00_Control_Plane_v4.0/sentinel-manager.md. | TASK-2026-RP04B-ACCEPTANCE; supplied checksum identifier SIM-DIGEST-RP04B; synthetic specification dry run only. The reference is a synthetic specification dry run of the Strike-1 rejection/acceptance scenario, not a live host test. | **OPEN — BASELINE STAGED. SPECIFIED; dry-run reference only.** This matrix makes the reported disposition traceable. Raw test inventory, fixtures, event transcript, and independently recomputed checksum remain **GAP / NOT PROVEN** in this PR. |
 | **#33 — SNT-TO-02: Task-bound Level D approval provenance** | Mandatory payload-bound schema in Manager §7 and Operator §7: Proposal_ID, Bound_Task_ID, Target_Scope, Payload_Checksum. Confirmation syntax: APPROVE <Proposal_ID> [<Payload_Checksum>]. | The synthetic specification dry run modeled rejection of an unbound/incomplete proposal and acceptance assessment of a corrected proposal; it did not exercise live runtime enforcement. Exact test vectors and event log are not present in the repository evidence inspected for this PR. | **SPECIFIED + TEST-REFERENCED.** The four-field contract and exact confirmation are now explicit. Runtime rejection of missing, stale, replayed, or mismatched values remains **NOT PROVEN** absent inspectable execution evidence. |
 | **#34 — SNT-TO-03: Independent deliverable acceptance, rejection, and rework (MG-04)** | Manager §6 requires independent audit of the exact candidate revision, consolidated defect reporting, bounded correction, and fresh audit after material edits. Operator §6 assigns Strike-1 correction to the producer and prevents self-certification. | The synthetic specification dry run modeled a Strike-1 rejection/correction/acceptance sequence. It is not empirical evidence that independent acceptance occurred in a live execution environment. | **SPECIFIED + TEST-REFERENCED.** The rework and role-separation contract is documented. The raw rejection record, corrected candidate, Verifier receipt, and independent audit transcript are not embedded here; full empirical verification remains **NOT PROVEN** by this PR alone. |
 | **#35 — SNT-TO-04: Level D authorization enforcement across execution paths (MG-05)** | Manager §§7–8 and Operator §§7–8 define proposal validation, human authorization, bounded execution, and independent read-back. The approval is bound to task, target/scope, and exact payload checksum. | The synthetic dry run can illustrate proposal-shape and approval-gate specification only. It does not test even one live host entry point, delegation route, replay path, or host execution API. | **OPEN — BASELINE STAGED. SPECIFIED; dry-run reference only. [PR #42](https://github.com/adityadhange/project-sentinel/pull/42): REFERENCE_PROTOTYPE (UNPROVEN_IN_PROD).** End-to-end host enforcement across all execution paths, bypass resistance, revocation, replay prevention, and post-mutation read-back are **GAP / NOT PROVEN**. No claim of runtime enforcement is made. |
@@ -83,7 +83,7 @@ No approval is valid if any binding field is missing or if the task, target, sco
 | Attribute | Recorded value |
 |---|---|
 | Test/task identifier | TASK-2026-RP04B-ACCEPTANCE |
-| Checksum identifier supplied | SHA256-4D9A11C8E03B7F21 |
+| Checksum identifier supplied | SIM-DIGEST-RP04B |
 | Test family | RP-04B synthetic specification dry run |
 | Modeled behavior | Strike-1 rejection followed by correction/acceptance assessment, at specification level only |
 | Provenance in this PR | Principal-Operator-supplied synthetic dry-run identifier and checksum string |
