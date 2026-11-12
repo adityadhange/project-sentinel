@@ -16,7 +16,8 @@ concurrency:
 jobs:
   plan:
     if: >-
-      ${{ github.event.sender.type == 'User' &&
+      ${{ vars.CLAUDE_API_ENABLED == 'true' &&
+          github.event.sender.type == 'User' &&
           github.event.comment.author_association == 'OWNER' &&
           github.event.issue.pull_request == null &&
           startsWith(github.event.comment.body, '@claude plan:') }}
@@ -56,9 +57,11 @@ jobs:
               AGENTS.md \
               PROJECT_STATE.md \
               HANDOFF_LOG.md \
-              "00 - GOVERNANCE AND RULES/AI_AUTHORITY_AND_RESPONSIBILITY.md" \
-              "00 - GOVERNANCE AND RULES/SOURCE_OF_TRUTH.md" \
-              "00 - GOVERNANCE AND RULES/DOCUMENT_CONTROL_AND_CHANGE_MANAGEMENT.md"; do
+              "01_Governance_Rules/AI_AUTHORITY_AND_RESPONSIBILITY.md" \
+              "01_Governance_Rules/SOURCE_OF_TRUTH.md" \
+              "01_Governance_Rules/DOCUMENT_CONTROL_AND_CHANGE_MANAGEMENT.md" \
+              "00_Control_Plane_v4.0/README.md" \
+              "00_Control_Plane_v4.0/sentinel-manager.md"; do
               if [[ -f "$file" ]]; then
                 echo
                 echo "===== SOURCE FILE: $file ====="
