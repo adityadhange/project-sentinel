@@ -127,3 +127,20 @@ If two active authoritative sources conflict, do not silently choose or synthesi
 ---
 
 **Control-plane reminder:** This root file is the routing and boundary index. Role-specific procedures remain in their canonical files under `00_Control_Plane_v4.0/`; living policy remains under `01_Governance_Rules/`. The archive `02_Archive_Legacy/` is quarantined. No text in this file grants permissions beyond the actual governing policy, approved authority, or host-platform capabilities.
+
+
+## 8. Session-start orientation bootstrap — proposed amendment
+
+> **Status of this section:** PROPOSED — NON-AUTHORITATIVE pending explicit Principal Operator approval. The existing RATIFIED ROOT-GEMINI-001 v4.0.0 authority anchor and Section 7 hierarchy remain controlling until a separately approved governance revision changes them.
+
+At the start of each session, before making architectural claims or proposing repository mutations:
+
+1. Read this `GEMINI.md` as the existing root authority anchor.
+2. Read `01_Governance_Rules/SOURCE_OF_TRUTH.md` (GOV-001) to understand the currently ratified source-precedence hierarchy and conflict procedure.
+3. Read `AGENTS.md` for the shared model-agnostic invariants, evidence discipline, role boundaries, branch discipline, and approval limits.
+4. Read the specific active specifications in `00_Control_Plane_v4.0/` required for the task.
+5. Read `PROJECT_STATE.md` as a dated, potentially stale baseline snapshot; refresh the live GitHub branch, commit, and PR state before relying on it.
+
+This is a **session reading sequence**, not a replacement source-precedence hierarchy. The currently ratified hierarchy remains the one stated in this file's Section 7 and GOV-001. Do not silently reinterpret `SOURCE_OF_TRUTH.md`, `AGENTS.md`, the control plane, or `PROJECT_STATE.md` as superseding the existing root anchor.
+
+Use `AGENTS.md` as the canonical location for full shared invariants rather than duplicating their complete text in provider-specific instructions. Do not self-validate assertions, silently resolve contradictions between authoritative documents, or mutate repository state without the required proposal, verification, and explicit operator authorization. If the live state differs from `PROJECT_STATE.md`, report the discrepancy and use fresh repository evidence.
