@@ -1,0 +1,3 @@
+# Keep legacy Word binaries and their embedded media/fonts out of GitHub source ZIP exports.
+99_Legacy_DOCX_Binaries/** export-ignore
+*.docx export-ignore

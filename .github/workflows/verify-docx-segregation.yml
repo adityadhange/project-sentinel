@@ -1,0 +1,43 @@
+name: Verify DOCX segregation
+
+on:
+  push:
+    paths:
+      - "99_Legacy_DOCX_Binaries/**"
+      - ".gitattributes"
+      - ".github/workflows/verify-docx-segregation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify preserved inventory and archive exclusion
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          archived_count=$(find 99_Legacy_DOCX_Binaries -type f -iname '*.docx' | wc -l | tr -d ' ')
+          outside_count=$(find . -path './.git' -prune -o -path './99_Legacy_DOCX_Binaries' -prune -o -type f -iname '*.docx' -print | wc -l | tr -d ' ')
+
+          test "$archived_count" -eq 130
+          test "$outside_count" -eq 0
+          grep -qxF '99_Legacy_DOCX_Binaries/** export-ignore' .gitattributes
+          grep -qxF '*.docx export-ignore' .gitattributes
+
+          archive=$(mktemp --suffix=.tar)
+          trap 'rm -f "$archive"' EXIT
+          git archive --format=tar HEAD > "$archive"
+          if tar -tf "$archive" | grep -Ei '(^|/)99_Legacy_DOCX_Binaries/|\.docx$'; then
+            echo "ERROR: DOCX archive exclusion failed"
+            exit 1
+          fi
+
+          echo "PASS: $archived_count DOCX preserved; none outside archive; Git archive excludes them."

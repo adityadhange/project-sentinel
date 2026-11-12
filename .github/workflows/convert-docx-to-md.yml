@@ -1,39 +1,16 @@
-name: Convert DOCX to Markdown
+name: RETIRED - DOCX conversion (preserve originals)
 
 on:
   workflow_dispatch:
 
+# Retired because the previous workflow deleted source DOCX files after conversion.
+# Originals are now preserved under 99_Legacy_DOCX_Binaries/.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  convert:
+  retired:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Convert DOCX files to GFM Markdown
-        run: |
-          find . -type f -name "*.docx" | while IFS= read -r file; do
-            # Strip .docx, and also strip trailing .md if named *.md.docx
-            base="${file%.docx}"
-            base="${base%.md}"
-            target="${base}.md"
-
-            echo "Converting: $file -> $target"
-            pandoc "$file" -f docx -t gfm --wrap=none -o "$target"
-            git rm -f "$file"
-          done
-
-      - name: Commit converted Markdown files
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: convert legacy .docx files to Markdown and remove binary bloat"
-            git push
-          else
-            echo "No .docx files found to convert."
-          fi
+      - run: echo "This workflow is retired. DOCX originals are preserved; do not delete them."
