@@ -1,3 +1,7 @@
 # Keep legacy Word binaries and their embedded media/fonts out of GitHub source ZIP exports.
 99_Legacy_DOCX_Binaries/** export-ignore
 *.docx export-ignore
+
+# Keep the legacy Excel evaluation ledger out of GitHub source ZIP exports.
+99_Legacy_XLSX_Binaries/** export-ignore
+*.xlsx export-ignore

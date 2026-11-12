@@ -1,0 +1,44 @@
+name: Verify XLSX segregation
+
+on:
+  push:
+    paths:
+      - "99_Legacy_XLSX_Binaries/**"
+      - ".gitattributes"
+      - ".github/workflows/verify-xlsx-segregation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify preserved ledger and archive exclusion
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          archived_count=$(find 99_Legacy_XLSX_Binaries -type f -iname '*.xlsx' | wc -l | tr -d ' ')
+          outside_count=$(find . -path './.git' -prune -o -path './99_Legacy_XLSX_Binaries' -prune -o -type f -iname '*.xlsx' -print | wc -l | tr -d ' ')
+
+          test "$archived_count" -eq 1
+          test "$outside_count" -eq 0
+          grep -qxF '99_Legacy_XLSX_Binaries/** export-ignore' .gitattributes
+          grep -qxF '*.xlsx export-ignore' .gitattributes
+
+          archive=$(mktemp --suffix=.tar)
+          trap 'rm -f "$archive"' EXIT
+          git archive --format=tar HEAD > "$archive"
+
+          if tar -tf "$archive" | grep -E '(^|/)99_Legacy_XLSX_Binaries/.+|\.xlsx$'; then
+            echo "ERROR: XLSX archive contents were not excluded"
+            exit 1
+          fi
+
+          echo "PASS: $archived_count XLSX preserved; none outside archive; no XLSX/archive contents in Git archive."
