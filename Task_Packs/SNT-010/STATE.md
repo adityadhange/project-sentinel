@@ -6,11 +6,11 @@
 - **Status:** REVIEW — merged to `main` via PR #27
 - **Artifact revision:** 0.1
 - **Merge commit:** `fc2c895c8e579be99e8333ca1d3903581bd75c3b`
-- **Observed main baseline:** `5189509082bf90cf9f60a37385ca77feb3ac9c72`
+- **Observed main baseline:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
 - **Capability:** Standard-library dependency graph compilation
 - **Dependencies:** None for this isolated prototype
 - **Completed:** Initial module, CLI, focused unit tests, usage and boundary documentation
-- **Test evidence:** Current-main Task Pack CI run [43290908623](https://github.com/adityadhange/project-sentinel/actions/runs/43290908623) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
+- **Test evidence:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
 - **Next action:** Principal Operator review of the merged reference prototype; any integration or runtime work requires a separate authorized task and contract.
 - **Required approval:** No production integration or runtime activation is requested by this task.
 - **Known limitations:** Prototype validates a supplied in-memory graph only. It does not persist task state, dispatch agents, enforce permissions, or connect to a runtime. Successful CI is not independent semantic verification or production evidence.
