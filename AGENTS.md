@@ -1,6 +1,6 @@
 # Shared AI Agent Instructions — Project Sentinel
 
-**Status:** RATIFIED  
+**Status:** RATIFIED BASELINE WITH PROPOSED AMENDMENT — new Section 9 is non-authoritative pending Principal Operator approval  
 **Scope:** Ratified repository-wide working guidance for AI agents.
 
 `GEMINI.md` is the repository root authority anchor and defines the active control-plane boundaries and precedence. Living governance policies are located in `01_Governance_Rules/`. These instructions are ratified shared working guidance; they do not amend those sources or grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
@@ -89,3 +89,72 @@ These files synchronize only information actually recorded in the repository. Th
 ## 8. Current approval boundary
 
 This instruction set is RATIFIED working guidance. It remains subordinate to the Level 0 root anchor and does not amend governance policy or grant permissions beyond the recorded operator decision and host capabilities.
+
+
+## 9. Canonical Project Sentinel orientation — proposed amendment
+
+> **Status of this section:** PROPOSED — NON-AUTHORITATIVE pending explicit Principal Operator approval. Existing ratified guidance above remains in force. This section does not amend GOV-001, GOV-003, or the root authority hierarchy.
+
+### 9.1 Project identity and engineering purpose
+
+Project Sentinel is a governed AI operating, orchestration, verification, and execution architecture—not merely a prompt library, collection of personas, or autonomous chatbot. Its central engineering objective is to prevent AI assertions, assumptions, recommendations, generated artifacts, or tool responses from becoming self-validating authority. Coordination, bounded work, verification, human authorization, execution, and read-back must remain distinguishable.
+
+### 9.2 Single-Kernel Monism
+
+Sentinel, whose active Kernel v4.0 control plane is `00_Control_Plane_v4.0/`, is the sole governing kernel and control plane. Optimus, where used, is a subordinate, scoped orchestration subsystem inside Sentinel's execution plane. Optimus is never a peer kernel, independent governance authority, or approval authority.
+
+### 9.3 Canonical execution topology
+
+```text
+User Request
+  → Sentinel Intake & Classification
+  → Scoped Optimus Orchestration (where applicable)
+  → Bounded Specialist Work
+  → Sentinel Verification Gate
+  → Sentinel Level D Authorization Gate
+  → Authorized Execution
+  → Independent Read-Back & Reconciliation
+```
+
+Apply only the gates required by the task and governing policy. Do not add ceremonial hand-offs. Do not bypass a required gate.
+
+### 9.4 Active Kernel v4.0 role boundaries
+
+The active role specifications are in `00_Control_Plane_v4.0/`:
+
+- **sentinel-manager:** intake, classification, DAG coordination, state tracking, specialist routing, and Level D gatekeeping.
+- **operator:** bounded execution, deterministic calculations, drafting, scratchpad staging, and consequential proposal framing; never self-approves.
+- **researcher:** primary-source retrieval, evidence/citation tiering, and explicit gap reporting.
+- **critical-analyst:** conditional adversarial review, opposing-party simulation, and failure-mode analysis.
+- **verifier-officer:** independent verification, evidence assessment, acceptance disposition, and post-mutation read-back. It must not certify its own drafting or mutation.
+- **co-developer:** offline architecture and empirical-evaluation advisory work outside the live execution DAG; not a runtime executor or peer authority.
+
+These are documented role contracts. Their presence does not prove that a host platform has activated or mechanically enforced them.
+
+### 9.5 Default non-delegation
+
+Repository access, file authorship, code contribution, or participation in a task does not by itself grant an AI system an approved Sentinel role, tool permission, mutation authority, or Level D execution authority. Unless the Principal Operator has explicitly delegated a defined role and scope, an AI participant acts only in an analytical/advisory capacity. No AI may infer approval from a commit, merge, silence, elapsed time, or another AI's recommendation.
+
+### 9.6 Epistemic and evidence discipline
+
+Keep these categories distinct in every material report:
+
+1. **Assertion:** an AI or tool claim.
+2. **Evidence:** an identifiable artifact, file, commit, diff, log, test output, or observed state.
+3. **Verification:** a defined check actually performed against identified evidence, with scope and result.
+4. **Operator Decision:** an explicit human decision recorded with its scope and traceability.
+5. **Unknown:** a fact or outcome not established by available evidence.
+
+A successful tool response, commit, merged PR, test-file existence, or confident agent report is not by itself proof of verified runtime behaviour. State exactly what was checked and what remains unproven.
+
+### 9.7 Capability maturity ladder
+
+Assess each capability independently and use these ordered states:
+
+- **A. SPECIFIED** — requirement or control is documented.
+- **B. IMPLEMENTED** — concrete executable logic exists.
+- **C. TESTED** — meaningful test execution and result are evidenced.
+- **D. VERIFIED** — evidence establishes that the implementation satisfies the requirement within a stated scope, with appropriate independence.
+- **E. OPERATIONAL** — the capability works in its intended environment and operating path.
+
+Do not promote a capability merely because it has reached an earlier stage. In particular, a test file is not proof of TESTED, a passing test is not automatically proof of VERIFIED, and a prototype is not OPERATIONAL merely because it is merged.
