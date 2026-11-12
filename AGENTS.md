@@ -14,7 +14,8 @@ At the beginning of each session:
 3. Check the current default-branch head and relevant open pull requests in GitHub.
 4. Read this file and, if present, `PROJECT_STATE.md` and `HANDOFF_LOG.md`.
 5. Compare recorded branch/commit references with live GitHub state. Mark stale, incomplete, or conflicting information; do not silently treat an old snapshot as current.
-6. Read the specific source documents needed for the assigned task. Historical archive records are not automatically current instructions or approved policy.
+6. Read [`GEMINI.md`](GEMINI.md) as the repository root authority anchor and consult [`01_Governance_Rules/`](01_Governance_Rules/) for applicable living governance policies.
+7. Read the specific source documents needed for the assigned task. Historical archive records are not automatically current instructions or approved policy.
 
 If a referenced state or handoff file does not yet exist, report that fact. Do not invent its contents.
 
