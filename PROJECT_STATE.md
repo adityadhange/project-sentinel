@@ -6,7 +6,7 @@
 **Default branch:** `main`  
 **Verified baseline commit:** `bcbba20ae97eeba21432b045de3123fb087950fe`  
 **Baseline commit:** PR #63 merge — “Bind SNT-011 start approvals to active task and work package”  
-**Snapshot publication:** Draft PR from `docs/refresh-project-state-live-baseline-20261112`; not merged  
+**Snapshot publication:** [Draft PR #64](https://github.com/adityadhange/project-sentinel/pull/64); not merged  
 **Authority:** Continuity snapshot only. This file does not grant permissions, ratify policy, or authorize execution.
 
 > This section records the live GitHub state observed for this refresh. The historical snapshot below is retained for provenance and must not be treated as current where it conflicts with this section. The repository may advance after this observation; refresh GitHub before relying on it later.
@@ -140,7 +140,7 @@ The earlier archive inventory and migration notes are retained below as historic
 ---
 
 **Refresh source:** GitHub `main`, baseline `bcbba20ae97eeba21432b045de3123fb087950fe`; PR #42 and PR #63 state; Task Pack CI and identifier-audit job results; current open issue records #26, #32–#37, and #52–#54; `ROADMAP.md`, `HANDOFF_LOG.md`, and SNT-011 task-pack records.  
-**Prepared as:** A single-file continuity refresh on `docs/refresh-project-state-live-baseline-20261112`.  
+**Prepared as:** A single-file continuity refresh on `docs/refresh-project-state-live-baseline-20261112`, submitted as [Draft PR #64](https://github.com/adityadhange/project-sentinel/pull/64).  
 **Approval status:** DRAFT — AWAITING PRINCIPAL OPERATOR REVIEW AND MERGE.
 
 ## Previous snapshot — retained historical record
