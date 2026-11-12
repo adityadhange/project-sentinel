@@ -22,6 +22,7 @@ jobs:
 
       - name: Run Sentinel Deep Audit
         run: |
+          python - << 'PY'
           import os
           import re
           import hashlib
@@ -143,3 +144,4 @@ jobs:
                   print(f" - {violation}")
               raise SystemExit(1)
           print("Active-directory naming gate passed.")
+          PY
