@@ -92,7 +92,7 @@ class ApprovalRequest:
     rollback_path: str
     verification_receipt_id: str
     verification_receipt_revision: str
-    verification_result: str = "PASS"
+    verification_result: str
 
     def binding_fields(self) -> dict[str, Any]:
         return {
@@ -174,9 +174,9 @@ class DeliverableSubmission:
     producer_id: str
     coordinator_id: str
     verifier_id: str
+    verification_result: str
     present_fields: frozenset[str] = frozenset()
     evidence_refs: frozenset[str] = frozenset()
-    verification_result: str = "PASS"
     approval: ApprovalRecord | None = None
     approval_request: ApprovalRequest | None = None
 

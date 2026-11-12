@@ -5,7 +5,7 @@
 **Status:** OPEN — BASELINE STAGED; acceptance and enforcement evidence remain outstanding  
 **Architecture invariant:** Sentinel is the sole governing kernel; Optimus is a subordinate orchestration subsystem.  
 **Synthetic specification dry-run reference:** TASK-2026-RP04B-ACCEPTANCE  
-**Supplied checksum identifier:** SHA256-4D9A11C8E03B7F21
+**Supplied checksum identifier:** SIM-DIGEST-RP04B
 
 ## 1. Purpose and evidence rules
 

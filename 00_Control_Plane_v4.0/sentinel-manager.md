@@ -166,12 +166,13 @@ WIP-1 permits only one mutating work package to occupy the active mutation-draft
 
 1. **Reservation at DAG compile:** When the Manager compiles the task DAG, it identifies the first eligible mutating work package in the stable runnable order and reserves the single WIP-1 slot for that package. Other mutating packages remain queued; they may not acquire a concurrent mutation-drafting slot.
 2. **Exclusive lock during Operator draft:** The reservation becomes an exclusive WIP-1 lock when the Operator begins drafting the mutating payload or change artifact. The lock remains held throughout that Operator drafting cycle. No second mutating work package may enter the same active drafting lane.
-3. **Normal release:** The Manager releases the WIP-1 lock when the Verifier issues the receipt for that work package's draft/verification cycle. Record the receipt identifier and release event in the task state.
-4. **Error rollback release:** If the drafting/verification cycle fails, the Manager may release the lock only after an error rollback has returned the package to its recorded pre-draft or other explicitly safe non-mutating state and the rollback/outcome is recorded. A failed or partial rollback does not release the lock; escalate and preserve the lock until safe disposition.
+3. **Hold through Level D execution:** A Verifier receipt does not release WIP-1. The lock remains held through proposal binding, explicit Principal Operator approval, authorized Level D execution, and independent post-mutation read-back. Do not admit another mutating package while execution or target-state verification is pending.
+4. **Normal closure:** Release the lock only after post-mutation read-back has been recorded and reconciled against the approved expected state, and the package has reached its recorded closure disposition. If read-back is unavailable, retain the lock until the workflow is explicitly closed as `CLOSED-UNVERIFIED (Operator Acknowledgment Required)`; this is administrative closure, not verification or a PASS.
+5. **Explicit abort:** The Manager may release the lock following an explicit abort only after confirming that no mutation remains in flight, the package is returned to a recorded safe non-mutating state (or the actual partial state is preserved and escalated), and the abort/outcome is recorded. A failed or partial rollback does not release the lock; preserve it until safe disposition.
 
 WIP-1 is a concurrency control, not an authorization. Verifier receipt issuance or lock release does not itself authorize a persistent mutation. Any consequential mutation remains halted at the separate Level D gate and requires the applicable current Verifier PASS receipt and explicit Principal Operator approval. A successful DAG compile, reservation, draft, or release event must never be represented as permission to execute.
 
-The Manager must persist the package identity, reservation time/event, Operator-draft start, Verifier receipt or rollback evidence, and lock-release reason. If the state cannot be reliably recorded or read back, report WIP-1 state as unknown/indeterminate and do not admit another mutating package into the lane.
+The Manager must persist the package identity, reservation time/event, Operator-draft start, Verifier receipt, Level D approval and execution references, post-mutation read-back/closure or explicit abort evidence, and lock-release reason. If the state cannot be reliably recorded or read back, report WIP-1 state as unknown/indeterminate and do not admit another mutating package into the lane.
 
 ## 6. Deliverable acceptance and verification
 
@@ -314,7 +315,7 @@ This specification does not assert that any of the following are already enforce
 
 These require separate platform-level inspection and testing. `UNKNOWN` or `INACCESSIBLE` must not be reported as `ABSENT`.
 
-The v4.0 DPR identifies the canonical taxonomy (`ORG-`, `CAP-`, `MTH-`, `RUL-`, `TST-`, `KNW-`). Historical four-tier epistemic labels and other v3.x mechanisms must not be silently promoted to mandatory v4.0 output syntax without confirmation from canonical v4.0 rules and tests.
+The four epistemic states defined in Preamble §2 are mandatory classification and handling rules for every material factual assertion throughout this specification. Apply them consistently in intake, analysis, verification, reporting, and closeout; they are not optional legacy labels or stylistic decorations. The canonical v4.0 identifier taxonomy remains (`ORG-`, `CAP-`, `MTH-`, `RUL-`, `TST-`, `KNW-`).
 
 ---
 

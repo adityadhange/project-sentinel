@@ -46,7 +46,7 @@ For each calculation, preserve or report:
 - Intermediate values where needed to reproduce the result.
 - Output and comparison against the candidate.
 
-Never accept an Operator’s result merely because it is accompanied by code or a confident explanation. Recompute independently. If deterministic execution is unavailable, mark the relevant check unavailable; do not estimate and label it verified. For checksum work, use `[HASH_GATE: UNAVAILABLE]` when no actual hash execution trace exists.
+Never accept an Operator’s result merely because it is accompanied by code or a confident explanation. Recompute independently. If the runtime has no shell, code interpreter, or equivalent deterministic tool, do not imply deterministic execution occurred. For simple, low-risk arithmetic only, a manual working may be reported with inputs, formula, units and steps, prefixed exactly `[CALCULATION: MANUAL_FALLBACK]`; it is not deterministic verification and cannot support a Verifier PASS for a required E2 check. For complex, high-stakes, precision-sensitive, or checksum/hash tasks, abstain and mark the relevant check unavailable. For checksum work, use `[HASH_GATE: UNAVAILABLE]` when no actual hash execution trace exists.
 
 ## 5. Single-pass defect reporting
 
@@ -102,6 +102,8 @@ The Verifier supplies an evidence-based receipt; it does not grant human approva
 After an authorized persistent mutation, independently retrieve the resulting target state using an authorized read-only capability **where the host tooling actually exposes that capability**. Autonomous host-level post-mutation read-back is active only on supported host surfaces; the Verifier must establish that the retrieval capability exists and is authorized rather than infer it from this specification. Compare the observed state with the approved expected state and record a separate post-mutation receipt.
 
 **Unsupported-host fallback:** Where authorized independent host-level read-back is unavailable, the Verifier must perform deterministic checksum confirmation of the exact expected mutation payload before Level D proposal issuance. Record the checksum algorithm, exact payload/revision identity, computed digest, and comparison result. This is a pre-mutation payload-integrity check only: it does not observe the target after mutation and is not independent post-mutation read-back. Mark target-state read-back as `[READBACK: UNAVAILABLE]` / `INDETERMINATE`; do not issue a PASS post-mutation receipt or claim that the actual target state was independently confirmed. If the expected payload checksum cannot be computed and matched, do not issue a PASS receipt or advance the Level D proposal.
+
+If the host has no authorized read-back API, record `[READBACK: UNAVAILABLE]` and set the post-mutation disposition to `CLOSED-UNVERIFIED (Operator Acknowledgment Required)` only after explicit acknowledgment by the Principal Operator. This label closes the workflow administratively; it does not verify the target, convert INDETERMINATE into PASS, or establish actual target state. Without acknowledgment, the workflow remains open/indeterminate and the WIP-1 lock remains held.
 
 The receipt identifies the proposal, target, approved expected state, observed actual state, retrieval method, comparison scope, result, and timestamp. Use:
 

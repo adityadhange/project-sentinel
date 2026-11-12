@@ -9,7 +9,9 @@ import importlib.util
 import json
 import os
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
+
+from approval_acceptance import ApprovalRecord, ApprovalRequest, validate_approval
 
 
 def _load_compiler() -> Callable[[dict[str, list[str]]], dict[str, Any]]:
@@ -160,11 +162,36 @@ class TaskStateManager:
             "states": {key: dict(value) for key, value in sorted(self.states.items())},
         }
 
-    def start(self, node_id: str) -> None:
-        """Record Manager-authorized start; this method is not an authorization control."""
+    def start(
+        self,
+        node_id: str,
+        *,
+        approval_record: ApprovalRecord | Mapping[str, Any] | None = None,
+        approval_request: ApprovalRequest | Mapping[str, Any] | None = None,
+    ) -> None:
+        """Start a READY package; mutating packages require a matching approval.
+
+        This reference check fails closed on missing/invalid receipts. It does
+        not authenticate the operator, atomically consume approval, or enforce
+        host permissions; production enforcement remains a host responsibility.
+        """
         item = self._get(node_id)
         if item["status"] != "READY":
             raise ValueError(f"{node_id!r} is not READY (current state: {item['status']})")
+        if item["mutating"]:
+            if approval_record is None or approval_request is None:
+                raise ValueError(
+                    f"{node_id!r} is mutating and requires an explicit approval record and verification request"
+                )
+            record = ApprovalRecord(**approval_record) if isinstance(approval_record, Mapping) else approval_record
+            request = ApprovalRequest(**approval_request) if isinstance(approval_request, Mapping) else approval_request
+            if not isinstance(record, ApprovalRecord) or not isinstance(request, ApprovalRequest):
+                raise ValueError("mutating work package approval inputs have invalid types")
+            allowed, reasons = validate_approval(record, request)
+            if not allowed:
+                raise ValueError(
+                    f"{node_id!r} approval validation failed closed: {', '.join(reasons)}"
+                )
         unmet = [dep for dep in self.intake["work_packages"][node_id]["depends_on"]
                  if self.states[dep]["status"] != "COMPLETED"]
         if unmet:
