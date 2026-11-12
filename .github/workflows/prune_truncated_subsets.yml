@@ -29,7 +29,182 @@ jobs:
           from pathlib import Path
 
           def clean_stem(name):
-              value = re.sub(r'(\(\d+\))|\.md\.md|\.md$', '', name, flags=re.IGNORECASE)
+              # Strip chained Markdown extensions/duplicate markers, e.g. .md(1).md.
+              value = re.sub(r'(?:\.md|\(\d+\))+
+
+          def is_archive_path(path):
+              return any('archive' in part.lower() for part in path.parts)
+
+          def is_exact_prefix(shorter, longer):
+              return bool(shorter) and len(shorter) < len(longer) and longer[:len(shorter)] == shorter
+
+          allowed_exts = {'.md', '.txt'}
+          ignored_dirs = {'.git', '.github'}
+          files = [
+              path for path in Path('.').rglob('*')
+              if path.is_file()
+              and path.suffix.lower() in allowed_exts
+              and not any(part in ignored_dirs for part in path.parts)
+              and not is_archive_path(path)
+              and path.name != '.gitkeep'
+          ]
+
+          active_naming_violations = []
+          for directory in Path('.').rglob('*'):
+              if not directory.is_dir() or '.git' in directory.parts:
+                  continue
+              if is_archive_path(directory):
+                  continue
+              if directory.name != '.github' and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', directory.name):
+                  active_naming_violations.append(f"directory: {directory}")
+
+          families = defaultdict(list)
+          for path in files:
+              if path.suffix.lower() in {'.docx', '.xlsx'}:
+                  continue
+              if re.search(r'(?:\.md|\(\d+\)){2,}
+                  lines = path.read_text(encoding='utf-8').splitlines()
+                  while lines and not lines[-1].strip():
+                      lines.pop()
+                  families[clean_stem(path.name)].append((str(path), lines))
+              except (OSError, UnicodeError) as exc:
+                  print(f'WARN: skipped unreadable file {path}: {exc}')
+
+          candidates = []
+          for family in families.values():
+              family.sort(key=lambda item: len(item[1]), reverse=True)
+              for i, (long_path, long_lines) in enumerate(family):
+                  for short_path, short_lines in family[i + 1:]:
+                      if is_exact_prefix(short_lines, long_lines):
+                          candidates.append((short_path, len(short_lines), long_path, len(long_lines)))
+
+          summary = [
+              '# Potentially Truncated Document Audit',
+              '',
+              '- **Mode:** READ-ONLY',
+              '- **Scope:** Active-scope Markdown and text files; archive paths are excluded.',
+              '- **Action:** No files are deleted, renamed, staged, committed, or submitted in a pull request.',
+              '- **Interpretation:** An exact line-prefix match is a review candidate, not proof that a file is safe to delete.',
+              '',
+          ]
+          for index, (short_path, short_count, long_path, long_count) in enumerate(candidates, 1):
+              summary.extend([
+                  f'## Candidate {index}: {short_path}',
+                  f'- Shorter file: {short_count} lines',
+                  f'- Longer comparison file: {long_path} ({long_count} lines)',
+                  '- Result: exact line-prefix relationship; human review required.',
+                  '',
+              ])
+          summary.extend(['---', f'**Total candidates:** {len(candidates)}', ''])
+          summary.append(f'**Active naming violations:** {len(active_naming_violations)}')
+          summary.extend(f'- {item}' for item in active_naming_violations)
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary), encoding='utf-8')
+          if active_naming_violations:
+              print('ERROR: active-directory naming violations detected:')
+              for violation in active_naming_violations:
+                  print(f' - {violation}')
+              raise SystemExit(1)
+          print(f'READ-ONLY AUDIT COMPLETE: {len(candidates)} candidate(s); zero repository mutations; naming gate passed.')
+          PY
+, '', name, flags=re.IGNORECASE)
+              return re.sub(r'[\s_\-\(\)]+', '', value).lower()
+
+          def is_archive_path(path):
+              return any('archive' in part.lower() for part in path.parts)
+
+          def is_exact_prefix(shorter, longer):
+              return bool(shorter) and len(shorter) < len(longer) and longer[:len(shorter)] == shorter
+
+          allowed_exts = {'.md', '.txt'}
+          ignored_dirs = {'.git', '.github'}
+          files = [
+              path for path in Path('.').rglob('*')
+              if path.is_file()
+              and path.suffix.lower() in allowed_exts
+              and not any(part in ignored_dirs for part in path.parts)
+              and not is_archive_path(path)
+              and path.name != '.gitkeep'
+          ]
+
+          families = defaultdict(list)
+          for path in files:
+              try:
+                  lines = path.read_text(encoding='utf-8').splitlines()
+                  while lines and not lines[-1].strip():
+                      lines.pop()
+                  families[clean_stem(path.name)].append((str(path), lines))
+              except (OSError, UnicodeError) as exc:
+                  print(f'WARN: skipped unreadable file {path}: {exc}')
+
+          candidates = []
+          for family in families.values():
+              family.sort(key=lambda item: len(item[1]), reverse=True)
+              for i, (long_path, long_lines) in enumerate(family):
+                  for short_path, short_lines in family[i + 1:]:
+                      if is_exact_prefix(short_lines, long_lines):
+                          candidates.append((short_path, len(short_lines), long_path, len(long_lines)))
+
+          summary = [
+              '# Potentially Truncated Document Audit',
+              '',
+              '- **Mode:** READ-ONLY',
+              '- **Scope:** Active-scope Markdown and text files; archive paths are excluded.',
+              '- **Action:** No files are deleted, renamed, staged, committed, or submitted in a pull request.',
+              '- **Interpretation:** An exact line-prefix match is a review candidate, not proof that a file is safe to delete.',
+              '',
+          ]
+          for index, (short_path, short_count, long_path, long_count) in enumerate(candidates, 1):
+              summary.extend([
+                  f'## Candidate {index}: {short_path}',
+                  f'- Shorter file: {short_count} lines',
+                  f'- Longer comparison file: {long_path} ({long_count} lines)',
+                  '- Result: exact line-prefix relationship; human review required.',
+                  '',
+              ])
+          summary.extend(['---', f'**Total candidates:** {len(candidates)}', ''])
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary), encoding='utf-8')
+          print(f'READ-ONLY AUDIT COMPLETE: {len(candidates)} candidate(s); zero repository mutations.')
+          PY
+, path.name, re.IGNORECASE):
+                  active_naming_violations.append(f"file: {path}")
+              try:
+                  lines = path.read_text(encoding='utf-8').splitlines()
+                  while lines and not lines[-1].strip():
+                      lines.pop()
+                  families[clean_stem(path.name)].append((str(path), lines))
+              except (OSError, UnicodeError) as exc:
+                  print(f'WARN: skipped unreadable file {path}: {exc}')
+
+          candidates = []
+          for family in families.values():
+              family.sort(key=lambda item: len(item[1]), reverse=True)
+              for i, (long_path, long_lines) in enumerate(family):
+                  for short_path, short_lines in family[i + 1:]:
+                      if is_exact_prefix(short_lines, long_lines):
+                          candidates.append((short_path, len(short_lines), long_path, len(long_lines)))
+
+          summary = [
+              '# Potentially Truncated Document Audit',
+              '',
+              '- **Mode:** READ-ONLY',
+              '- **Scope:** Active-scope Markdown and text files; archive paths are excluded.',
+              '- **Action:** No files are deleted, renamed, staged, committed, or submitted in a pull request.',
+              '- **Interpretation:** An exact line-prefix match is a review candidate, not proof that a file is safe to delete.',
+              '',
+          ]
+          for index, (short_path, short_count, long_path, long_count) in enumerate(candidates, 1):
+              summary.extend([
+                  f'## Candidate {index}: {short_path}',
+                  f'- Shorter file: {short_count} lines',
+                  f'- Longer comparison file: {long_path} ({long_count} lines)',
+                  '- Result: exact line-prefix relationship; human review required.',
+                  '',
+              ])
+          summary.extend(['---', f'**Total candidates:** {len(candidates)}', ''])
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary), encoding='utf-8')
+          print(f'READ-ONLY AUDIT COMPLETE: {len(candidates)} candidate(s); zero repository mutations.')
+          PY
+, '', name, flags=re.IGNORECASE)
               return re.sub(r'[\s_\-\(\)]+', '', value).lower()
 
           def is_archive_path(path):
