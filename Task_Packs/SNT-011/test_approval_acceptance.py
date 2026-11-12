@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 from datetime import datetime, timezone
 
@@ -24,7 +25,8 @@ def approval(**overrides):
         "scope": {"path": "target.md", "namespace": "test"},
         "action": "overwrite",
         "payload_revision": "rev-1",
-        "payload_digest": "digest-1",
+        "payload_digest": hashlib.sha256(b"payload-v1").hexdigest(),
+        "digest_algorithm": "sha256",
         "expected_state": {"revision": "rev-1"},
         "rollback_path": "restore-rev-0",
         "verification_receipt_id": "REC-001",
@@ -39,13 +41,23 @@ def approval(**overrides):
 def request(**overrides):
     record = approval()
     values = record.binding_fields()
+    values["payload_bytes"] = b"payload-v1"
     values["verification_result"] = "PASS"
     values.update(overrides)
     return ApprovalRequest(**values)
 
 
 class ApprovalTests(unittest.TestCase):
-    def test_approval_request_requires_explicit_verification_receipt(self):
+    def test_approval_request_defaults_to_pending_and_rejects_omitted_result(self):
+        values = approval().binding_fields()
+        values["payload_bytes"] = b"payload-v1"
+        candidate = ApprovalRequest(**values)
+        self.assertEqual(candidate.verification_result, "PENDING")
+        allowed, reasons = validate_approval(approval(), candidate, now=NOW)
+        self.assertFalse(allowed)
+        self.assertIn("APPROVAL_NOT_VERIFIED", reasons)
+
+    def test_approval_request_requires_payload_bytes(self):
         with self.assertRaises(TypeError):
             ApprovalRequest(**approval().binding_fields())
 
@@ -72,18 +84,37 @@ class ApprovalTests(unittest.TestCase):
         self.assertIn("APPROVAL_CONSUMED", reasons)
 
     def test_non_pass_receipt_cannot_authorize(self):
-        allowed, reasons = validate_approval(approval(), request(verification_result="PARTIAL"), now=NOW)
+        for result in ("FAIL", "PARTIAL", "PENDING"):
+            with self.subTest(result=result):
+                allowed, reasons = validate_approval(approval(), request(verification_result=result), now=NOW)
+                self.assertFalse(allowed)
+                self.assertIn("APPROVAL_NOT_VERIFIED", reasons)
+
+    def test_payload_digest_is_independently_derived_from_bytes(self):
+        candidate = request(payload_digest="0" * 64)
+        self.assertEqual(candidate.computed_payload_digest(), hashlib.sha256(b"payload-v1").hexdigest())
+        allowed, reasons = validate_approval(approval(), candidate, now=NOW)
         self.assertFalse(allowed)
-        self.assertIn("APPROVAL_NOT_VERIFIED", reasons)
+        self.assertIn("APPROVAL_MISMATCH", reasons)
+
+    def test_unsupported_digest_algorithm_fails_closed(self):
+        allowed, reasons = validate_approval(
+            approval(), request(digest_algorithm="md5"), now=NOW
+        )
+        self.assertFalse(allowed)
+        self.assertIn("APPROVAL_UNSUPPORTED", reasons)
 
 
 class AcceptanceTests(unittest.TestCase):
-    def test_submission_requires_explicit_verification_result(self):
-        with self.assertRaises(TypeError):
-            DeliverableSubmission(
-                task_id="TASK-001", deliverable_id="DEL-001", revision="rev-1",
-                producer_id="operator", coordinator_id="manager", verifier_id="verifier"
-            )
+    def test_submission_defaults_to_pending_and_is_rejected_without_explicit_pass(self):
+        candidate = DeliverableSubmission(
+            task_id="TASK-001", deliverable_id="DEL-001", revision="rev-1",
+            producer_id="operator", coordinator_id="manager", verifier_id="verifier"
+        )
+        self.assertEqual(candidate.verification_result, "PENDING")
+        result = evaluate_acceptance(self.contract(), candidate)
+        self.assertEqual(result.status, "REJECTED")
+        self.assertIn("VERIFICATION_NOT_PASS", result.reason_codes)
 
     def contract(self, level_d_required=False):
         return DeliverableContract(
