@@ -39,8 +39,8 @@ class IntakeStateTests(unittest.TestCase):
         }
         state = TaskStateManager(data)
         fields = {
-            "task_id": "TASK-001", "proposal_id": "PROP-001", "target": "target.md",
-            "scope": {"path": "target.md"}, "action": "overwrite", "payload_revision": "rev-1",
+            "task_id": "TASK-001", "proposal_id": "PROP-001", "target": "work-package:mutate",
+            "scope": {"work_package": "mutate"}, "action": "overwrite", "payload_revision": "rev-1",
             "payload_digest": hashlib.sha256(b"runtime-payload").hexdigest(),
             "digest_algorithm": "sha256", "expected_state": {"revision": "rev-1"},
             "rollback_path": "restore-rev-0", "verification_receipt_id": "REC-001",
@@ -108,8 +108,8 @@ class IntakeStateTests(unittest.TestCase):
         }
         state = TaskStateManager(data)
         fields = {
-            "task_id": "TASK-WIP1", "proposal_id": "PROP-WIP1", "target": "target.bin",
-            "scope": {"path": "target.bin"}, "action": "overwrite",
+            "task_id": "TASK-WIP1", "proposal_id": "PROP-WIP1", "target": "work-package:mutate-a",
+            "scope": {"work_package": "mutate-a"}, "action": "overwrite",
             "payload_revision": "rev-1",
             "payload_digest": hashlib.sha256(b"runtime-payload").hexdigest(),
             "digest_algorithm": "sha256", "expected_state": {"revision": "rev-1"},
