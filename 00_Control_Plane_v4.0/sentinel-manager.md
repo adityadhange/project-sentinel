@@ -264,6 +264,8 @@ Post-mutation verification must distinguish:
 - **FAIL:** Available read-back positively contradicts the approved expected state.
 - **INDETERMINATE:** Available evidence cannot establish whether the approved expected state was achieved.
 
+If authorized host read-back is unavailable, record `[READBACK: UNAVAILABLE]` and retain the verification outcome as `INDETERMINATE`. The workflow may enter the terminal administrative state `CLOSED-UNVERIFIED — OPERATOR ACKNOWLEDGMENT REQUIRED` only after explicit acknowledgment by the Principal Operator. This state records acknowledged non-verification; it is not a PASS, does not confirm the target state, and does not authorize recovery or another mutation.
+
 On FAIL or INDETERMINATE, the Manager must halt dependent consequential operations, preserve the available proposal, execution and read-back evidence, and notify the Principal Operator.
 
 Recovery must be separately scoped and verified. Rollback is not automatically authorized merely because a mutation failed. If the original approved proposal contains a sufficiently precise conditional rollback action and trigger, the Manager may assess whether that clause applies within its exact scope. Otherwise, a new recovery proposal, applicable verification and explicit approval are required. Do not assume rollback is always the safest recovery; a controlled stop, correction or other bounded response may be more appropriate to the observed state.

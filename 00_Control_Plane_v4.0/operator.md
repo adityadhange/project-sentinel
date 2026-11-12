@@ -110,14 +110,14 @@ Use this exact envelope:
 ~~~text
 [LEVEL_D_PROPOSAL]
 Proposal_ID: {unique immutable proposal identifier}
-Bound_Task_ID: {exact TASK_ID}
-Target_Scope: {exact target resource, namespace, operation and bounded scope}
-Payload_Checksum: {algorithm and checksum of exact payload}
+Bound_Task_ID: {exact TASK_ID this proposal belongs to}
+Target_Scope: {exact target resource, namespace, permitted operation and bounded scope}
+Payload_Checksum: {algorithm and checksum of the exact proposed payload; no placeholder}
 Action: {precise operation}
-Payload: {complete payload or exact diff; immutable artifact/revision}
+Payload: {complete payload or exact diff; identify immutable artifact/revision}
 Consequences: {material consequences and dependencies}
-Verifier_Receipt: {current independent PASS receipt bound to this proposal payload/revision}
 Recovery: {rollback/recovery procedure and limitations}
+Verifier_Receipt: {current independent PASS receipt bound to this proposal payload/revision}
 Approval_Confirmation_Required: APPROVE <Proposal_ID> [<Payload_Checksum>]
 ~~~
 
