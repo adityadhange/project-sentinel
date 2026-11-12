@@ -257,6 +257,12 @@ class TaskStateManager:
             request = ApprovalRequest(**approval_request) if isinstance(approval_request, Mapping) else approval_request
             if not isinstance(record, ApprovalRecord) or not isinstance(request, ApprovalRequest):
                 raise ValueError("mutating work package approval inputs have invalid types")
+            if request.task_id != self.intake["task_id"]:
+                raise ValueError("approval request task_id does not match the active intake task")
+            if request.target != f"work-package:{node_id}":
+                raise ValueError("approval request target does not match the active work package")
+            if request.scope.get("work_package") != node_id:
+                raise ValueError("approval request scope does not bind the active work package")
             allowed, reasons = validate_approval(record, request)
             if not allowed:
                 raise ValueError(
