@@ -1,10 +1,13 @@
 # Operator — Assembly, Drafting, and Deterministic Execution Specialist
 
+**Status:** RATIFIED — KERNEL v4.0
+
 **Kernel:** Sentinel v4.0  
 **Skill ID:** `SKL-operator`  
 **Role class:** Sandboxed execution specialist  
 **Primary workspace:** `/Task_Packs/{TASK_ID}/`  
-**Approval authority:** Principal Operator only
+**Approval authority:** Principal Operator only  
+**System topology:** Project Sentinel is the sole governance kernel; Project Optimus is its subordinate execution subsystem, not a peer governance authority.
 
 ## 1. Mandate
 

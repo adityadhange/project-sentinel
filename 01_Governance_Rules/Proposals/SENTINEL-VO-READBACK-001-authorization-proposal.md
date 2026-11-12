@@ -6,7 +6,7 @@
 
 **Historical repository baseline used for the initial draft:** `adityadhange/project-sentinel`, `main`, commit [`1a10b57562a1ae0f4c5bef37cf818c4af3e26887`](https://github.com/adityadhange/project-sentinel/commit/1a10b57562a1ae0f4c5bef37cf818c4af3e26887). This is not the current repository head. **Reconciliation baseline for this revision:** `main`, commit [`3d486af0c99531d1909e466ea1ff2ae03904e0db`](https://github.com/adityadhange/project-sentinel/commit/3d486af0c99531d1909e466ea1ff2ae03904e0db) (2026-11-10). Re-check the live head and relevant file SHAs before any future execution; this recorded SHA is a revision snapshot, not a permanent authorization target.
 
-**Proposal status:** DRAFT — AWAITING PRINCIPAL OPERATOR APPROVAL
+**Proposal status:** NON-AUTHORITATIVE / DRAFT — AWAITING PRINCIPAL OPERATOR APPROVAL
 
 **Change type:** Host-side permission design, controlled test-harness execution, and evidence capture. This proposal does not itself authorize repository changes, production activation, or consequential mutations.
 
@@ -29,9 +29,9 @@ This proposal is subordinate to the existing Sentinel governance boundaries and 
 
 Relevant repository sources:
 
-- [`v4.0_verifier-officer.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/01%20-%20SOURCE%20ARCHIVE/Organized_Legacy_Versions/Kernel%20v4.0/v4.0_verifier-officer.md), especially §§4–8.
-- [`RUL-Capability_Permissions_Matrix (Kernel v4.0).md.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/01%20-%20SOURCE%20ARCHIVE/Organized_Legacy_Versions/Kernel%20v4.0/RUL-Capability_Permissions_Matrix%20%28Kernel%20v4.0%29.md.md), §2.1.
-- [`RUL-Shared_Governance_Contract (Kernel v4.0).md.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/01%20-%20SOURCE%20ARCHIVE/Organized_Legacy_Versions/Kernel%20v4.0/RUL-Shared_Governance_Contract%20%28Kernel%20v4.0%29.md.md), §1.1.
+- [`v4.0_verifier-officer.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/02_Archive_Legacy/Organized_Legacy_Versions/Kernel%20v4.0/v4.0_verifier-officer.md), especially §§4–8.
+- [`RUL-Capability_Permissions_Matrix (Kernel v4.0).md.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/02_Archive_Legacy/Organized_Legacy_Versions/Kernel%20v4.0/RUL-Capability_Permissions_Matrix%20%28Kernel%20v4.0%29.md.md), §2.1.
+- [`RUL-Shared_Governance_Contract (Kernel v4.0).md.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/02_Archive_Legacy/Organized_Legacy_Versions/Kernel%20v4.0/RUL-Shared_Governance_Contract%20%28Kernel%20v4.0%29.md.md), §1.1.
 - [`MANAGER-RECONCILIATION-RECORD.md`](https://github.com/adityadhange/project-sentinel/blob/1a10b57562a1ae0f4c5bef37cf818c4af3e26887/02%20-%20MIGRATION%20%26%20RECONCILIATION/03%20-%20Duplicate%20%26%20Version%20Reconciliation/MANAGER-RECONCILIATION-RECORD.md), platform-enforcement limitations.
 
 ## 3. Exact scope of the proposed authorization

@@ -1,5 +1,10 @@
 # PROJECT SENTINEL — SYSTEM CONTROL PLANE (KERNEL v4.0)
 
+**Document ID:** ROOT-GEMINI-001  
+**Version:** 4.0.0  
+**Status:** RATIFIED  
+**Approved By:** Principal Operator Aditya Vijay Dhange
+
 **Principal Operator:** Aditya Vijay Dhange  
 **System authority:** Project Sentinel is the sole governance kernel and system control plane. Optimus, where used, is a subordinate orchestration subsystem within Sentinel's execution plane—not a peer governance authority.
 
@@ -22,8 +27,9 @@ Use these canonical specifications:
 5. [critical-analyst.md](00_Control_Plane_v4.0/critical-analyst.md) — conditional adversarial stress-testing, opposing-party steelmanning and pre-mortem analysis.
 6. [co-developer.md](00_Control_Plane_v4.0/co-developer.md) — offline Class M meta-architecture, empirical evaluation and lean compilation advisory; not a live runtime executor.
 7. [IDENTIFIER_NAMING_STANDARD.md](00_Control_Plane_v4.0/IDENTIFIER_NAMING_STANDARD.md) — canonical specialist and role identifier conventions.
+8. [VERIFICATION_TRACEABILITY_MATRIX.md](00_Control_Plane_v4.0/VERIFICATION_TRACEABILITY_MATRIX.md) — canonical requirements-to-evidence traceability, status and open verification-gap index.
 
-These seven documents are the explicit active control-plane references. Do not silently substitute another directory, legacy filename, or historical persona definition. The Co-Developer remains an offline advisory channel outside the live execution DAG.
+These eight documents are the explicit active control-plane references. Do not silently substitute another directory, legacy filename, or historical persona definition. The Co-Developer remains an offline advisory channel outside the live execution DAG.
 
 ### Living governance policies
 
@@ -109,11 +115,12 @@ Record the inputs, units, method and outputs needed for independent reproduction
 
 Apply the following order when instructions or records conflict:
 
-1. Explicit current Principal Operator instruction, within applicable safety and platform limits.
-2. Applicable living governance policy in `01_Governance_Rules/`.
-3. Ratified Kernel v4.0 invariants and the canonical specifications in `00_Control_Plane_v4.0/`.
-4. Task-specific instructions and artifacts within the authorized task pack.
-5. Historical or archived material, which is context only and never overrides active authority.
+0. **Root authority anchor — this `GEMINI.md` document (ROOT-GEMINI-001, Version 4.0.0, RATIFIED).** This file defines the repository's source-precedence hierarchy and active instruction boundaries. No lower-level repository document may rewrite or supersede this hierarchy by self-declaration.
+1. **Explicit current Principal Operator instruction**, within applicable safety and platform limits and subject to platform and safety constraints.
+2. **Binding living governance policy** in `01_Governance_Rules/`, but only where the individual document explicitly carries status `RATIFIED` or `APPROVED`. A document marked `DRAFT`, `NON-AUTHORITATIVE`, `CANDIDATE`, `UNDER REVIEW`, `OPEN`, or with an unconfirmed status is not binding policy and cannot grant authority. The `01_Governance_Rules/Proposals/` directory and `GOV-002 — AI AUTHORITY AND RESPONSIBILITY FRAMEWORK` are explicitly `NON-AUTHORITATIVE / DRAFT` unless separately ratified by a recorded Principal Operator decision.
+3. **Ratified Kernel v4.0 invariants and canonical specifications** in `00_Control_Plane_v4.0/`.
+4. **Task-specific instructions and artifacts** within the authorized task pack, provided they do not conflict with Levels 0–3.
+5. **Historical or archived material** in `02_Archive_Legacy/`, which is context only and never overrides active authority.
 
 If two active authoritative sources conflict, do not silently choose or synthesize a new rule. Identify the exact conflict, preserve both source references, halt the affected action, and request the required governance disposition.
 

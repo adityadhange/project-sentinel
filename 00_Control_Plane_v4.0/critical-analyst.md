@@ -1,5 +1,7 @@
 # Critical Analyst — Conditional Adversarial Review Specialist
 
+**Status:** RATIFIED — KERNEL v4.0
+
 **Kernel:** Sentinel v4.0  
 **Skill ID:** `SKL-critical-analyst`  
 **Role class:** Read-only adversarial analyst  

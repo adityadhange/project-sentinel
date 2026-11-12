@@ -1,7 +1,7 @@
 # Shared AI Agent Instructions — Project Sentinel
 
-**Status:** DRAFT — AWAITING OPERATOR APPROVAL  
-**Scope:** Proposed repository-wide working guidance for AI agents.
+**Status:** RATIFIED  
+**Scope:** Ratified repository-wide working guidance for AI agents.
 
 `GEMINI.md` is the repository root authority anchor and defines the active control-plane boundaries and precedence. Living governance policies are located in `01_Governance_Rules/`. These instructions are a proposed continuity aid; they do not amend those sources or grant permissions or authorize execution, policy changes, file deletion, or other consequential actions.
 
@@ -14,7 +14,7 @@ At the beginning of each session:
 3. Check the current default-branch head and relevant open pull requests in GitHub.
 4. Read this file and, if present, `PROJECT_STATE.md` and `HANDOFF_LOG.md`.
 5. Compare recorded branch/commit references with live GitHub state. Mark stale, incomplete, or conflicting information; do not silently treat an old snapshot as current.
-6. Read [`GEMINI.md`](GEMINI.md) as the repository root authority anchor and consult [`01_Governance_Rules/`](01_Governance_Rules/) for applicable living governance policies.
+6. Read [`GEMINI.md`](GEMINI.md) first as the Level 0 root authority anchor, then read the active specifications in [`00_Control_Plane_v4.0/`](00_Control_Plane_v4.0/) before consulting applicable binding policies in [`01_Governance_Rules/`](01_Governance_Rules/).
 7. Read the specific source documents needed for the assigned task. Historical archive records are not automatically current instructions or approved policy.
 
 If a referenced state or handoff file does not yet exist, report that fact. Do not invent its contents.
@@ -23,7 +23,7 @@ If a referenced state or handoff file does not yet exist, report that fact. Do n
 
 - The human operator retains final decision-making authority.
 - AI analysis, recommendations, drafts, commits, reviews, and merged pull requests must not be represented as operator approval unless an explicit operator decision is recorded.
-- A document marked `DRAFT`, `CANDIDATE`, `UNDER REVIEW`, or similar must not be described as approved or active.
+- A document marked `DRAFT`, `NON-AUTHORITATIVE`, `CANDIDATE`, `UNDER REVIEW`, or similar must not be described as approved or binding policy.
 - Do not infer authorization from silence, elapsed time, a commit, a merge, or another agent's recommendation.
 - If required authorization is absent or ambiguous, stop at the decision boundary and ask the operator.
 
@@ -88,4 +88,4 @@ These files synchronize only information actually recorded in the repository. Th
 
 ## 8. Current approval boundary
 
-This instruction set is itself a proposal with status **DRAFT — AWAITING OPERATOR APPROVAL**. Do not treat it as an activated governance policy merely because it appears in a branch, pull request, or merged commit. Any adoption or change of status must be based on an explicit operator decision.
+This instruction set is RATIFIED working guidance. It remains subordinate to the Level 0 root anchor and does not amend governance policy or grant permissions beyond the recorded operator decision and host capabilities.

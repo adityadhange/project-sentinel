@@ -3,7 +3,7 @@
 **Document ID:** GOV-003  
 **Version:** 1.0  
 **Status:** RATIFIED — KERNEL v4.0 BASELINE by Principal Operator Aditya Vijay Dhange  
-**Document Class:** Governance / Proposed Control Procedure
+**Document Class:** Ratified Control Procedure
 
 ## 1. Purpose
 
@@ -41,6 +41,7 @@ The following status labels govern controlled repository documents:
 
 | Status | Meaning |
 |---|---|
+| RATIFIED | Formally adopted by an explicit Principal Operator ratification disposition; binding within the recorded scope |
 | DRAFT — AWAITING OPERATOR APPROVAL | Proposed content not yet approved |
 | UNDER REVIEW | Submitted for examination; not approved |
 | APPROVED | Explicitly approved by the operator, with a traceable approval record |
@@ -154,6 +155,7 @@ This document establishes the ratified document-control procedure for the Kernel
 
 - **Decision:** RATIFIED — KERNEL v4.0 BASELINE.
 - **Approving authority:** Principal Operator Aditya Vijay Dhange.
+- **Baseline ratification disposition:** The Principal Operator expressly ratified GOV-003 as part of the Kernel v4.0 baseline; this recorded disposition is the source of its RATIFIED status and binding scope.
 - **Decision date:** 2026-11-12.
 - **Scope:** GOV-003, Version 1.0, including the controlled document lifecycle, review, approval, read-back, and preservation procedure.
 - **Traceability:** Explicit Principal Operator instruction issued for the repository remediation on branch `fix/governance-and-ci-reconciliation`; this branch and its resulting pull request preserve the implementation record.
