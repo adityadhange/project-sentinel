@@ -77,28 +77,28 @@ A search of the active v4.0 control-plane documents found no explicit references
 
 | Mechanism | Archived v3.6 concept (short label) | Active v4.0 comparison | Identifier-level migration status |
 |---|---|---|---|
-| M-0367 | Prompt instruction/context separation | No explicit equivalent identified | **Unmapped** |
-| M-0368 | 70/20/10 token allocation | No equivalent allocation identified | **Unmapped** |
-| M-0369 | Reliability badges and numeric scores | Epistemic tags exist, but not this scoring format | **Modified / not carried forward as-is** |
-| M-0370 | Bounded retry and diagnostic routing | Two-strike handling and specialist routing overlap | **Partial** |
-| M-0371 | Last-five-turn memory and no external state | Task-pack state/continuity differs materially | **Conflicting / not carried forward as-is** |
-| M-0372 | Retrieve and verify before execution | Researcher primary-source and evidence-gap rules overlap | **Partial** |
-| M-0373 | Binary PASS/FAIL output | v4.0 also uses PARTIAL and INDETERMINATE | **Modified** |
-| M-0374 | Three-state interactive loop | No explicit equivalent identified | **Unmapped** |
-| M-0375 | Multipart input buffering | No explicit equivalent identified | **Unmapped** |
-| M-0376 | Risk classification | Conditional Critical Analyst activation and Manager routing overlap | **Partial** |
-| M-0377 | Three-lines-of-defence model | Independent Verifier and role separation exist; no complete equivalent formal model identified | **Partial** |
-| M-0378 | Ex-ante/ex-post security controls | Untrusted-source handling exists; full lifecycle not mapped | **Partial** |
-| M-0379 | `<leapArtifact>` patch wrapper | No equivalent identified | **Unmapped** |
-| M-0380 | Compressed URI references | No equivalent identified; provenance/locators handled differently | **Not carried forward as-is** |
-| M-0381 | Incomplete Assistant-prefix prompting | No equivalent identified | **Not carried forward as-is** |
-| M-0382 | Fidelity-score apoptosis | Mechanism evaluation states exist; same threshold/automatic archival rule not identified | **Modified** |
-| M-0383 | Fixed five-section prompt anatomy | No universal equivalent identified | **Not carried forward as-is** |
-| M-0384 | Model-specific syntax routing | No explicit equivalent identified | **Unmapped** |
-| M-0385 | Stripping subjective modifiers | Evidence/testability requirements overlap, but no equivalent rule identified | **Partial** |
-| M-0386 | `<think>` XML delimiters | No equivalent identified | **Not carried forward as-is** |
-| M-0387 | Bias toward action | Action-oriented routing exists subject to approval gates | **Partial; subordinate to authority controls** |
-| M-0388 | One terminal command at a time | No explicit universal equivalent identified | **Unmapped** |
+| M-0367 | Prompt instruction/context separation | No explicit equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0368 | 70/20/10 token allocation | No equivalent allocation identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0369 | Reliability badges and numeric scores | Epistemic tags exist, but not this scoring format | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0370 | Bounded retry and diagnostic routing | Two-strike handling and specialist routing overlap | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0371 | Last-five-turn memory and no external state | Task-pack state/continuity differs materially | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0372 | Retrieve and verify before execution | Researcher primary-source and evidence-gap rules overlap | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0373 | Binary PASS/FAIL output | v4.0 also uses PARTIAL and INDETERMINATE | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0374 | Three-state interactive loop | No explicit equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0375 | Multipart input buffering | No explicit equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0376 | Risk classification | Conditional Critical Analyst activation and Manager routing overlap | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0377 | Three-lines-of-defence model | Independent Verifier and role separation exist; no complete equivalent formal model identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0378 | Ex-ante/ex-post security controls | Untrusted-source handling exists; full lifecycle not mapped | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0379 | `<leapArtifact>` patch wrapper | No equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0380 | Compressed URI references | No equivalent identified; provenance/locators handled differently | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0381 | Incomplete Assistant-prefix prompting | No equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0382 | Fidelity-score apoptosis | Mechanism evaluation states exist; same threshold/automatic archival rule not identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0383 | Fixed five-section prompt anatomy | No universal equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0384 | Model-specific syntax routing | No explicit equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0385 | Stripping subjective modifiers | Evidence/testability requirements overlap, but no equivalent rule identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0386 | `<think>` XML delimiters | No equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0387 | Bias toward action | Action-oriented routing exists subject to approval gates | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
+| M-0388 | One terminal command at a time | No explicit universal equivalent identified | **NOT VERIFIABLE at identifier level** — conceptual comparison only; no item-level migration map or authorized disposition located |
 
 The archive's `active` labels do not establish active v4.0 status. Each mechanism requires an explicit disposition by the authorized decision-maker: retained, modified, rejected, superseded, or unproven. No such disposition is made by this working paper.
 
