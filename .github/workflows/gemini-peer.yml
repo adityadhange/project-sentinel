@@ -19,7 +19,8 @@ jobs:
       ${{ github.event.sender.type == 'User' &&
           github.event.comment.author_association == 'OWNER' &&
           github.event.issue.pull_request == null &&
-          startsWith(github.event.comment.body, '@gemini-cli plan:') }}
+          startsWith(github.event.comment.body, '@gemini-cli plan:') &&
+          !startsWith(github.event.comment.body, '@gemini-cli plan: WD-002-HASH') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
