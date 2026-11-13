@@ -109,6 +109,7 @@ The following are outside this MVP proposal:
 - Production Level D mutation execution. The MVP may validate and record a proposal/approval state only; it does not execute the action.
 - Changes to host permissions, credentials, secrets, workflow permissions, governance policy, or canonical role specifications.
 - A claim that local application checks enforce all execution paths or prevent bypass through host tools, APIs, retries, delegation, or alternate entry points.
+- Production deployment, production operation, service-level commitments, or designation of this proposal/reference code as a production-ready runtime.
 - Multi-user, multi-tenant, distributed, cloud-hosted, or high-availability deployment.
 - A web dashboard, mobile application, browser extension, or polished graphical interface.
 - Autonomous agent dispatch or a production Optimus runtime. Assignment/handoff records may be represented, but real dispatch is not a required MVP capability.
