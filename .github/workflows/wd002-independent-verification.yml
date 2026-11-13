@@ -86,7 +86,7 @@ jobs:
               "\n\nIdentifier inventory:\n" + "\n".join(ids) + "\n",
               encoding="utf-8")
           mechanisms = sorted(set(re.findall(r"M-03\d{2}", p.read_text())))
-          expected = [f"M-{i}" for i in range(367,389)]
+          expected = [f"M-{i:04d}" for i in range(367,389)]
           if mechanisms != expected:
               raise SystemExit(f"Mechanism ID inventory mismatch: expected {expected}, got {mechanisms}")
           if 16 + 15 + 5 + 7 + 16 != 59:
