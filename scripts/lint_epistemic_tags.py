@@ -25,7 +25,7 @@ def check_block(path, line_no, lines):
     tags = TAG_RE.findall(raw)
     if not tags:
         return [f"{path}:{line_no}: untagged assertion; add one exact canonical epistemic tag: {', '.join(sorted(TAGS))}"]
-    invalid = [tag for tag in tags if tag.upper() not in {item.upper() for item in TAGS}]
+    invalid = [tag for tag in tags if tag not in TAGS]
     if invalid:
         return [f"{path}:{line_no}: invalid/manufactured epistemic tag {invalid[0]!r}; use an exact canonical tag"]
     if len({tag.upper() for tag in tags}) != 1:
