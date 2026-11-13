@@ -87,8 +87,8 @@ jobs:
           missing = sorted(required - receipt.keys())
           if missing:
               fail("Receipt is missing required fields: " + ", ".join(missing))
-          if receipt["schema_version"] != 1:
-              fail("Unsupported receipt schema_version; expected 1.")
+          if type(receipt["schema_version"]) is not int or receipt["schema_version"] != 1:
+              fail("Unsupported receipt schema_version; expected integer 1.")
           if receipt["candidate_commit"] != head:
               fail("Receipt candidate_commit does not match this PR head SHA.")
           if receipt["scope"] != "sentinel-control-plane":
