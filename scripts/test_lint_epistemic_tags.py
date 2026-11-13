@@ -27,6 +27,10 @@ class EpistemicLintTests(unittest.TestCase):
         errors = lint_text("[FACT: VERIFIED] The record is authentic. [Q1]")
         self.assertTrue(any("invalid/manufactured" in e for e in errors))
 
+    def test_lowercase_tag_fails(self):
+        errors = lint_text("[fact: primary_verified] The record is authentic. [Q1]")
+        self.assertTrue(any("invalid/manufactured" in e for e in errors))
+
     def test_missing_locator_fails(self):
         errors = lint_text("[FACT: PRIMARY_VERIFIED] The record is authentic.")
         self.assertTrue(any("lacks a concrete citation locator" in e for e in errors))
