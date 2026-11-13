@@ -1,0 +1,170 @@
+name: Verifier Receipt Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "00_Control_Plane_v4.0/**"
+      - ".github/audits/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verifier-receipt-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify-receipt:
+    name: Verify immutable Verifier receipt
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact PR head and required history
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate base-anchored verification receipt and artifact SHA-256
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          import subprocess
+          import sys
+          from datetime import datetime
+
+          base = os.environ["BASE_SHA"]
+          head = os.environ["HEAD_SHA"]
+          pr_author = os.environ["PR_AUTHOR"]
+
+          def fail(message):
+              print(f"::error::{message}")
+              sys.exit(1)
+
+          if not re.fullmatch(r"[0-9a-f]{40}", base):
+              fail("Invalid PR base commit SHA.")
+          if not re.fullmatch(r"[0-9a-f]{40}", head):
+              fail("Invalid PR head commit SHA.")
+
+          # The receipt must already exist in the immutable base-commit tree.
+          # A receipt added or modified by the PR itself is never trusted.
+          receipt_path = f".github/verification-receipts/{head}.json"
+          receipt_result = subprocess.run(
+              ["git", "show", f"{base}:{receipt_path}"],
+              check=False, capture_output=True
+          )
+          if receipt_result.returncode != 0:
+              fail(
+                  f"Missing base-branch verification receipt: {receipt_path}. "
+                  "The Verifier must publish the receipt to the protected base branch "
+                  "after independently reviewing this exact candidate commit."
+              )
+
+          try:
+              receipt = json.loads(receipt_result.stdout.decode("utf-8"))
+          except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+              fail(f"Receipt is not valid UTF-8 JSON: {exc}")
+
+          required = {
+              "schema_version", "candidate_commit", "artifact_sha256",
+              "scope", "result", "verifier", "issued_at", "receipt_id"
+          }
+          if not isinstance(receipt, dict):
+              fail("Receipt root must be a JSON object.")
+          missing = sorted(required - receipt.keys())
+          if missing:
+              fail("Receipt is missing required fields: " + ", ".join(missing))
+          if receipt["schema_version"] != 1:
+              fail("Unsupported receipt schema_version; expected 1.")
+          if receipt["candidate_commit"] != head:
+              fail("Receipt candidate_commit does not match this PR head SHA.")
+          if receipt["scope"] != "sentinel-control-plane":
+              fail("Receipt scope must be 'sentinel-control-plane'.")
+          if receipt["result"] != "PASS":
+              fail("Receipt result must be PASS.")
+          if not isinstance(receipt["verifier"], str) or not receipt["verifier"].strip():
+              fail("Receipt verifier identity is missing.")
+          if receipt["verifier"].strip().casefold() == pr_author.strip().casefold():
+              fail("Receipt verifier must not be the PR author.")
+          if not isinstance(receipt["receipt_id"], str) or not receipt["receipt_id"].strip():
+              fail("Receipt ID is missing.")
+          if not isinstance(receipt["issued_at"], str):
+              fail("Receipt issued_at must be an ISO-8601 timestamp.")
+          try:
+              datetime.fromisoformat(receipt["issued_at"].replace("Z", "+00:00"))
+          except ValueError:
+              fail("Receipt issued_at is not a valid ISO-8601 timestamp.")
+          expected_hash = receipt["artifact_sha256"]
+          if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+              fail("Receipt artifact_sha256 must be 64 lowercase hexadecimal characters.")
+
+          # Hash the complete PR delta within the protected scope. Include file
+          # status and path, so additions, modifications, renames and deletions
+          # are all bound to the receipt. --no-renames represents a rename as
+          # a deletion plus an addition, avoiding ambiguous rename parsing.
+          diff = subprocess.run(
+              [
+                  "git", "diff", "--name-status", "-z", "--no-renames",
+                  f"{base}...{head}", "--",
+                  "00_Control_Plane_v4.0", ".github/audits"
+              ],
+              check=True, capture_output=True
+          ).stdout
+          fields = diff.split(b"\0")
+          if fields and fields[-1] == b"":
+              fields.pop()
+          if len(fields) % 2:
+              fail("Unable to parse scoped PR file manifest.")
+          entries = []
+          for index in range(0, len(fields), 2):
+              status = fields[index].decode("ascii", errors="strict")
+              path_bytes = fields[index + 1]
+              path = path_bytes.decode("utf-8", errors="strict")
+              if status not in {"A", "M", "D", "T"}:
+                  fail(f"Unsupported diff status {status!r} for {path!r}.")
+              if status == "D":
+                  content_digest = "DELETED"
+              else:
+                  blob = subprocess.run(
+                      ["git", "show", f"{head}:{path}"],
+                      check=True, capture_output=True
+                  ).stdout
+                  content_digest = hashlib.sha256(blob).hexdigest()
+              entries.append((path_bytes, status, content_digest))
+
+          if not entries:
+              fail("No scoped candidate files were found in this PR.")
+
+          manifest = bytearray()
+          for path_bytes, status, content_digest in sorted(entries, key=lambda item: item[0]):
+              manifest.extend(status.encode("ascii"))
+              manifest.extend(b"\0")
+              manifest.extend(path_bytes)
+              manifest.extend(b"\0")
+              manifest.extend(content_digest.encode("ascii"))
+              manifest.extend(b"\n")
+          actual_hash = hashlib.sha256(manifest).hexdigest()
+
+          print(f"Candidate commit: {head}")
+          print(f"Scoped files bound: {len(entries)}")
+          print(f"Computed artifact SHA-256: {actual_hash}")
+          print(f"Receipt ID: {receipt['receipt_id']}")
+          print(f"Verifier: {receipt['verifier']}")
+
+          if not hashlib.compare_digest(actual_hash, expected_hash):
+              fail("Verification receipt SHA-256 does not match the candidate artifact.")
+
+          print("::notice::Verifier receipt exists in the PR base commit and its artifact SHA-256 matches.")
+          PY
