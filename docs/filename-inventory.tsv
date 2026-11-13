@@ -1,0 +1,335 @@
+classification	blob_sha	mode	path
+NO_NAME_RULE_MATCH	d07d575c0bd4c4e6b66df5d7635934cbbd5cfd9e	100644	.gitattributes
+NO_NAME_RULE_MATCH	faaabbbf772f5a083b43cb07a182878a1d9aeaef	100644	.github/audits/SNT-TO-05-v3.6-v4.0-crosswalk-WD-001.md
+NO_NAME_RULE_MATCH	0cd359fb0e7946f4cb3985d44af3d5d8b41e3480	100644	.github/audits/SNT-TO-05-v3.6-v4.0-crosswalk-WD-002.md
+NO_NAME_RULE_MATCH	1ceb39963064af5da2830f5a698717b4e791b8d9	100644	.github/audits/exact-duplicate-cleanup-manifest-2026-11-11.csv
+NO_NAME_RULE_MATCH	7d5b610579c15a4d22aef53fa4be6e7f9dc83b64	100644	.github/copilot-instructions.md
+NO_NAME_RULE_MATCH	f4797c6d5387cc6d9d2c3dc96dc643f997f9136e	100644	.github/dependabot.yml
+NO_NAME_RULE_MATCH	c6355a4567687026dcba3cb81c75e0736f0bcb31	100644	.github/workflows/audit.yml
+NO_NAME_RULE_MATCH	917560993382e6c66c8c9b25d87e646a9bad1682	100644	.github/workflows/audit_co_developer_naming.yml
+NO_NAME_RULE_MATCH	7af19b9d8a7a4780630f9b74c7a94da1c0361ab9	100644	.github/workflows/claude-peer.yml
+NO_NAME_RULE_MATCH	b3a7ce5b91b39f2b86a5f20431482fb2aef3fafb	100644	.github/workflows/cleanup_exact_duplicates.yml
+NO_NAME_RULE_MATCH	f2567b4f145c971745ed762258225f2ee0e62a35	100644	.github/workflows/convert-docx-to-md.yml
+NO_NAME_RULE_MATCH	8c2ad9f2d09bb79f0fd536831e0d70015a4db936	100644	.github/workflows/gemini-peer-execute.yml
+NO_NAME_RULE_MATCH	50aa3e7f821e3f657036080fd55de12015403493	100644	.github/workflows/gemini-peer.yml
+NO_NAME_RULE_MATCH	0ab762dca2e1c3ef9bfd9b47ab35401440643eb7	100644	.github/workflows/prune_truncated_subsets.yml
+NO_NAME_RULE_MATCH	91959458ff13ab3053f8537898a468a992c2d918	100644	.github/workflows/task-pack-ci.yml
+NO_NAME_RULE_MATCH	616f54bfe0bd3c84a226789c635426f1ecb7498d	100644	.github/workflows/verify-docx-segregation.yml
+NO_NAME_RULE_MATCH	9d7289562c7192b2fce3841af300010be87b32ab	100644	.github/workflows/verify-xlsx-segregation.yml
+NO_NAME_RULE_MATCH	ab1529a31a1a967e83327d89ac8d872545033a06	100644	.github/workflows/wd002-independent-verification.yml
+NO_NAME_RULE_MATCH	e31901918f09760136ba228e283343c1b8bf13c9	100644	.gitignore
+NO_NAME_RULE_MATCH	45ae8755e8560d90ec3456e09d5b41b6fd975162	100644	00_Control_Plane_v4.0/IDENTIFIER_NAMING_STANDARD.md
+NO_NAME_RULE_MATCH	16bfa976a4a25add61201274bd1beab52d17f0c0	100644	00_Control_Plane_v4.0/README.md
+NO_NAME_RULE_MATCH	19b3704b6d66550e1a9efea3e70f971da0ded020	100644	00_Control_Plane_v4.0/VERIFICATION_TRACEABILITY_MATRIX.md
+NO_NAME_RULE_MATCH	e6eb088f0b9f41cc7a5fc027cc1d952b50c35319	100644	00_Control_Plane_v4.0/co-developer.md
+NO_NAME_RULE_MATCH	48db7f58d0fe5485f424fddfad6225f96fc282fa	100644	00_Control_Plane_v4.0/critical-analyst.md
+NO_NAME_RULE_MATCH	93abee956d543e823553f60ef21f7bcf854d097d	100644	00_Control_Plane_v4.0/operator.md
+NO_NAME_RULE_MATCH	362f3d3510814a52356ccd587f741224920ac86b	100644	00_Control_Plane_v4.0/researcher.md
+NO_NAME_RULE_MATCH	1df1e3319db16e9ac3d8b334b1f0ac149295235a	100644	00_Control_Plane_v4.0/sentinel-manager.md
+NO_NAME_RULE_MATCH	e491208daa1139ac1cfcbedee439443f73ecd08f	100644	00_Control_Plane_v4.0/verifier-officer.md
+NO_NAME_RULE_MATCH	4f0c7c792a063d7d81b54fb0b47d5f8a5dc24bbf	100644	01_Governance_Rules/AI_AUTHORITY_AND_RESPONSIBILITY.md
+NO_NAME_RULE_MATCH	3f50059cda65b4f302877e8537f527b667e6f7e0	100644	01_Governance_Rules/DOCUMENT_CONTROL_AND_CHANGE_MANAGEMENT.md
+NO_NAME_RULE_MATCH	f0f061bf401dd1f14b445a359b9b534197402121	100644	01_Governance_Rules/Proposals/README.md
+NO_NAME_RULE_MATCH	fcca31db614fe021eaff46595f7b449917d54c23	100644	01_Governance_Rules/Proposals/SENTINEL-VO-READBACK-001-authorization-proposal.md
+NO_NAME_RULE_MATCH	f095c3926f9311a80ff0c3cc4f18e5b133219c3f	100644	01_Governance_Rules/README.md
+NO_NAME_RULE_MATCH	146904138053e095decf24b1479db7d35cc1c782	100644	01_Governance_Rules/SOURCE_OF_TRUTH.md
+NO_NAME_RULE_MATCH	2b8d85b374d5da999183981d9ba2e928a0f9e50e	100644	02_Archive_Legacy/05_Sentinel_Empirical_Evaluation_and_Firing_Ledger (Kernel v3.3.0 Reconciled).md
+NO_NAME_RULE_MATCH	5314e6933d9557b813e0924910c7783ed2f21a6d	100644	02_Archive_Legacy/MIGRATION_MANIFEST.md
+NO_NAME_RULE_MATCH	ec68d6650a413161504a45e99da6b3a9ef843946	100644	02_Archive_Legacy/README.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/migration_reconciliation_archive/01 - Source Inventory/.gitkeep
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/migration_reconciliation_archive/02 - Migration Records/.gitkeep
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/migration_reconciliation_archive/03 - Duplicate & Version Reconciliation/.gitkeep
+NO_NAME_RULE_MATCH	af1f62ff9f3e8a96a007b7a6f5869baec64e9e83	100644	02_Archive_Legacy/migration_reconciliation_archive/03 - Duplicate & Version Reconciliation/MANAGER-RECONCILIATION-RECORD.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/migration_reconciliation_archive/04 - Migration Verification Records/.gitkeep
+NO_NAME_RULE_MATCH	6b9e41d1ac126d3641568502850729ecb214096a	100644	02_Archive_Legacy/migration_reconciliation_archive/REVIEW-PACK-SOURCE-A-CORE.md
+NO_NAME_RULE_MATCH	04836f5dcfd03de25df059b24b291349fe240cd9	100644	02_Archive_Legacy/migration_reconciliation_archive/REVIEW-PACK-SOURCE-B-GOVERNANCE.md
+NO_NAME_RULE_MATCH	1c1cdc5d30d974c7f38da86d2575cfbda55b49e4	100644	02_Archive_Legacy/migration_reconciliation_archive/REVIEW-PACK-SOURCE-C-MAPCA-VERIFIER.md
+NO_NAME_RULE_MATCH	6e76da3d0827400fdadcd54e6c0e89b184aa4d79	100644	02_Archive_Legacy/migration_reconciliation_archive/REVIEW-PACK-SOURCE-D-WORKFLOWS.md
+NO_NAME_RULE_MATCH	1e65441f23f266c01e47967f5555847708d54f4f	100644	02_Archive_Legacy/migration_reconciliation_archive/SENTINEL-MAPCA-001-FREE-FIRST-ACCESS-ADDENDUM-v1.1.md
+NO_NAME_RULE_MATCH	678349ea41e1ea857d105702ab8420628f80ab54	100644	02_Archive_Legacy/migration_reconciliation_archive/SENTINEL-MAPCA-REVIEW-PACK-001.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v2.x_and_earlier/.gitkeep
+NO_NAME_RULE_MATCH	fdf085ce132dd5ac14bad103638058285cd5bece	100644	02_Archive_Legacy/v2.x_and_earlier/00_Optimus_Sentinel_System_Architecture_DPR.md
+NO_NAME_RULE_MATCH	7d6b336e39c82143ec3faa4d3bb78da304185b67	100644	02_Archive_Legacy/v2.x_and_earlier/01 — Master Task Register.md
+NO_NAME_RULE_MATCH	a83ec8cd40460c9c9e012b91d80ac9e9dfd0944d	100644	02_Archive_Legacy/v2.x_and_earlier/02_Optimus_Decisions_Approval_Ledger.md
+NO_NAME_RULE_MATCH	35bcba45e78ee1da5d45add7840df55a5f606e54	100644	02_Archive_Legacy/v2.x_and_earlier/05_Optimus_Coordinator_Recovery_Log.md
+NO_NAME_RULE_MATCH	c0894cc679db22a13fdaec2d6225b1782d701638	100644	02_Archive_Legacy/v2.x_and_earlier/06_Optimus_Specialist_Acceptance_Suite.md
+NO_NAME_RULE_MATCH	f64d3220e55517ab0a00f87b3c043b20689b94ad	100644	02_Archive_Legacy/v2.x_and_earlier/07_Optimus_Sentinel_Integration_Register.md
+NO_NAME_RULE_MATCH	59a2e388501b84b12ba45f6a0445216f21b6e784	100644	02_Archive_Legacy/v2.x_and_earlier/08_Optimus_Release_Decision.md
+NO_NAME_RULE_MATCH	cda0d9ce93b8bdce3c81e1c281d582c337edadba	100644	02_Archive_Legacy/v2.x_and_earlier/1.md
+NO_NAME_RULE_MATCH	2537310e581e85a106c8e08132da08e1a8ce20ef	100644	02_Archive_Legacy/v2.x_and_earlier/2.md
+NO_NAME_RULE_MATCH	2403f0ed6520033a4f25cca5cb1252dc3a0bee51	100644	02_Archive_Legacy/v2.x_and_earlier/3.md
+NO_NAME_RULE_MATCH	0b7cbc5d35c4aba8877f1c54dfd043ab8f82372a	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED] 01_Corporate_Secretary_System_Prompt_v2.md
+MALFORMED_NAME_CANDIDATE	44f929983e73acbf2ac56ef7d6fe7b9a5194d01e	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED] Corporate_Secretary.md.md
+MALFORMED_NAME_CANDIDATE	75ae80064232d3a0f48ee32d51c6ffa2e43a24b6	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED] Corporate_Secretary_Shadow.md.md
+MALFORMED_NAME_CANDIDATE	cecb4fcc4543574f3806b7c4bf32a07025f540cb	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED] General_Manager.md.md
+MALFORMED_NAME_CANDIDATE	5de9be048ea83f3ec974646b653f112fdce0ef70	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED] Head_Of_Operations.md.md
+NO_NAME_RULE_MATCH	6a4b3bcbdbf4203105beb4ef19797bd005e245be	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED_20261021] DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL.md
+NO_NAME_RULE_MATCH	9e742a015a773c8936dd941e57c3b15b3110da68	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED_20261026] 00_Optimus_Sentinel_System_Architecture_DPR.md
+MALFORMED_NAME_CANDIDATE	100ccbd56f319be9c4a6902c6e29a6ac087ed776	100644	02_Archive_Legacy/v2.x_and_earlier/[SUPERSEDED_v2.5.3] 00_Living_Guidebook_Mechanism_Index_v2.5.3.md.md
+MALFORMED_NAME_CANDIDATE	44f929983e73acbf2ac56ef7d6fe7b9a5194d01e	100644	02_Archive_Legacy/v2.x_and_earlier/v2.0_[SUPERSEDED] Corporate_Secretary.md.md
+MALFORMED_NAME_CANDIDATE	cecb4fcc4543574f3806b7c4bf32a07025f540cb	100644	02_Archive_Legacy/v2.x_and_earlier/v2.0_[SUPERSEDED] General_Manager.md.md
+NO_NAME_RULE_MATCH	0b7cbc5d35c4aba8877f1c54dfd043ab8f82372a	100644	02_Archive_Legacy/v2.x_and_earlier/v2.1 01_Corporate_Secretary_System_Prompt.md
+NO_NAME_RULE_MATCH	2a778a63c1d238c74081ba1150450d3762498abf	100644	02_Archive_Legacy/v3.0_to_v3.2/00_Optimus_Sentinel_System_Architecture_DPR (Kernel v3.1.0 Reconciled).md
+NO_NAME_RULE_MATCH	6896b5d00716f426866fdebf428db1a98d42da31	100644	02_Archive_Legacy/v3.0_to_v3.2/DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL (KERNEL V3.0 REVISED).md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/.gitkeep
+MALFORMED_NAME_CANDIDATE	154bbd2a50cb27b7f347257c8dd296d112224dcb	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/00_Optimus_Sentinel_System_Architecture_DPR (Kernel v3.0 Reconciled) (2).md
+NO_NAME_RULE_MATCH	744352d65b55bf4a658ee309372d3154448ec98d	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/00_Optimus_Sentinel_System_Architecture_DPR (Kernel v3.0 Reconciled).md
+MALFORMED_NAME_CANDIDATE	ffef239c04235b53d8fcf50b74a03c1f137f6fb7	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/04_Optimus_Shared_Operating_Contract (Kernel v3.0 Reconciled) (2).md
+NO_NAME_RULE_MATCH	a78fecc07afb9b3148820b16b0b2864b3ad0e811	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/04_Optimus_Shared_Operating_Contract (Kernel v3.0 Reconciled).md
+NO_NAME_RULE_MATCH	6896b5d00716f426866fdebf428db1a98d42da31	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL (KERNEL V3.0 REVISED).md
+NO_NAME_RULE_MATCH	636a237139834917eed5ba11343efcbc4741748c	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.0/[SUPERSEDED_20261026] 00_Optimus_Sentinel_System_Architecture_DPR.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.1/.gitkeep
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/.gitkeep
+MALFORMED_NAME_CANDIDATE	0ea92320d9eab22dcac1430c53bdb2959a7ea7c1	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/03_Optimus_Capability_Permissions_Register (Kernel v3.0 Reconciled) (2).md
+NO_NAME_RULE_MATCH	44f60818a9824969cb78db055ec1db00e597f2d4	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/03_Optimus_Capability_Permissions_Register (Kernel v3.0 Reconciled).md
+MALFORMED_NAME_CANDIDATE	7cd50050061e88b9dd37ad502a1927b2c584d489	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/04_Optimus_Skills_Registry (Kernel v3.0 Reconciled) (2).md
+NO_NAME_RULE_MATCH	e80989e21ae8ac7786d030f4cbba83cf5d3bfe14	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/04_Optimus_Skills_Registry (Kernel v3.0 Reconciled).md
+NO_NAME_RULE_MATCH	8925d99722b1d1da44b1b18ba7315301e158f6d8	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/Master Task Register.md
+NO_NAME_RULE_MATCH	00b7aa2498d1a7d01e3a7a048b8c574e35ab143b	100644	02_Archive_Legacy/v3.0_to_v3.2/Kernel_v3.2/_SUPER_1.md
+NO_NAME_RULE_MATCH	00b7aa2498d1a7d01e3a7a048b8c574e35ab143b	100644	02_Archive_Legacy/v3.0_to_v3.2/[SUPERSEDED_20261027] DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL (KERNEL V3.2.0 RECONCILED).md
+NO_NAME_RULE_MATCH	8cfe2d623ad59cbed83956ad5ac578f91d553f5f	100644	02_Archive_Legacy/v3.0_to_v3.2/[SUPERSEDED_v3.2.0] DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL(1).md
+NO_NAME_RULE_MATCH	8cfe2d623ad59cbed83956ad5ac578f91d553f5f	100644	02_Archive_Legacy/v3.0_to_v3.2/[SUPERSEDED_v3.2.0] DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL.md
+NO_NAME_RULE_MATCH	2a778a63c1d238c74081ba1150450d3762498abf	100644	02_Archive_Legacy/v3.0_to_v3.2/v3.1.0 00_Optimus_Sentinel_System_Architecture_DPR ().md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/.gitkeep
+NO_NAME_RULE_MATCH	c21b1b576ccc2d7c65bbc96953a83831b9fa05ed	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/00_NGT_CASE_ROADMAP_v3.3.md
+NO_NAME_RULE_MATCH	d61376be2125eac239edfa2c6b143b97f945e183	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/00_Sentinel_Master_Roadmap (Advisory Working Copy).md
+NO_NAME_RULE_MATCH	3f9e339cca9a5b04b4719ec9296db96799406338	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/00_Sentinel_System_Architecture_DPR (Advisory Working Copy).md
+MALFORMED_NAME_CANDIDATE	fa804d26affeca3e250b0f8d979df20e9ea15d71	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/02_sentinel-decisions-approval-ledger.md.md
+NO_NAME_RULE_MATCH	2b8d85b374d5da999183981d9ba2e928a0f9e50e	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/05_Sentinel_Empirical_Evaluation_and_Firing_Ledger (Kernel v3.3.0 Reconciled).md
+MALFORMED_NAME_CANDIDATE	5de3bb56a0434eacda2427c0dbb1a2381c91b82d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/06_Operator.md.md
+MALFORMED_NAME_CANDIDATE	b1c145fbd7ba909b580c71d1899c0d046ec0a43c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/07_verifier-officer.md.md
+NO_NAME_RULE_MATCH	06bd81eae1b57e7b37a4b4f286c1fae44971877c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 01_Sentinel_System_Architecture_DPR (Kernel v3.3.0 Reconciled)(1).md
+NO_NAME_RULE_MATCH	06bd81eae1b57e7b37a4b4f286c1fae44971877c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 01_Sentinel_System_Architecture_DPR (Kernel v3.3.0 Reconciled).md
+MALFORMED_NAME_CANDIDATE	c035f6ca53f7bdd01871801f38c8ad4b5d8a9ca9	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 01_sentinel-master-task-register.md.md
+NO_NAME_RULE_MATCH	b1a723f163a3cf9c368b86aa9f7929a7f68be428	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 06_Sentinel_Active_Session_Handover (Kernel v3.3.0 Reconciled)(1).md
+NO_NAME_RULE_MATCH	b1a723f163a3cf9c368b86aa9f7929a7f68be428	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 06_Sentinel_Active_Session_Handover (Kernel v3.3.0 Reconciled).md
+MALFORMED_NAME_CANDIDATE	154ecdbe1ad03cb37c0d3ec197c0d9d022e867af	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 07_Sentinel_Expert_Advisory_Master_Record_and_27_Point_Action_Plan.md.md
+NO_NAME_RULE_MATCH	01a51fd4b3bd7027dff0d61e4fb383ecc6b6f4ff	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] 08_co-developer_legacy.md
+NO_NAME_RULE_MATCH	b4c7ec44538a207afde765df4783a0d809b7f7d1	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/[SUPERSEDED] Sentinel_Session_History_Archive.md
+MALFORMED_NAME_CANDIDATE	5de3bb56a0434eacda2427c0dbb1a2381c91b82d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0 06_Operator.md.md
+NO_NAME_RULE_MATCH	67f5a6143cb1fc16eae2789cf02f1f0611591b12	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0 Capability & Permissions Register(1).md
+NO_NAME_RULE_MATCH	67f5a6143cb1fc16eae2789cf02f1f0611591b12	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0 Capability & Permissions Register.md
+NO_NAME_RULE_MATCH	fd9a97be96485f6ba1e2d2953251630deb45a2dd	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0 Decisions & Approval Ledger.md
+MALFORMED_NAME_CANDIDATE	c035f6ca53f7bdd01871801f38c8ad4b5d8a9ca9	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0[SUPERSEDED] 01_sentinel-master-task-register.md.md
+MALFORMED_NAME_CANDIDATE	b1c145fbd7ba909b580c71d1899c0d046ec0a43c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/v3.3.0_07_verifier-officer.md.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/.gitkeep
+MALFORMED_NAME_CANDIDATE	f3275193e7709cfe4ff36ce76e7de23dc6c1a581	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/00_Living_Guidebook_Master_Index_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	bb0c0b2ddd900dcf93d3ea98c50fd7151baae70a	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/02_project-coordinator.md.md
+MALFORMED_NAME_CANDIDATE	a7cb43ed4a6112f1e2757c01d15b118883c1950a	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/03_prompt-architect.md.md
+MALFORMED_NAME_CANDIDATE	04e1e0114a247be71819c057e417195d6fc238e0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/04_researcher.md.md
+MALFORMED_NAME_CANDIDATE	a7a70002626d1fa00c0cc5f55876e3243ae43745	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/05_critical-analyst.md.md
+MALFORMED_NAME_CANDIDATE	8d5ff8c31bd880b732adc36f480bd4451a84ebd4	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/06_operator.md.md
+MALFORMED_NAME_CANDIDATE	8fb73a78b0dfd5e2da5ba72133e25ea13aea6796	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Bucket_1_Directives_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	8a318bf972c9fd5f8e5b6ac252d145f199f2fd86	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Bucket_2_Cognitive_Logic_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	63076348b5a0264ad37660b289c3084ab688b09c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Bucket_3_Context_Ingestion_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	f5fcf6cd05299de53e63263bc44017475b981d58	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Bucket_4_Output_Constraints_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	7053dc9c400e423a6c072dbb1341e96c011e8de5	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Bucket_5_Guardrails_Canonical.md.md
+MALFORMED_NAME_CANDIDATE	1233c289c7124c851cdf8a86533cac482be477bb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Register_01_Core_Engines (Kernel v3.4.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	0401c64d37a16de651bb29206306f4d6f4cf5d38	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Register_04_Epistemic_Verification_Ledger (Kernel v3.4.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	a913d40ba40551c933a6592dbce1112c8d47ccd9	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Sentinel_Session_History_Archive (Kernel v3.4.0 Update).md(1).md
+MALFORMED_NAME_CANDIDATE	a913d40ba40551c933a6592dbce1112c8d47ccd9	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/Sentinel_Session_History_Archive (Kernel v3.4.0 Update).md.md
+NO_NAME_RULE_MATCH	f47a684f17a0898f6dfde2ac9acd29c3e47c65e0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[CONSOLIDATED_INTO_SENTINEL_MANAGER] 02_project-coordinator (Kernel v3.4.1 Reconciled)(1).md
+NO_NAME_RULE_MATCH	f47a684f17a0898f6dfde2ac9acd29c3e47c65e0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[CONSOLIDATED_INTO_SENTINEL_MANAGER] 02_project-coordinator (Kernel v3.4.1 Reconciled).md
+MALFORMED_NAME_CANDIDATE	38d27d3aae7a56197405a238063bee9e5ba1c7a8	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 01_Sentinel_System_Architecture_DPR (Kernel v3.4.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	e8607d197c2238d46782676925a6dc4acf57b8d2	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 01_sentinel-master-task-register.md.md
+MALFORMED_NAME_CANDIDATE	99028c03b34c97ee8a15d90c09d90b78b2472f7d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 02_sentinel-decisions-approval-ledger.md.md
+MALFORMED_NAME_CANDIDATE	7c3954f23eb3bac45e40478790784cd0905ce6d3	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 03_Sentinel_Improvement_Payload_Workbench (Kernel v3.4.1).md.md
+MALFORMED_NAME_CANDIDATE	37b8dde1aba25c3fd794840e2a96ae1aa91d0b06	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 04_sentinel-shared-operating-contract.md.md
+MALFORMED_NAME_CANDIDATE	39d8620ed63839bd499dc1759d5432dcd63418cd	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] 06_Sentinel_Active_Session_Handover (Kernel v3.4.0 Ratified).md.md
+NO_NAME_RULE_MATCH	61a4f859d2cd54739ac5e6c13883345b4ee42c12	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] Sentinel_Session_History_Archive (Kernel v3.4.1).md
+NO_NAME_RULE_MATCH	e26422486b0c3ccdb45c02203be9f16172afba94	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/[SUPERSEDED] Sentinel_Session_History_Archive.md
+MALFORMED_NAME_CANDIDATE	a7cb43ed4a6112f1e2757c01d15b118883c1950a	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0 03_prompt-architect.md.md
+MALFORMED_NAME_CANDIDATE	a7a70002626d1fa00c0cc5f55876e3243ae43745	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0 05_critical-analyst.md.md
+NO_NAME_RULE_MATCH	cbd41633239c90c71d94c0958ba69f8b02db4917	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0 Sentinel_Session_History_Archive.md
+MALFORMED_NAME_CANDIDATE	99028c03b34c97ee8a15d90c09d90b78b2472f7d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0 [SUPERSEDED] 02_sentinel-decisions-approval-ledger.md.md
+MALFORMED_NAME_CANDIDATE	bb0c0b2ddd900dcf93d3ea98c50fd7151baae70a	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0_02_project-coordinator.md.md
+MALFORMED_NAME_CANDIDATE	04e1e0114a247be71819c057e417195d6fc238e0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0_04_researcher.md.md
+MALFORMED_NAME_CANDIDATE	8d5ff8c31bd880b732adc36f480bd4451a84ebd4	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.0_06_operator.md.md
+NO_NAME_RULE_MATCH	cbd41633239c90c71d94c0958ba69f8b02db4917	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.4/v3.4.1 Sentinel_Session_History_Archive.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/.gitkeep
+MALFORMED_NAME_CANDIDATE	2692ba7fe5acab4c3ec132f1219171982ec658c6	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/01_bucket-1-directives.md.md
+NO_NAME_RULE_MATCH	1cb47edfd51d0d29c0aefd3c10dae63febe431e7	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/01_sentinel-manager (Kernel v3.5.0 Ratified)(1).md
+NO_NAME_RULE_MATCH	1cb47edfd51d0d29c0aefd3c10dae63febe431e7	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/01_sentinel-manager (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	b35c0623c8c3aecbac386b827da9b73fccf8efd6	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/01_sentinel-master-task-register (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	b35c0623c8c3aecbac386b827da9b73fccf8efd6	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/01_sentinel-master-task-register (Kernel v3.5.0 Ratified).md.md
+NO_NAME_RULE_MATCH	079ab90156444a66caa9950dd259058c6fe1c610	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/02_Sentinel_Master_Roadmap (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	55c9fcb10e967fd2ddca5e44e32e006d345bec07	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/02_bucket-2-cognitive-logic.md.md
+MALFORMED_NAME_CANDIDATE	204cb0e535fb51c2ee905bafc97cbf9529181945	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/02_sentinel-decisions-approval-ledger (Kernel v3.5.0 Ratified).md(1).md
+NO_NAME_RULE_MATCH	2d589467c2da59dacb63897b841487ddf12bcb07	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/03_sentinel-capability-permissions-register (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	4185b61c6c45eff660c7054c6165cde927336aa3	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/04_researcher (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	4185b61c6c45eff660c7054c6165cde927336aa3	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/04_researcher (Kernel v3.5.0 Ratified).md.md
+NO_NAME_RULE_MATCH	ee761510786a3439814a8aa3cd9ee8469cbd03eb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/04_sentinel-shared-operating-contract (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	1903e92ea4d27c1fc8c81c7e3adb303ed71d4e30	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_critical-analyst (Kernel v3.5.0 Ratified)(2).md
+NO_NAME_RULE_MATCH	32166acf7e9146b0aad28aeabfc5b08b6f5d8c66	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_critical-analyst (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	720c5dd44096fd5977106aabe33f60e5a2c65e7d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_sentinel-skills-registry (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	720c5dd44096fd5977106aabe33f60e5a2c65e7d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_sentinel-skills-registry (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	720c5dd44096fd5977106aabe33f60e5a2c65e7d	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/05_sentinel-skills-registry (Kernel v3.5.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	7e0f5e84747b26f44c682685f56af65fdef5d027	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/06_Sentinel_Active_Session_Handover (Kernel v3.5.0 Ratified).md(1).md
+NO_NAME_RULE_MATCH	011c304f0a7c2a76362de84ec3caf06caa3a5b50	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/06_operator (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	a693b806bf1807ed2b0e4b6317704c0fb2c1d9f1	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/07_verifier-officer (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	ab98212d25343bcb53314bda0732025c261c5382	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/08_co-developer (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	5e95ef2023c6ac3aed34498d9c6a3a50432257fb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/Sentinel_Session_History_Archive (Kernel v3.5.0 Ratified).md.md
+NO_NAME_RULE_MATCH	079ab90156444a66caa9950dd259058c6fe1c610	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 02_Sentinel_Master_Roadmap (Kernel v3.5.0 Ratified)(1).md
+NO_NAME_RULE_MATCH	079ab90156444a66caa9950dd259058c6fe1c610	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 02_Sentinel_Master_Roadmap (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	204cb0e535fb51c2ee905bafc97cbf9529181945	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 02_sentinel-decisions-approval-ledger (Kernel v3.5.0 Ratified)(1).md
+NO_NAME_RULE_MATCH	204cb0e535fb51c2ee905bafc97cbf9529181945	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 02_sentinel-decisions-approval-ledger (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	2d589467c2da59dacb63897b841487ddf12bcb07	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 03_sentinel-capability-permissions-register (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	dcf6eb217beb505d52a31141000ad5285d2fa53c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 06_Sentinel_Active_Session_Handover (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	dcf6eb217beb505d52a31141000ad5285d2fa53c	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 06_Sentinel_Active_Session_Handover (Kernel v3.5.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	011c304f0a7c2a76362de84ec3caf06caa3a5b50	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 06_operator (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	011c304f0a7c2a76362de84ec3caf06caa3a5b50	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 06_operator (Kernel v3.5.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	a693b806bf1807ed2b0e4b6317704c0fb2c1d9f1	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 07_verifier-officer (Kernel v3.5.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	a693b806bf1807ed2b0e4b6317704c0fb2c1d9f1	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 07_verifier-officer (Kernel v3.5.0 Ratified).md.md
+NO_NAME_RULE_MATCH	ab98212d25343bcb53314bda0732025c261c5382	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 08_co-developer (Kernel v3.5.0 Ratified)(1).md
+NO_NAME_RULE_MATCH	ab98212d25343bcb53314bda0732025c261c5382	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] 08_co-developer (Kernel v3.5.0 Ratified).md
+MALFORMED_NAME_CANDIDATE	5e95ef2023c6ac3aed34498d9c6a3a50432257fb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/[SUPERSEDED] Sentinel_Session_History_Archive (Kernel v3.5.0 Ratified).md.md
+NO_NAME_RULE_MATCH	6412569a3359174b693348a578c96c2d3e74cfa6	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5 operator.md
+NO_NAME_RULE_MATCH	ee761510786a3439814a8aa3cd9ee8469cbd03eb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0 04_sentinel-shared-operating-contract (Kernel v3.5.0 Ratified).md
+NO_NAME_RULE_MATCH	b7bd028e0ecd29663b0fd7f5e134abdc6354fcdb	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0_03_Sentinel_Improvement_Payload_Workbench.md
+NO_NAME_RULE_MATCH	6889fb747abed38f65dc22ed57a39b08845cc400	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0_critical-analyst(1).md
+NO_NAME_RULE_MATCH	9f5a832a7f85b70cdaac60a981f924507b67e38b	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0_operator(1).md
+NO_NAME_RULE_MATCH	629f196aa54d9316f3e7e64b05b4841a92b9f8c3	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0_researcher.md
+NO_NAME_RULE_MATCH	472ab32135c26faf6940b64077bf9eff501211d0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5.0_verifier-officer(1).md
+NO_NAME_RULE_MATCH	40b6fc3a56079b7d9774e92bba8f82d387dbf4b0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5_critical-analyst.md
+NO_NAME_RULE_MATCH	5f15de5afe4240748c806c610a96f6760ea58ff0	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5_researcher.md
+NO_NAME_RULE_MATCH	d3edf2b975b013bb97df552c518bac3b6ff64a8e	100644	02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.5/v3.5_verifier-officer.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.6_transition_source/.gitkeep
+MALFORMED_NAME_CANDIDATE	3955177aa9f37290bb5855436b11b3e0a3e0d75d	100644	02_Archive_Legacy/v3.6_transition_source/00_living-guidebook-master-index (Kernel v3.6.0).md(1).md
+NO_NAME_RULE_MATCH	1579ef9b0997653dde6d5b878dd999cbd90d7804	100644	02_Archive_Legacy/v3.6_transition_source/01-sentinel-manager-v3.6.0.md
+MALFORMED_NAME_CANDIDATE	b60dd829850bc0f3c5f7d9875566af4b4fd50b7b	100644	02_Archive_Legacy/v3.6_transition_source/01_Sentinel_System_Architecture_DPR (Kernel v3.6.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	61837d99d8a7c38b70919b09e8b41d0489bf7c9b	100644	02_Archive_Legacy/v3.6_transition_source/03_bucket-3-context-ingestion.md.md
+NO_NAME_RULE_MATCH	35cc814e77cf179a93d1e3a3552a6dc80ecb6ae3	100644	02_Archive_Legacy/v3.6_transition_source/04-researcher-v3.6.0.md
+MALFORMED_NAME_CANDIDATE	3bcf99287ae07533abbb17a0c5e65618d2da6205	100644	02_Archive_Legacy/v3.6_transition_source/04_bucket-4-output-constraints.md.md
+MALFORMED_NAME_CANDIDATE	a390c92727e68636decc4b7d66453ad6efa26fdf	100644	02_Archive_Legacy/v3.6_transition_source/05_bucket-5-guardrails.md.md
+NO_NAME_RULE_MATCH	5d02a1b497fdbbe8ed0e6c029d4c0efbeac85ba5	100644	02_Archive_Legacy/v3.6_transition_source/06-assembly-operator-v3.6.0.md
+NO_NAME_RULE_MATCH	ba301a958ed7c5a84d6fc01a1f9cdde7a5cdf0c8	100644	02_Archive_Legacy/v3.6_transition_source/07-verifier-records-officer-v3.6.0.md
+MALFORMED_NAME_CANDIDATE	4b187f798c1ec768b1bf203add06b61972c61e92	100644	02_Archive_Legacy/v3.6_transition_source/08_co-developer (Kernel v3.6.0 Ratified).md(1).md
+MALFORMED_NAME_CANDIDATE	4b187f798c1ec768b1bf203add06b61972c61e92	100644	02_Archive_Legacy/v3.6_transition_source/08_co-developer (Kernel v3.6.0 Ratified).md.md
+NO_NAME_RULE_MATCH	9461f401b5f8c1e1d0a022d48f3b1d14027779a4	100644	02_Archive_Legacy/v3.6_transition_source/Kernel v3.6.0 Bucket Updates (M-0367 to M-0388).md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/.gitkeep
+NO_NAME_RULE_MATCH	fd9a97be96485f6ba1e2d2953251630deb45a2dd	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/0(1).md
+NO_NAME_RULE_MATCH	d61376be2125eac239edfa2c6b143b97f945e183	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/00_Sentinel_Master_Roadmap (Advisory Working Copy).md
+NO_NAME_RULE_MATCH	3f9e339cca9a5b04b4719ec9296db96799406338	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/00_Sentinel_System_Architecture_DPR (Advisory Working Copy).md
+NO_NAME_RULE_MATCH	6a4b3bcbdbf4203105beb4ef19797bd005e245be	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/DETAILED PROJECT REPORT (DPR)_ PROJECT OPTIMUS & PROJECT SENTINEL.md
+NO_NAME_RULE_MATCH	fbdab134ef4c9b63a51bb2ff0239c93b5a6f9365	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert Review Notes - Project Sentinel (Oct 2026).md
+MALFORMED_NAME_CANDIDATE	9224556d60d9b46e4ee00355fd9b6a181c503276	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Complete_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	9224556d60d9b46e4ee00355fd9b6a181c503276	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Complete_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	00824a48785d491d1e29fc6aedefe055c8657295	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Authoritative_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	00824a48785d491d1e29fc6aedefe055c8657295	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Authoritative_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	3c98c7cd22608c53cacdb4822d2cf857b40b1529	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Comprehensive_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	3c98c7cd22608c53cacdb4822d2cf857b40b1529	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Comprehensive_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	4801a9a82dd74bbdbe70a847a58f166a8d403adb	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Comprehensive_v2_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	4801a9a82dd74bbdbe70a847a58f166a8d403adb	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Advisory_Session_Notes_Final_Comprehensive_v2_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	90ec5a212f6405d3301a97aeaca38aff68e67d91	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Review_Notes_Project_Sentinel_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	90ec5a212f6405d3301a97aeaca38aff68e67d91	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Expert_Review_Notes_Project_Sentinel_Oct_2026.md.md
+NO_NAME_RULE_MATCH	1e5b22de00fe41126c6f187870e4fb48c3a9c147	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/MIGRATION-GAP-REGISTER.md
+MALFORMED_NAME_CANDIDATE	4a573a7c44d6dbff1bbfb33905bf9ec8feb170b8	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Project_Sentinel_Expert_Advisory_Master_Record_Single_Kernel_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	4a573a7c44d6dbff1bbfb33905bf9ec8feb170b8	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Project_Sentinel_Expert_Advisory_Master_Record_Single_Kernel_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	46c4eb20d209f50aa5d9706aadb2e2fd09833400	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Project_Sentinel_Optimus_Expert_Advisory_Master_Record_Oct_2026.md(1).md
+MALFORMED_NAME_CANDIDATE	46c4eb20d209f50aa5d9706aadb2e2fd09833400	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/Project_Sentinel_Optimus_Expert_Advisory_Master_Record_Oct_2026.md.md
+MALFORMED_NAME_CANDIDATE	e8607d197c2238d46782676925a6dc4acf57b8d2	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] 01_sentinel-master-task-register.md.md
+MALFORMED_NAME_CANDIDATE	37b8dde1aba25c3fd794840e2a96ae1aa91d0b06	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] 04_sentinel-shared-operating-contract.md.md
+MALFORMED_NAME_CANDIDATE	154ecdbe1ad03cb37c0d3ec197c0d9d022e867af	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] 07_Sentinel_Expert_Advisory_Master_Record_and_27_Point_Action_Plan.md.md
+MALFORMED_NAME_CANDIDATE	75ae80064232d3a0f48ee32d51c6ffa2e43a24b6	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] Corporate_Secretary_Shadow.md.md
+MALFORMED_NAME_CANDIDATE	5de9be048ea83f3ec974646b653f112fdce0ef70	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] Head_Of_Operations.md.md
+NO_NAME_RULE_MATCH	b4c7ec44538a207afde765df4783a0d809b7f7d1	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] Sentinel_Session_History_Archive(1).md
+NO_NAME_RULE_MATCH	e26422486b0c3ccdb45c02203be9f16172afba94	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/[SUPERSEDED] Sentinel_Session_History_Archive.md
+NO_NAME_RULE_MATCH	acc4b58485f4c70da724530d3db2a53db3776b16	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/consolidated_parent_mechanisms.md
+NO_NAME_RULE_MATCH	186b13e3c8eb42b78c6859ca238f8be330e846dc	100644	02_Archive_Legacy/v3.6_transition_source/Root-Level_Files/mechanism_index.md
+MALFORMED_NAME_CANDIDATE	2c79c44cae20fadbed068219480d1ff139c20c4c	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ARCH-Active_Session_Handover.md.md
+MALFORMED_NAME_CANDIDATE	614c834f2404b40044917cbe7d38504ed8035c97	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ARCH-Master_Roadmap.md.md
+MALFORMED_NAME_CANDIDATE	6316044f3899f813b964c4a010ea60d2d7e4971a	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ARCH-Session_History_Archive.md.md
+MALFORMED_NAME_CANDIDATE	b60dd829850bc0f3c5f7d9875566af4b4fd50b7b	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ARCH-System_Architecture_DPR.md.md
+MALFORMED_NAME_CANDIDATE	78f8fc0d3112854066aa9418a57d5d59e6b53485	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ORG-CONTEXT_INGESTION.md.md
+MALFORMED_NAME_CANDIDATE	466c5b66fe93290f0b3b629f877f7d436405b5cd	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ORG-GUARDRAILS.md.md
+MALFORMED_NAME_CANDIDATE	331227ec8765071f6369dccc80ce0b0102623e05	100644	02_Archive_Legacy/v3.6_transition_source/[SUPERSEDED_CONTENT] ORG-OUTPUT_CONSTRAINTS.md.md
+MALFORMED_NAME_CANDIDATE	7d790de3b8da04690abf0a1fe06e1c720bdc8ca1	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/SKL-operator (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	158079f7b791fd873ba3fe6be45f1f534328b263	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/SKL-researcher (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	fb77d4a64a81168172ccb7327334424b441e7f54	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/SKL-sentinel-manager (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	2dceb8ef5e0cb507050dbab8ba2c1708a22a2472	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/SKL-verifier-officer (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	2c79c44cae20fadbed068219480d1ff139c20c4c	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ARCH-Active_Session_Handover.md.md
+MALFORMED_NAME_CANDIDATE	614c834f2404b40044917cbe7d38504ed8035c97	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ARCH-Master_Roadmap.md.md
+MALFORMED_NAME_CANDIDATE	6316044f3899f813b964c4a010ea60d2d7e4971a	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ARCH-Session_History_Archive.md.md
+MALFORMED_NAME_CANDIDATE	13db51932f83a929b246277270dee17265edccbc	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ORG-COGNITIVE_LOGIC.md(1).md
+MALFORMED_NAME_CANDIDATE	78f8fc0d3112854066aa9418a57d5d59e6b53485	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ORG-CONTEXT_INGESTION.md.md
+MALFORMED_NAME_CANDIDATE	ef371ac512d4dbdeb61fba66d363f1c14cf678cf	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ORG-DIRECTIVES.md(1).md
+MALFORMED_NAME_CANDIDATE	466c5b66fe93290f0b3b629f877f7d436405b5cd	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ORG-GUARDRAILS.md.md
+MALFORMED_NAME_CANDIDATE	331227ec8765071f6369dccc80ce0b0102623e05	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] ORG-OUTPUT_CONSTRAINTS.md.md
+MALFORMED_NAME_CANDIDATE	a48eecf01860c0b08bbe6701d5da54e8d16e4c18	100644	02_Archive_Legacy/v3.6_transition_source/_Historical_Source_Material/[SUPERSEDED_CONTENT] REG-Master_Task_Register.md(1).md
+MALFORMED_NAME_CANDIDATE	4cdabbd708ae5defac2f295990dc4b29eaedb7e8	100644	02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/REG-Decisions_Approval_Ledger (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	a592741b55967d045e9d8fd6dea9a723a9a4a845	100644	02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	3dcd9f7b370b29f2425f8f55ff40d3923f7e2a23	100644	02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	f1b3354a8b2922d85453798e8144d1f03e08dc02	100644	02_Archive_Legacy/v3.6_transition_source/from_mislabeled_v4.0/SKL-Master_Persona_Registry (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	346e47439aca1941e84f533f224fc7cac7c62454	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_01_bucket-1-directives.md(1).md
+MALFORMED_NAME_CANDIDATE	e4611562bd217539fa0c9325790ff8e18c51cf84	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_02_bucket-2-cognitive-logic.md(1).md
+NO_NAME_RULE_MATCH	2c512dd2d145feb87bb501995d0da299c9e9e5b2	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_co-developer(1).md
+NO_NAME_RULE_MATCH	142a20215e5f23f8ade3529442a007f7e9431632	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_co-developer.md
+NO_NAME_RULE_MATCH	d062764f32ad0530b7b31f148cab052664989e8b	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_sentinel-manager(1).md
+NO_NAME_RULE_MATCH	6ede8d5357b616f5ef5a6e6d1250a681e8225be6	100644	02_Archive_Legacy/v3.6_transition_source/v3.6.0_sentinel-manager.md
+NO_NAME_RULE_MATCH	8b137891791fe96927ad78e64b0aad7bded08bdc	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/.gitkeep
+MALFORMED_NAME_CANDIDATE	3955177aa9f37290bb5855436b11b3e0a3e0d75d	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/00_living-guidebook-master-index (Kernel v3.6.0).md.md
+MALFORMED_NAME_CANDIDATE	346e47439aca1941e84f533f224fc7cac7c62454	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/01_bucket-1-directives.md.md
+MALFORMED_NAME_CANDIDATE	e4611562bd217539fa0c9325790ff8e18c51cf84	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/02_bucket-2-cognitive-logic.md.md
+MALFORMED_NAME_CANDIDATE	8fb2c1b661036b579cafdc22e5b5cf6f5c3c7673	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ARCH-Active_Session_Handover (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	c11a0d39a966f09a2a48ffa4b6bef0c4f868b526	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ARCH-Improvement_Payload_Workbench (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	5ad7fd6ce189c2e763938c70ddb83c2b6982aa67	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ARCH-Master_Roadmap (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	178c53f42b333af26b55930e81d65096462db5ed	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ARCH-Session_History_Archive (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	4e262c96cd8438fb3b0f3f1b63fb739ac33f0936	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ARCH-System_Architecture_DPR (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	dfbb9851d72136ba7733da88ef9aa08aa6653295	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ORG-COGNITIVE_LOGIC (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	740c7fd3aa24b2f08937f81a777f2218f52b5f8b	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ORG-CONTEXT_INGESTION (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	8f69719913a39dabd284348f90cb39bb20da6cd4	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ORG-DIRECTIVES (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	9e7df48a8e7ed6cb8db3f4e34f17c7dee2ee4815	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ORG-GUARDRAILS (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	7307ceff084e92d01d4ef2b4c0a7bb505c90818a	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/ORG-OUTPUT_CONSTRAINTS (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	4cdabbd708ae5defac2f295990dc4b29eaedb7e8	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/REG-Decisions_Approval_Ledger (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	804b4a5b2c9d3b67490c6ba8056f5a8f08617d89	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/REG-Decisions_Approval_Ledger (Kernel v4.0).md(2).md
+MALFORMED_NAME_CANDIDATE	804b4a5b2c9d3b67490c6ba8056f5a8f08617d89	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/REG-Decisions_Approval_Ledger (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	48ec9c207d198ada5d58a1b2c887673e30fc8e1c	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/REG-Master_Task_Register (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	48ec9c207d198ada5d58a1b2c887673e30fc8e1c	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/REG-Master_Task_Register (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	a592741b55967d045e9d8fd6dea9a723a9a4a845	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	3fc181c604daf0eb0c2dc07d8a8d33adec6b735e	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md(2).md
+MALFORMED_NAME_CANDIDATE	3fc181c604daf0eb0c2dc07d8a8d33adec6b735e	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Capability_Permissions_Matrix (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	3dcd9f7b370b29f2425f8f55ff40d3923f7e2a23	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	8b7aa0a2d44c2f3ab380c6beb373ca17fb95d19c	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md(2).md
+MALFORMED_NAME_CANDIDATE	8b7aa0a2d44c2f3ab380c6beb373ca17fb95d19c	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/RUL-Shared_Governance_Contract (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	1233c289c7124c851cdf8a86533cac482be477bb	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/Register_01_Core_Engines (Kernel v3.4.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	0401c64d37a16de651bb29206306f4d6f4cf5d38	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/Register_04_Epistemic_Verification_Ledger (Kernel v3.4.0 Ratified).md.md
+MALFORMED_NAME_CANDIDATE	f1b3354a8b2922d85453798e8144d1f03e08dc02	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-Master_Persona_Registry (Kernel v4.0).md(1).md
+MALFORMED_NAME_CANDIDATE	2c87b549f8d60c47114681192a7d8422ac815320	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-Master_Persona_Registry (Kernel v4.0).md(2).md
+MALFORMED_NAME_CANDIDATE	2c87b549f8d60c47114681192a7d8422ac815320	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-Master_Persona_Registry (Kernel v4.0).md.md
+NO_NAME_RULE_MATCH	1dca1b227b597cc6e4defbe8828b63819afd0d6b	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-Master_Persona_Registry-v4.0.md
+NO_NAME_RULE_MATCH	b0c3326a2645dc7d6b1710db040f0a23aa3324cf	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-Master_Persona_Registry.md
+MALFORMED_NAME_CANDIDATE	1903e92ea4d27c1fc8c81c7e3adb303ed71d4e30	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-critical-analyst (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	7d790de3b8da04690abf0a1fe06e1c720bdc8ca1	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-operator (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	158079f7b791fd873ba3fe6be45f1f534328b263	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-researcher (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	fb77d4a64a81168172ccb7327334424b441e7f54	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-sentinel-manager (Kernel v4.0).md.md
+MALFORMED_NAME_CANDIDATE	2dceb8ef5e0cb507050dbab8ba2c1708a22a2472	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/SKL-verifier-officer (Kernel v4.0).md.md
+NO_NAME_RULE_MATCH	43c5a586beb0f5bf59787fb63b5787cc6d7d6445	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_01_Sentinel_System_Architecture_DPR.md
+NO_NAME_RULE_MATCH	7ea536ed8ea7340bfd85a29fd362455f6b8175b8	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_VERSION_INDEX(1).md
+NO_NAME_RULE_MATCH	a556272e7fe32484f5d228034ba5493a9769c265	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_VERSION_INDEX.md
+NO_NAME_RULE_MATCH	738af09ead0a33113842d8906b0ca3d82841d46d	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_critical-analyst.md
+NO_NAME_RULE_MATCH	4f927fbbf6ed49456a21cc01c273993f76f599d4	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_operator.md
+NO_NAME_RULE_MATCH	b48d3aa9e53168b4d5189edf802cd0d6f34114c2	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_researcher.md
+NO_NAME_RULE_MATCH	a8e47559baf166b0e2b684a7a1cf17bd5c9cc685	100644	02_Archive_Legacy/v4.0_reconstruction_candidates/Kernel_v4.0/v4.0_verifier-officer.md
+NO_NAME_RULE_MATCH	381c8a1731eb898dcdace209dd1d8d84be4c6233	100644	99_Legacy_XLSX_Binaries/02_Archive_Legacy/v3.3_to_v3.5/Kernel_v3.3/05_Sentinel_Empirical_Evaluation_and_Firing_Ledger (Kernel v3.3.0 Reconciled).xlsx
+NO_NAME_RULE_MATCH	4e1690851c256521c67e01affd8010298817f711	100644	AGENTS.md
+NO_NAME_RULE_MATCH	f5918c932597022ebeae562b4079d56c6fec52f1	100644	CLAUDE.md
+NO_NAME_RULE_MATCH	b2c281ac557a66309d279e04d23bddf962eaad5a	100644	DOCX_PRESERVATION_STATUS.md
+NO_NAME_RULE_MATCH	aabb30c135649ff66b04e39d38695409b4a848db	100644	GEMINI.md
+NO_NAME_RULE_MATCH	430b1405371c60b959d9d2862b7305905e071474	100644	HANDOFF_LOG.md
+NO_NAME_RULE_MATCH	bef3d8258b9536322af1c3f52d182fe235eae333	100644	PROJECT_STATE.md
+NO_NAME_RULE_MATCH	0f79d27d652661b9b269e8106e6e1a323a8cc3c3	100644	README.md
+NO_NAME_RULE_MATCH	88610751bc2265d47ed2e228175119140fe77ab1	100644	ROADMAP.md
+NO_NAME_RULE_MATCH	9094b166a7560b54a19629907d4915e0137f961e	100644	SENTINEL_MVP_SCOPE_PROPOSAL_v1.0.md
+NO_NAME_RULE_MATCH	c34616b8ba08225b139ce86b5a30751c976aeb86	100644	Task_Packs/SNT-010/README.md
+NO_NAME_RULE_MATCH	8a1afc30996d347aef1ba03e0d1b246cdc4c73cb	100644	Task_Packs/SNT-010/STATE.md
+NO_NAME_RULE_MATCH	7ce6483a4e2cc2111ef7296350f26547fc599b18	100644	Task_Packs/SNT-010/benchmark_dag.py
+NO_NAME_RULE_MATCH	ed0d33a95b83f1c096d248d63643ffafd17ac494	100644	Task_Packs/SNT-010/sentinel_dag.py
+NO_NAME_RULE_MATCH	9323d741ca84ce02b756630bd05543fdd6225dc8	100644	Task_Packs/SNT-010/test_sentinel_dag.py
+NO_NAME_RULE_MATCH	29203cd0add539d7317db00c596fcbeba1fae6d9	100644	Task_Packs/SNT-011/README.md
+NO_NAME_RULE_MATCH	27bbd0ded3164b884b6424611f90d80f6f961847	100644	Task_Packs/SNT-011/STATE.md
+NO_NAME_RULE_MATCH	ac15856e718ce87f58d1a33b093490224872a0e5	100644	Task_Packs/SNT-011/approval_acceptance.py
+NO_NAME_RULE_MATCH	0242f9ea17b319c28ea42bdeea46a5b209efec5f	100644	Task_Packs/SNT-011/task_runtime.py
+NO_NAME_RULE_MATCH	178992f6502c15ecf843bfa14697233a7c1a1d8d	100644	Task_Packs/SNT-011/test_approval_acceptance.py
+NO_NAME_RULE_MATCH	87f202c4413567934befbcef2034d0388a7f5799	100644	Task_Packs/SNT-011/test_task_runtime.py
+NO_NAME_RULE_MATCH	f02ebfbec3aaa176fa6e0c576da9f17bb500fb26	100644	package.json
+NO_NAME_RULE_MATCH	ff7f9fcb7b5a4cb98c1b58ee3c02830165f9bdfa	100644	scripts/audit-structure.js
