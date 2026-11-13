@@ -131,3 +131,27 @@ Copy this template and append a completed entry below the previous entry.
 - **Outstanding work / blockers:** Principal Operator review and merge of the Draft PR; then verify the merged files and close #67 only if every acceptance criterion is satisfied. No additional task is authorized by this handoff.
 - **Next authorized action:** Principal Operator review of the Draft PR and its checks. Do not merge automatically or promote runtime capabilities.
 - **Handoff confidence:** **Partially verified.** GitHub baseline, PR/issue state, and workflow run results were checked; semantic correctness beyond the stated documentary reconciliation and any runtime behavior remain unproven.
+
+
+## 2026-11-13 — SNT-TO-12 continuity reconciliation after PR #64
+
+- **Agent / contributor:** ChatGPT-assisted documentation reconciliation; Principal Operator review and merge remain pending.
+- **Repository branch and starting commit:** `docs/snt-to-12-reconcile-live-baseline`, created from `main` at `ffe45b801c9267473dbde6eed5380d42dc859faa`.
+- **Objective:** Reconcile the live roadmap, SNT-010/SNT-011 state records, project snapshot, and handoff log with the merged repository state after PRs #27, #30, #63, and #64, while recording newly open issues #65 and #66.
+- **Actions performed:** Refreshed the live `main` head, relevant PR merge states, Task Pack CI evidence, and open issue/PR state. Updated the current status fields in both task-pack state records; refreshed the current baseline, task statuses, and issue queue in `ROADMAP.md`; replaced only the current snapshot section of `PROJECT_STATE.md`; appended this entry without editing prior handoff entries.
+- **Changes proposed or made:** `Task_Packs/SNT-010/STATE.md`, `Task_Packs/SNT-011/STATE.md`, `ROADMAP.md`, `PROJECT_STATE.md`, and this appended `HANDOFF_LOG.md` entry. No source code, workflow, policy, permission, credential, archive, runtime, or task-ownership changes were made.
+- **Evidence and verification:**
+  - Current observed `main` baseline: `ffe45b801c9267473dbde6eed5380d42dc859faa`, the merge commit for PR #87 (2026-11-13). This baseline includes the post-PR-64 state and a later unrelated DAG benchmark change.
+  - PR #27 merged SNT-010 at `fc2c895c8e579be99e8333ca1d3903581bd75c3b`.
+  - PR #30 merged SNT-011 at `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`.
+  - PR #63 subsequently added task/work-package approval binding at `bcbba20ae97eeba21432b045de3123fb087950fe`.
+  - PR #64 merged the project-state refresh at `11bb2f8711731dac31ca2996b18ae5c05f0cbc56`.
+  - PR #87 subsequently merged at the current observed baseline `ffe45b801c9267473dbde6eed5380d42dc859faa`; it is recorded to explain why the current baseline is later than PR #64.
+  - Task Pack CI run [43215975152](https://github.com/adityadhange/project-sentinel/actions/runs/43215975152) completed successfully on the PR #63 baseline. The completed job included the repository task-pack pytest suites.
+  - Later Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) completed successfully on the PR #74 baseline and executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
+  - Four open pull requests for GitHub Actions dependency updates were observed. Issues #65, #66, and #67 were open; #65 is pending validation/planning, and #66 is pending planning and prerequisite validation.
+  - CI success is evidence of test execution and green workflow results on the named commits only. Independent semantic/runtime verification, host enforcement, production activation, and live dispatch remain pending/unproven.
+- **Operator decisions:** None newly recorded by this reconciliation. It does not authorize issue #65/#66 implementation, runtime activation, permission changes, or policy changes.
+- **Outstanding work / blockers:** Principal Operator review and merge of this documentation PR; then re-check the five files and close #67 only if all acceptance criteria are met. Issue #65 needs a validation/CI coverage plan; issue #66 remains gated by its MVP, traceability, and governance prerequisites.
+- **Next authorized action:** Principal Operator review of this Draft PR. Do not merge automatically or treat CI success as independent runtime verification.
+- **Handoff confidence:** **Partially verified.** PR merge states, current baseline, selected CI job results, and open issue/PR state were checked against GitHub. Independent runtime behavior and semantic acceptance were not tested.
