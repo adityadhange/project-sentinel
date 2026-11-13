@@ -2,7 +2,7 @@
 
 **Status: PROPOSED, NOT APPROVED, no implementation authorized**  
 **Document:** SENTINEL-MVP-SCOPE-PROPOSAL-v1.0  
-**Prepared against `main` HEAD:** `11bb2f8711731dac31ca2996b18ae5c05f0cbc56`  
+**Prepared against `main` HEAD:** `077f6107d34103aeb475ab6bf642b19910501865`  
 **Related work item:** [Issue #28](https://github.com/adityadhange/project-sentinel/issues/28)  
 **Proposal posture:** Review material only. This document records a drafting direction, not an operator acceptance decision.
 
@@ -116,6 +116,20 @@ The following are outside this MVP proposal:
 - Automatic policy interpretation or resolution of unresolved governance questions.
 - Data migration, historical archive restructuring, or broad repository cleanup.
 - Expanding or replacing `package.json` before the runtime and packaging decisions are made.
+
+---
+
+### 3.3 AI-provider independence is a release constraint
+
+AI-provider integrations are explicitly excluded from the MVP's critical path, not merely deferred as a lower-priority feature.
+
+- No provider SDK, API key, credential, billing account, model endpoint, hosted inference service, or provider-specific adapter may be required to install, configure, run, test, or accept the MVP.
+- No core intake, DAG compilation, task-state transition, blocked-state calculation, evidence registration, verification-record handling, or closeout behavior may require a model call.
+- Provider-backed work, if considered in a later release, must remain behind an optional adapter boundary and must not change the kernel's task identity, state, authorization, evidence, or closeout contracts.
+- When a work package cannot be completed without an external specialist or provider, the MVP records an explicit handoff or blocked state. It must not fabricate a result, imply that a model ran, or mark the package complete.
+- A clean-environment acceptance run must succeed with provider credentials absent and provider integrations unconfigured. Network access must not be needed for the deterministic core workflow.
+
+Any future proposal to add a provider dependency requires a separate scope decision and must not be smuggled into MVP implementation through a convenience library, runtime default, or test fixture.
 
 ---
 
@@ -266,7 +280,7 @@ These criteria are proposed for operator review. They become binding MVP accepta
 | **MVP-09** | Verification is bound to the exact artifact revision. | A receipt identifies the candidate revision; a changed artifact makes the old receipt inapplicable; checksum/revision mismatch cannot produce PASS. |
 | **MVP-10** | Verification supports PASS, FAIL, and INDETERMINATE outcomes. | Positive, negative, and unavailable-evidence tests demonstrate all three outcomes; inaccessible verifier/read-back is never represented as PASS. |
 | **MVP-11** | Closeout is distinct from package completion and requires the defined review path. | All packages COMPLETED leads to REVIEW; accepted closeout requires applicable verification and operator acceptance; failed/indeterminate review remains visibly unresolved. |
-| **MVP-12** | Core kernel operation is reproducible without an AI provider. | A clean environment can intake, compile, track, report, and close out a non-consequential test task with provider credentials/network integrations absent; setup/run/test instructions reproduce the result. |
+| **MVP-12** | Core kernel operation is reproducible without an AI provider or provider-specific dependency. | From a clean checkout/environment with provider credentials, SDKs, endpoints, and integrations absent/unconfigured, run intake, DAG compilation, state transitions, blocked/ambiguous reporting, evidence registration, verification, and non-consequential closeout; all deterministic core tests pass without model calls or provider network access. Any specialist work not performed locally is explicitly handed off or blocked. |
 
 ### 7.1 Acceptance evidence required
 
