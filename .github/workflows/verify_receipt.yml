@@ -38,7 +38,7 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import hashlib
-import hmac
+          import hmac
           import json
           import os
           import re
@@ -104,7 +104,9 @@ import hmac
           if not isinstance(receipt["issued_at"], str):
               fail("Receipt issued_at must be an ISO-8601 timestamp.")
           try:
-              datetime.fromisoformat(receipt["issued_at"].replace("Z", "+00:00"))
+              issued_at = datetime.fromisoformat(receipt["issued_at"].replace("Z", "+00:00"))
+              if issued_at.tzinfo is None or issued_at.utcoffset() is None:
+                  fail("Receipt issued_at must include a timezone.")
           except ValueError:
               fail("Receipt issued_at is not a valid ISO-8601 timestamp.")
           expected_hash = receipt["artifact_sha256"]
