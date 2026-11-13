@@ -4,29 +4,34 @@
 **Observation date:** 2026-11-13 (UTC)
 **Repository:** `adityadhange/project-sentinel`
 **Default branch:** `main`
-**Verified baseline commit:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
-**Baseline commit:** PR #74 merge — “ci: reconcile DOCX repository disposition”
-**Snapshot publication:** Follow-up continuity reconciliation proposed through a Draft PR for issue #67; Principal Operator review and merge remain pending
+**Verified baseline commit:** `ffe45b801c9267473dbde6eed5380d42dc859faa`
+**Baseline commit:** PR #87 merge — “Introduce DAG compiler benchmark suite”; includes the post-PR-64 repository state
+**Post-PR-64 reference commit:** `11bb2f8711731dac31ca2996b18ae5c05f0cbc56` (PR #64 merge)
+**Snapshot publication:** Proposed through this documentation-only PR for issue #67; Principal Operator review and merge remain pending
 **Authority:** Continuity snapshot only. This file does not grant permissions, ratify policy, or authorize execution.
 
 > This section records the live GitHub state observed for this refresh. The historical snapshot below is retained for provenance and must not be treated as current where it conflicts with this section. The repository may advance after this observation; refresh GitHub before relying on it later.
 
 ## 1. Verified repository baseline
 
-- **Observed:** The default branch is `main` at `c5f8cc81c001157e983f054a292b929ad0e392f9`, observed on 2026-11-13 UTC immediately before this follow-up reconciliation.
-- **Observed:** PR [#73](https://github.com/adityadhange/project-sentinel/pull/73) merged the first continuity-record reconciliation at `2bc3ec563ebb5fc3370b027cbc51397288a8853b`; PR [#74](https://github.com/adityadhange/project-sentinel/pull/74) then merged at this baseline (`c5f8cc81c001157e983f054a292b929ad0e392f9`).
-- **Observed:** PR [#71](https://github.com/adityadhange/project-sentinel/pull/71) merged the proposed MVP scope at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`.
-- **Observed:** No repository pull requests were open at this observed baseline.
-- **Observed:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) completed successfully and ran `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
-- **Observed:** Observed-main co-developer identifier audit run [43293248664](https://github.com/adityadhange/project-sentinel/actions/runs/43293248664), DOCX disposition run [43293248578](https://github.com/adityadhange/project-sentinel/actions/runs/43293248578), and XLSX segregation run [43293248591](https://github.com/adityadhange/project-sentinel/actions/runs/43293248591) completed successfully.
-- **Scope limitation:** A successful merge or CI run establishes repository/automation evidence for the recorded scope; it does not establish independent semantic verification, production runtime activation, host permission enforcement, or operational capability beyond the checks actually run.
+- **Observed:** The default branch is `main` at `ffe45b801c9267473dbde6eed5380d42dc859faa`, the merge commit for PR #87, observed on 2026-11-13 UTC immediately before this follow-up change.
+- **Observed:** PR [#27](https://github.com/adityadhange/project-sentinel/pull/27) merged SNT-010 at `fc2c895c8e579be99e8333ca1d3903581bd75c3b`.
+- **Observed:** PR [#30](https://github.com/adityadhange/project-sentinel/pull/30) merged SNT-011 at `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`.
+- **Observed:** PR [#63](https://github.com/adityadhange/project-sentinel/pull/63) subsequently added task/work-package approval binding at `bcbba20ae97eeba21432b045de3123fb087950fe`.
+- **Observed:** PR [#64](https://github.com/adityadhange/project-sentinel/pull/64) merged the post-PR-63 project-state refresh at `11bb2f8711731dac31ca2996b18ae5c05f0cbc56`.
+- **Observed:** PR [#87](https://github.com/adityadhange/project-sentinel/pull/87) subsequently merged the DAG benchmark suite at the current baseline `ffe45b801c9267473dbde6eed5380d42dc859faa`. This is a later, unrelated change that advances `main` beyond PR #64.
+- **Observed:** PR #71 merged the proposed MVP scope at `50f33e7db71716a0c70c0bd1972c9cf85014e7cd`; the proposal remains a scope artifact and does not authorize implementation or deployment.
+- **Observed:** Four open pull requests were present during this refresh; all four are dependency-update PRs for GitHub Actions components. Issue #67 remains open pending this reconciliation.
+- **Observed:** Task Pack CI run [43215975152](https://github.com/adityadhange/project-sentinel/actions/runs/43215975152) completed successfully on the PR #63 baseline. The completed job included the repository task-pack pytest suites.
+- **Observed:** A later Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) also completed successfully on the PR #74 baseline and ran `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`.
+- **Scope limitation:** These workflow results establish CI test execution and success for the recorded commits. They do not establish independent semantic verification, independent runtime verification, host permission enforcement, production runtime activation, or operational capability beyond the checks actually run.
 
-## 2. Current pull-request and issue evidence
+## 2. Current issue and pull-request evidence
 
-- **Open pull requests:** None observed during this refresh.
-- **Continuity records:** `ROADMAP.md`, `Task_Packs/SNT-010/STATE.md`, `Task_Packs/SNT-011/STATE.md`, and `HANDOFF_LOG.md` are updated to this observed baseline by the follow-up issue #67 reconciliation proposed from this branch. PR #73's earlier merge is not treated as completion of this follow-up.
-- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** Final follow-up to reconcile the records with the post-PR-74 baseline and explain the pre-merge/self-reference boundary; this Draft PR requires Principal Operator review and merge.
-- **Other open work:** Issues [#12](https://github.com/adityadhange/project-sentinel/issues/12), [#14](https://github.com/adityadhange/project-sentinel/issues/14), [#28](https://github.com/adityadhange/project-sentinel/issues/28), [#32–#37](https://github.com/adityadhange/project-sentinel/issues/32), [#52–#54](https://github.com/adityadhange/project-sentinel/issues/52), and [#65–#70](https://github.com/adityadhange/project-sentinel/issues/65) remain open at the observed baseline. Their open state is not evidence that work has been claimed, started, or completed. Their open state is not evidence that work has been claimed, started, or completed.
+- **Open issue [#65](https://github.com/adityadhange/project-sentinel/issues/65):** Repository-wide validation and CI trigger coverage. Current disposition: pending validation/planning. Its scope requires workflow/trigger inventory, invariant-to-check mapping, path-aware coverage, and negative tests; the issue does not itself prove these tasks have been completed.
+- **Open issue [#66](https://github.com/adityadhange/project-sentinel/issues/66):** Minimum runnable Sentinel kernel. Current disposition: pending planning and prerequisite validation; implementation is gated by approved MVP scope (#28), requirements traceability (#37), and stable governance/verification requirements. The issue explicitly does not authorize implementation before those prerequisites are approved.
+- **Open issue [#67](https://github.com/adityadhange/project-sentinel/issues/67):** This continuity-record reconciliation. Keep open until the Principal Operator reviews and merges the proposed updates and the acceptance criteria are checked.
+- **Open pull requests:** Four dependency-update PRs for GitHub Actions components were observed. No claim is made that they are part of this reconciliation.
 
 ## 3. Canonical architecture and authority boundaries
 
@@ -58,17 +63,20 @@ Do not promote a capability merely because its specification exists, code has me
 | Item | Current evidence-backed status | Boundary |
 |---|---|---|
 | Kernel v4.0 control-plane and specialist specifications | Present in `00_Control_Plane_v4.0/` | Documentation presence does not establish host activation or enforcement |
-| SNT-010 deterministic DAG compiler | Merged in PR #27; covered by the successful current-main Task Pack CI run | Isolated reference prototype; no production wiring or runtime activation |
-| SNT-011 intake and lifecycle integration | Merged in PR #30; task/work-package binding strengthened by PR #63; covered by the successful current-main Task Pack CI run | Reference implementation; no host permission enforcement or production dispatch |
+| SNT-010 deterministic DAG compiler | Merged in PR #27; Task Pack CI passed on the PR #63 baseline (run 43215975152) and later PR #74 baseline (run 43293248622) | Isolated reference prototype; no production wiring or independent runtime verification |
+| SNT-011 intake and lifecycle integration | Merged in PR #30; task/work-package approval binding added by PR #63; Task Pack CI passed on runs 43215975152 and 43293248622 | Reference implementation; no host permission enforcement, independent runtime verification, or production dispatch |
 | Product-focused MVP boundary | Proposed in `SENTINEL_MVP_SCOPE_PROPOSAL_v1.0.md`, merged through PR #71 | The proposal does not authorize implementation or deployment |
-| Repository-wide validation | Current recorded CI includes Task Pack CI and the co-developer identifier audit | Broader validation and trigger coverage remain tracked by issue #65 |
+| Repository-wide validation | Current recorded CI includes Task Pack CI and other selected repository audits | Broader validation and trigger coverage remain tracked by issue #65 |
+| Minimum runnable kernel | Planning issue #66 is open | Implementation remains gated by MVP approval, traceability, and governance prerequisites |
 
 ## 5. Known limitations and separately scoped work
 
-1. The successful Task Pack CI run establishes that the named pytest suites executed successfully; it does not establish independent semantic verification or production operation.
-2. The SNT-010 and SNT-011 task-pack state files describe reviewable reference artifacts, not activated runtime capabilities.
-3. Broader validation, runtime enforcement, independent read-back, and production activation remain tracked by separate issues and are not silently promoted by this documentation update.
-4. Historical statements retained below this section remain historical and are not rewritten to appear current.
+1. Successful Task Pack CI establishes that the named task-pack test suites executed successfully on the referenced commits; it does not establish independent semantic or runtime verification or production operation.
+2. The SNT-010 and SNT-011 task-pack state files describe merged, reviewable reference artifacts, not activated runtime capabilities.
+3. Issue #65 remains pending validation/planning; repository-wide test coverage and ordinary-change trigger coverage have not been inferred from the selected green CI runs.
+4. Issue #66 remains pending planning and prerequisite validation; no implementation or deployment is authorized by its open status.
+5. Independent runtime verification, host permission enforcement, independent read-back, and production activation remain unproven.
+6. Historical statements retained below this section remain historical and are not rewritten to appear current.
 
 ## 6. Archive and deferred-work boundaries
 
@@ -79,17 +87,18 @@ Do not promote a capability merely because its specification exists, code has me
 
 ## 7. Current disposition and next authorized action
 
-**This follow-up snapshot refresh is submitted for Principal Operator review as a Draft PR addressing issue #67.**
+**This continuity snapshot refresh is submitted for Principal Operator review as a Draft PR addressing issue #67.**
 
 - Review the exact diff against the live `main` baseline recorded above.
 - Merge only if the Principal Operator accepts the reconciliation.
 - Keep issue #67 open until the Principal Operator has reviewed and merged the follow-up PR and the acceptance criteria have been checked.
+- Issues #65 and #66 remain open pending their respective planning/validation gates; this reconciliation does not claim or authorize their implementation.
 - No additional repository changes are authorized by this snapshot alone.
 
 ---
 
-**Refresh source:** GitHub `main`, baseline `c5f8cc81c001157e983f054a292b929ad0e392f9`; PRs #73 and #74; observed-main Task Pack CI run `43293248622`, identifier audit `43293248664`, DOCX disposition `43293248578`, and XLSX segregation `43293248591`; current open issue and pull-request records observed on 2026-11-13 UTC.
-**Prepared as:** A follow-up multi-record continuity reconciliation on `docs/finalize-issue-67-continuity-20261113`.
+**Refresh source:** GitHub `main`, observed baseline `ffe45b801c9267473dbde6eed5380d42dc859faa`; PRs #27, #30, #63, #64, and #87; Task Pack CI runs 43215975152 and 43293248622; current open issue and pull-request records observed on 2026-11-13 UTC.
+**Prepared as:** A documentation-only continuity reconciliation for issue #67.
 **Approval status:** DRAFT — AWAITING PRINCIPAL OPERATOR REVIEW AND MERGE.
 
 ## Previous snapshot — retained historical record
