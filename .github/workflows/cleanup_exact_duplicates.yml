@@ -103,6 +103,9 @@ jobs:
               out.write("# Exact duplicate inventory\n\n")
               out.write(f"- Candidates: {len(candidates)}\n- Manifest SHA-256: {manifest_hash}\n")
               out.write("- Dry-run inventory only; no files removed and no PR created.\n")
+              out.write("\n## Exact deletion manifest\n\n```text\n")
+              out.write(manifest.read_text(encoding="utf-8"))
+              out.write("```\n")
           PY
 
       - name: Verify Principal Operator approval bound to manifest
