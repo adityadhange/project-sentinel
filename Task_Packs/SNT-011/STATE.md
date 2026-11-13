@@ -3,13 +3,15 @@
 - **Payload:** Connect structured task intake and task-state management to the SNT-010 dependency compiler
 - **Workspace:** `/Task_Packs/SNT-011/`
 - **Owner:** ChatGPT
-- **Status:** REVIEW — merged to `main` via PR #30
+- **Status:** REVIEW — implementation merged to `main` via PR #30; tests executed successfully in Task Pack CI
 - **Depends on:** SNT-010 (merged reference prototype)
 - **Scope:** Intake validation, DAG invocation, initial state derivation, lifecycle transitions, persistence, readiness/block propagation, v4.0 Manager working-draft contract update
-- **Completed:** Integration adapter, state manager, Manager working-draft lifecycle contract, documentation, focused unit tests, and task/work-package approval binding added through PR #63
-- **Merge commit:** `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`
-- **Observed main baseline:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
-- **Test evidence:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
+- **Completed:** Integration adapter, state manager, Manager working-draft lifecycle contract, documentation, and focused unit tests merged through PR #30; PR #63 subsequently added task/work-package approval binding
+- **PR #30 merge commit:** `f6ed3d4c4d3d1ed2cbc28699f25960c16d502d1f`
+- **PR #63 approval-binding merge commit:** `bcbba20ae97eeba21432b045de3123fb087950fe`
+- **PR #64 post-reconciliation merge commit:** `11bb2f8711731dac31ca2996b18ae5c05f0cbc56`
+- **Observed main baseline (current observation):** `ffe45b801c9267473dbde6eed5380d42dc859faa` (includes PR #64 and subsequent PR #87)
+- **Test evidence:** Task Pack CI run [43215975152](https://github.com/adityadhange/project-sentinel/actions/runs/43215975152) completed successfully on the PR #63 baseline. A later observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) also completed successfully and executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`. These results establish CI execution only; independent runtime verification remains pending.
 - **Not included:** Runtime skill activation, agent dispatch, permissions, WIP-1 enforcement, Level D host enforcement, canonical governance ratification, or production activation
-- **Next action:** Principal Operator review of the merged reference implementation; any runtime wiring or host enforcement requires separate authorization and evidence.
+- **Next action:** Preserve the merged implementation and approval-binding changes as a reviewable reference layer. Any runtime wiring, independent runtime verification, or host enforcement requires separate authorization and evidence.
 - **Known limitations:** The reference implementation does not authenticate the approving human, enforce host permissions, provide atomic replay protection across all execution paths, or establish independent post-mutation read-back. Successful CI is not production evidence.

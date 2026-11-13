@@ -3,14 +3,14 @@
 - **Payload:** Deterministic DAG compiler prototype
 - **Workspace:** `/Task_Packs/SNT-010/`
 - **Owner:** ChatGPT
-- **Status:** REVIEW — merged to `main` via PR #27
+- **Status:** REVIEW — implementation merged to `main` via PR #27; Task Pack CI executed successfully on the PR #63 baseline
 - **Artifact revision:** 0.1
 - **Merge commit:** `fc2c895c8e579be99e8333ca1d3903581bd75c3b`
-- **Observed main baseline:** `c5f8cc81c001157e983f054a292b929ad0e392f9`
+- **Observed main baseline (current observation):** `ffe45b801c9267473dbde6eed5380d42dc859faa` (includes PR #64 and subsequent PR #87)
 - **Capability:** Standard-library dependency graph compilation
 - **Dependencies:** None for this isolated prototype
 - **Completed:** Initial module, CLI, focused unit tests, usage and boundary documentation
-- **Test evidence:** Observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q` successfully.
-- **Next action:** Principal Operator review of the merged reference prototype; any integration or runtime work requires a separate authorized task and contract.
+- **Test evidence:** Task Pack CI run [43215975152](https://github.com/adityadhange/project-sentinel/actions/runs/43215975152) completed successfully on the PR #63 baseline. A later observed-main Task Pack CI run [43293248622](https://github.com/adityadhange/project-sentinel/actions/runs/43293248622) also completed successfully and executed `python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q`. These results establish CI execution only; independent runtime verification remains pending.
+- **Next action:** Preserve the merged prototype as a reviewable reference implementation. Any integration, independent runtime verification, or production activation requires a separate authorized task and evidence.
 - **Required approval:** No production integration or runtime activation is requested by this task.
 - **Known limitations:** Prototype validates a supplied in-memory graph only. It does not persist task state, dispatch agents, enforce permissions, or connect to a runtime. Successful CI is not independent semantic verification or production evidence.
