@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry Run (Preview only, do not delete)'
+        description: 'Dry Run (generate candidate manifest; do not delete or publish)'
         type: boolean
         default: true
       proposal_id:
-        description: 'Required authorization proposal ID when dry_run is false'
+        description: 'Approval proposal issue number (required for active PR creation)'
         type: string
         required: false
         default: ''
@@ -16,6 +16,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: read
 
 jobs:
   deduplicate:
@@ -29,198 +30,186 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Process Exact Duplicates
-        id: cleanup
-        env:
-          DRY_RUN: ${{ github.event.inputs.dry_run }}
-          PROPOSAL_ID: ${{ github.event.inputs.proposal_id }}
-          GH_TOKEN: ${{ github.token }}
+      - name: Inventory exact duplicates and build deterministic manifest
+        id: inventory
+        shell: bash
         run: |
-          python - << 'EOF'
-          import os
-          import re
-          import hashlib
-          import subprocess
-          import sys
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, re, subprocess, os
           from pathlib import Path
           from collections import defaultdict
 
-          def get_sha256(filepath):
-              hasher = hashlib.sha256()
-              try:
-                  with open(filepath, 'rb') as f:
-                      for chunk in iter(lambda: f.read(65536), b''):
-                          hasher.update(chunk)
-                  return hasher.hexdigest()
-              except Exception:
-                  return None
+          def sha256(path):
+              h = hashlib.sha256()
+              with open(path, "rb") as f:
+                  for chunk in iter(lambda: f.read(65536), b""): h.update(chunk)
+              return h.hexdigest()
 
-          def score_keeper(path_str):
-              """
-              Lower score = better canonical file to KEEP.
-              Higher score = redundant/glitched copy to DELETE.
-              """
-              score = 0
-              lower = path_str.lower()
-              
-              # Heavy penalties for sync artifacts and duplicates
-              if "_recovered_duplicate_copies" in lower:
-                  score += 100
-              if "_historical_source_material" in lower:
-                  score += 40
-              if "copy of" in lower:
-                  score += 50
-              if ".md.md" in lower:
-                  score += 40
-              if re.search(r'\(\d+\)', lower):
-                  score += 30
-              if "[superseded" in lower:
-                  score += 15
-                  
-              # Slight penalty for longer path to prefer root/canonical folders
-              score += len(path_str) * 0.05
-              return score
+          def score(path):
+              p = path.lower()
+              n = 0
+              for needle, points in [("_recovered_duplicate_copies",100),("_historical_source_material",40),("copy of",50),(".md.md",40),("[superseded",15)]:
+                  if needle in p: n += points
+              if re.search(r"\(\d+\)", p): n += 30
+              return n + len(path) * 0.05
 
-          # Metadata-only boundary audit: inspect Git tree entries (paths + blob IDs),
-          # never read active-directory file contents. Identical Git blob IDs identify
-          # byte-identical tracked files. A cross-boundary group aborts the run.
-          tree_listing = subprocess.run(
-              ["git", "ls-tree", "-r", "-z", "--full-tree", "HEAD"],
-              check=True, stdout=subprocess.PIPE
-          ).stdout
-          archive_blob_paths = defaultdict(list)
-          active_blob_paths = defaultdict(list)
-          for entry in tree_listing.split(bytes([0])):
-              if not entry:
-                  continue
-              metadata, raw_path = entry.split(bytes([9]), 1)
-              mode, object_type, blob_id = metadata.decode("ascii").split(" ", 2)
-              if object_type != "blob" or mode not in ("100644", "100755"):
-                  continue
-              path = raw_path.decode("utf-8", "surrogateescape")
-              if Path(path).name == ".gitkeep":
-                  continue
-              if path.startswith("02_Archive_Legacy/"):
-                  archive_blob_paths[blob_id].append(path)
-              else:
-                  active_blob_paths[blob_id].append(path)
+          archive = Path("02_Archive_Legacy")
+          if archive.is_symlink(): raise SystemExit("::error::Archive root is a symlink.")
+          resolved = archive.resolve()
+          listing = subprocess.run(["git","ls-tree","-r","-z","--full-tree","HEAD"],check=True,stdout=subprocess.PIPE).stdout
+          archived, active = defaultdict(list), defaultdict(list)
+          for entry in listing.split(b"\0"):
+              if not entry: continue
+              meta, raw = entry.split(b"\t",1)
+              mode, typ, oid = meta.decode("ascii").split(" ",2)
+              if typ != "blob" or mode not in ("100644","100755"): continue
+              path = raw.decode("utf-8","surrogateescape")
+              if Path(path).name == ".gitkeep": continue
+              (archived if path.startswith("02_Archive_Legacy/") else active)[oid].append(path)
+          cross = set(archived) & set(active)
+          if cross:
+              for oid in sorted(cross): print(f"Cross-boundary blob {oid}: archive={archived[oid]} active={active[oid]}")
+              raise SystemExit("::error::Cross-boundary duplicate group; no deletion.")
 
-          spanning_groups = [
-              (blob_id, archive_paths, active_blob_paths[blob_id])
-              for blob_id, archive_paths in archive_blob_paths.items()
-              if blob_id in active_blob_paths
-          ]
-          if spanning_groups:
-              print("::error::Duplicate group spans 02_Archive_Legacy/ and an active repository path; aborting with no deletion.")
-              for blob_id, archive_paths, active_paths in spanning_groups:
-                  print(f"Git blob {blob_id}: archive={archive_paths}; active={active_paths}")
-              sys.exit(1)
+          files = []
+          if archive.is_dir():
+              for p in archive.rglob("*"):
+                  if p.name == ".gitkeep" or p.is_symlink() or not p.is_file(): continue
+                  if resolved not in p.resolve().parents: raise SystemExit(f"::error::Path escaped archive: {p}")
+                  files.append(p)
+          groups = defaultdict(list)
+          for p in files: groups[sha256(p)].append(p.as_posix())
+          candidates = []
+          for digest, paths in groups.items():
+              if len(paths) < 2: continue
+              ordered = sorted(paths,key=score)
+              candidates.extend((p,digest,ordered[0]) for p in ordered[1:])
+          candidates.sort(key=lambda x:x[0])
 
-          root = Path('.')
-          archive_root = root / "02_Archive_Legacy"
-          archive_resolved = archive_root.resolve()
+          manifest = Path("DELETION_MANIFEST.txt")
+          with manifest.open("w",encoding="utf-8",newline="\n") as out:
+              out.write("# Project Sentinel exact-duplicate deletion manifest v1\n")
+              out.write("# JSONL records: candidate path, SHA-256, retained canonical path\n")
+              for path,digest,keeper in candidates:
+                  out.write(json.dumps({"path":path,"sha256":digest,"keep":keeper},ensure_ascii=True,sort_keys=True,separators=(",",":"))+"\n")
+          manifest_hash = sha256(manifest)
+          print(f"Manifest SHA-256: {manifest_hash}")
+          print(f"Deletion candidates: {len(candidates)}")
+          print(f"Required approval comment line: APPROVE SNT-TO-13 {manifest_hash}")
+          with open(os.environ["GITHUB_OUTPUT"],"a") as out:
+              out.write(f"candidate_count={len(candidates)}\nmanifest_sha256={manifest_hash}\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as out:
+              out.write("# Exact duplicate inventory\n\n")
+              out.write(f"- Candidates: {len(candidates)}\n- Manifest SHA-256: {manifest_hash}\n")
+              out.write("- Dry-run inventory only; no files removed and no PR created.\n")
+              out.write("\n## Exact deletion manifest\n\n```text\n")
+              out.write(manifest.read_text(encoding="utf-8"))
+              out.write("```\n")
+          PY
 
-          # Hard boundary: enumerate only regular files inside the legacy archive.
-          # Skip symlinks so an archive entry cannot redirect deletion elsewhere.
-          all_files = [
-              f for f in archive_root.rglob("*")
-              if f.is_file()
-              and not f.is_symlink()
-              and archive_resolved in f.resolve().parents
-          ] if archive_root.is_dir() else []
-
-          hash_map = defaultdict(list)
-          for f in all_files:
-              # CRITICAL SAFEGUARD: Never cross-deduplicate .gitkeep files
-              if f.name == ".gitkeep":
-                  continue
-                  
-              h = get_sha256(f)
-              if h:
-                  hash_map[h].append(str(f))
-
-          exact_groups = [paths for paths in hash_map.values() if len(paths) > 1]
-          is_dry_run = os.environ.get("DRY_RUN", "true").lower() == "true"
-          proposal_id = os.environ.get("PROPOSAL_ID", "").strip()
-
-          if not is_dry_run and not re.fullmatch(r"[A-Z0-9][A-Z0-9._-]{2,63}", proposal_id):
-              print("::error::Destructive cleanup requires an explicit valid proposal_id workflow_dispatch input.")
-              sys.exit(1)
-
-          total_deleted = 0
-          summary_lines = []
-
-          summary_lines.append("# 🛡️ Hardened Exact Duplicate Cleanup\n\n")
-          summary_lines.append(f"- **Mode:** {'🔍 DRY RUN (Simulation)' if is_dry_run else '🚀 ACTIVE PR CREATION'}\n")
-          summary_lines.append(f"- **Proposal ID:** {proposal_id if not is_dry_run else 'not required for dry run'}\n")
-          summary_lines.append(f"- **Identical Hash Groups Found:** {len(exact_groups)}\n")
-          summary_lines.append(f"- **Protected:** `.gitkeep` files were completely exempted.\n\n")
-
-          files_to_remove = []
-
-          for idx, group in enumerate(exact_groups, 1):
-              # Sort by penalty score: index 0 will be the best canonical keeper
-              group.sort(key=score_keeper)
-              keep_file = group[0]
-              remove_files = group[1:]
-
-              summary_lines.append(f"### Group {idx}\n")
-              summary_lines.append(f"🟢 **KEPT (Canonical):** `{keep_file}`\n\n")
-              summary_lines.append("**Redundant Clones Marked for Removal:**\n")
-              for r in remove_files:
-                  summary_lines.append(f"- 🔴 `{r}`\n")
-                  files_to_remove.append(r)
-                  total_deleted += 1
-              summary_lines.append("\n")
-
-          summary_lines.append(f"\n---\n**Total redundant copies to be removed:** {total_deleted}\n")
-
-          with open(os.environ.get('GITHUB_STEP_SUMMARY', 'summary.md'), 'w', encoding='utf-8') as out:
-              out.write("".join(summary_lines))
-
-          if not is_dry_run and files_to_remove:
-              for file_path in files_to_remove:
-                  candidate = Path(file_path)
-                  # Re-check immediately before unlinking; fail closed if the
-                  # path escaped the archive boundary or became a symlink.
-                  if candidate.is_symlink() or archive_resolved not in candidate.resolve().parents:
-                      raise RuntimeError(f"refusing out-of-archive deletion: {file_path}")
-                  if candidate.exists():
-                      candidate.unlink()
-
-              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                  f.write(f"deleted_count={total_deleted}\n")
-          else:
-              with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-                  f.write("deleted_count=0\n")
-
-          EOF
-
-      - name: Create Pull Request with Deletions
-        if: ${{ steps.cleanup.outputs.deleted_count > 0 }}
+      - name: Verify Principal Operator approval bound to manifest
+        if: ${{ inputs.dry_run == false }}
         env:
           GH_TOKEN: ${{ github.token }}
-          PROPOSAL_ID: ${{ github.event.inputs.proposal_id }}
+          GH_REPO: ${{ github.repository }}
+          PROPOSAL_ID: ${{ inputs.proposal_id }}
+          EXPECTED_MANIFEST_SHA256: ${{ steps.inventory.outputs.manifest_sha256 }}
+          PRINCIPAL_OPERATOR: adityadhange
+        shell: bash
         run: |
+          set -euo pipefail
+          if [[ ! "$PROPOSAL_ID" =~ ^[1-9][0-9]*$ ]]; then
+            echo "::error::proposal_id must be a numeric GitHub issue number."; exit 1
+          fi
+          if [[ ! "$EXPECTED_MANIFEST_SHA256" =~ ^[a-f0-9]{64}$ ]]; then
+            echo "::error::Manifest digest is missing or malformed."; exit 1
+          fi
+          ISSUE="$(gh issue view "$PROPOSAL_ID" --repo "$GH_REPO" --json number,state,comments)"
+          [[ "$(jq -r '.number' <<<"$ISSUE")" == "$PROPOSAL_ID" ]] || { echo "::error::Proposal issue number mismatch."; exit 1; }
+          [[ "$(jq -r '.state' <<<"$ISSUE")" == "OPEN" ]] || { echo "::error::Proposal issue must be open."; exit 1; }
+          REQUIRED="APPROVE SNT-TO-13 $EXPECTED_MANIFEST_SHA256"
+          APPROVED="$(jq -r --arg principal "$PRINCIPAL_OPERATOR" --arg marker "$REQUIRED" '
+            [.comments[] | select(.author.login == $principal)
+             | select((.body | split("\n") | map(sub("\r$"; "")) | index($marker)) != null)
+            ] | length > 0
+          ' <<<"$ISSUE")"
+          [[ "$APPROVED" == "true" ]] || {
+            echo "::error::No exact Principal Operator approval for this manifest digest on issue #$PROPOSAL_ID."
+            echo "::error::Required standalone comment line: $REQUIRED"; exit 1;
+          }
+          echo "Approval and manifest digest verified."
+
+      - name: Revalidate manifest and remove approved archive candidates in runner workspace
+        id: cleanup
+        if: ${{ inputs.dry_run == false }}
+        env:
+          EXPECTED_MANIFEST_SHA256: ${{ steps.inventory.outputs.manifest_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL="$(sha256sum DELETION_MANIFEST.txt | awk '{print $1}')"
+          [[ "$ACTUAL" == "$EXPECTED_MANIFEST_SHA256" ]] || { echo "::error::Manifest changed after approval."; exit 1; }
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          archive=Path("02_Archive_Legacy")
+          if archive.is_symlink(): raise SystemExit("::error::Archive root became a symlink.")
+          root=archive.resolve()
+          records=[]
+          with open("DELETION_MANIFEST.txt",encoding="utf-8") as f:
+              for line in f:
+                  if line.startswith("#") or not line.strip(): continue
+                  records.append(json.loads(line))
+          def digest(p):
+              h=hashlib.sha256()
+              with open(p,"rb") as f:
+                  for chunk in iter(lambda:f.read(65536),b""): h.update(chunk)
+              return h.hexdigest()
+          for rec in records:
+              p=Path(rec["path"])
+              if not p.as_posix().startswith("02_Archive_Legacy/"): raise SystemExit(f"::error::Out-of-bound path: {p}")
+              if p.name==".gitkeep" or p.is_symlink() or not p.is_file(): raise SystemExit(f"::error::Protected/missing/non-regular candidate: {p}")
+              if root not in p.resolve().parents: raise SystemExit(f"::error::Resolved path escaped archive: {p}")
+              if digest(p)!=rec["sha256"]: raise SystemExit(f"::error::SHA-256 mismatch: {p}")
+          for rec in records: Path(rec["path"]).unlink()
+          with open(os.environ["GITHUB_OUTPUT"],"a") as out: out.write(f"deleted_count={len(records)}\n")
+          PY
+
+      - name: Create Draft Pull Request with immutable manifest
+        if: ${{ inputs.dry_run == false && steps.cleanup.outputs.deleted_count > 0 }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROPOSAL_ID: ${{ inputs.proposal_id }}
+          DELETED_COUNT: ${{ steps.cleanup.outputs.deleted_count }}
+          EXPECTED_MANIFEST_SHA256: ${{ steps.inventory.outputs.manifest_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL="$(sha256sum DELETION_MANIFEST.txt | awk '{print $1}')"
+          [[ "$ACTUAL" == "$EXPECTED_MANIFEST_SHA256" ]] || { echo "::error::Manifest digest changed before PR creation."; exit 1; }
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          BRANCH_NAME="cleanup/remove-exact-duplicates-$(date +%s)"
-          git checkout -b "$BRANCH_NAME"
-          git add -u
-          git commit -m "chore: remove ${{ steps.cleanup.outputs.deleted_count }} exact bit-for-bit duplicate copies (proposal $PROPOSAL_ID)"
-          git push origin "$BRANCH_NAME"
-
-          gh pr create \
-            --base main \
-            --head "$BRANCH_NAME" \
-            --title "🧹 Clean up ${{ steps.cleanup.outputs.deleted_count }} exact duplicate clones" \
-            --body "Automated cleanup of 100% SHA-256 identical duplicate files.
-
-          ### Safeguards Applied:
-          - **Bit-for-bit verified:** Only files with identical cryptographic SHA-256 hashes are removed.
-          - **Intelligent Keeper Priority:** Kept canonical filenames; removed \`(1)\`, \`(2)\`, \`.md.md\`, \`Copy of\`, and \`_Recovered_Duplicate_Copies\`.
-          - **Exemptions:** \`.gitkeep\` files and divergent content versions were completely untouched.
-
-          Authorization proposal: $PROPOSAL_ID
-          Please review the diff and tap Merge to apply."
+          BRANCH="cleanup/exact-duplicates-$(date -u +%Y%m%dT%H%M%SZ)"
+          git checkout -b "$BRANCH"
+          git add -u -- 02_Archive_Legacy/
+          git add -- DELETION_MANIFEST.txt
+          git commit -m "chore: propose ${DELETED_COUNT} exact duplicate removals"
+          git push origin "$BRANCH"
+          {
+            printf '%s\n' "Automated exact-duplicate cleanup proposal."
+            printf '\n- Approval proposal: #%s\n' "$PROPOSAL_ID"
+            printf '\n- Principal Operator: @adityadhange\n'
+            printf '\n- Candidate count: %s\n' "$DELETED_COUNT"
+            printf '\n- Manifest SHA-256: %s\n' "$ACTUAL"
+            printf '\n### Safeguards\n'
+            printf '%s\n' "- Deletion candidates restricted to 02_Archive_Legacy/."
+            printf '%s\n' "- Symlinks and .gitkeep files are excluded."
+            printf '%s\n' "- Candidate SHA-256 values revalidated before removal."
+            printf '%s\n' "- This workflow creates a draft PR; it never merges."
+            printf '\n### DELETION_MANIFEST.txt\n\n'
+            cat DELETION_MANIFEST.txt
+          } > PR_BODY.md
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" --draft \
+            --title "[SNT-TO-13] Propose ${DELETED_COUNT} verified archive duplicate removals" \
+            --body-file PR_BODY.md
