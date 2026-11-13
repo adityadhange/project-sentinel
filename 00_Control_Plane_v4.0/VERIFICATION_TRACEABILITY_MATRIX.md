@@ -1,8 +1,8 @@
 # Verification & Traceability Matrix — Kernel v4.0
 
 **Document ID:** SNT-VERIFICATION-TRACEABILITY-MATRIX  
-**Version:** 1.0  
-**Status:** OPEN — BASELINE STAGED; acceptance and enforcement evidence remain outstanding  
+**Version:** 1.1  
+**Status:** OPEN — BASELINE STAGED; acceptance, enforcement, and independent source-reconciliation evidence remain outstanding  
 **Architecture invariant:** Sentinel is the sole governing kernel; Optimus is a subordinate orchestration subsystem.  
 **Synthetic specification dry-run reference:** TASK-2026-RP04B-ACCEPTANCE  
 **Synthetic dry-run label:** [SYNTHETIC-DRYRUN-ID: RP04B-001]
@@ -119,3 +119,29 @@ Issues #32–#37 are **OPEN — BASELINE STAGED**. The merged Kernel v4.0 schema
 For Issue #35, [PR #42](https://github.com/adityadhange/project-sentinel/pull/42) is **REFERENCE_PROTOTYPE (UNPROVEN_IN_PROD)**. It exercises a reference-layer task-start gate only; it does not establish host/runtime enforcement, identity authentication, atomic approval consumption, or host permission enforcement. Independent host/runtime proof remains mandatory.
 
 Closing an issue, merging a schema, or merging this matrix update is not evidence that runtime enforcement or empirical acceptance has been achieved.
+
+
+## 8. Provisional mechanism disposition register — Batch 1 (M-0367–M-0373)
+
+**Record:** [SNT-TO-07 Batch 1 Disposition Record](../.github/audits/SNT-TO-07-batch-1-disposition-record.md)  
+**Authority status:** Proposed reconciliation record; not an approved architecture amendment.  
+**Verification status:** Source documents were read from the repository and compared at the recorded revision. Independent peer review and formal Sentinel Verifier receipt remain outstanding. No mechanism is marked empirically tested or independently verified by this addendum.
+
+| Mechanism | Disposition | v4.0 source relationship | Traceability state / remaining work |
+|---|---|---|---|
+| M-0367 — Prompt instruction/context separation | **RESTORE — REFINED** | Researcher §7 treats retrieved content as data and rejects embedded instructions. The original mandatory three-part prompt placement is not explicitly present as a universal v4.0 format. | **PARTIAL.** Preserve the instruction/data authority boundary. Do not reinstate the exact legacy prompt anatomy without a separate need and test. Add an explicit universal invariant only through approved control-plane change. |
+| M-0368 — 70/20/10 token allocation | **RESTORE — REFINED** | No explicit adaptive token-budget control or fixed allocation was located in the inspected active v4.0 Manager, Researcher, Verifier, or Operator specifications. | **GAP / NOT PROVEN.** Restore explicit task-sensitive budget planning and protect capacity for evidence and verification. Retire 70/20/10 as a mandatory ratio; define and test any implementation before promotion. |
+| M-0369 — Reliability badges and numeric scores | **DEPRECATE** | Researcher §3 uses evidence tiers T1/T2/T3; Verifier §10 uses explicit audit outcomes. Neither establishes calibrated 1–100 reliability scores. | **PROPOSED DEPRECATION.** Retire uncalibrated badges/scores. Preserve evidence tiers and scoped outcome states; do not claim statistical calibration. |
+| M-0370 — Bounded retry and diagnostic routing | **MAPPED** | Manager §§6 and 10 define a bounded two-strike correction/arbitration loop; Manager §4 defines specialist routing. | **DOCUMENTED MAPPING.** Do not create a competing retry loop. Executable enforcement and tests remain separate evidence requirements. |
+| M-0371 — Last-five-turn memory and no external state | **DEPRECATE** | Manager §§3–4 and §4's state-board requirements use task-pack state, recorded transitions, artifact/receipt references and verified progress. | **DOCUMENTED REPLACEMENT.** Retire fixed five-turn memory and the prohibition on external task state. Conversation history alone is not authoritative state. |
+| M-0372 — Retrieve and verify before execution | **MAPPED** | Researcher §2 specifies primary-source routing; Manager §4 requires evidence prerequisites and readiness checks before dispatch; Level D remains separately gated. | **DOCUMENTED MAPPING.** Retrieval, evidence sufficiency, approval and execution remain distinct gates. No claim that every action requires web retrieval. |
+| M-0373 — Binary PASS/FAIL output | **MAPPED** | Verifier §10 uses PASS/FAIL/PARTIAL/ARBITRATION_REQUIRED for audit output; §9 uses PASS/FAIL/INDETERMINATE for post-mutation read-back. | **DOCUMENTED MAPPING WITH SCOPE DISTINCTION.** Do not collapse the two outcome vocabularies into one enum. Any unified schema requires separate design and tests. |
+
+### 8.1 Promotion and verification boundary
+
+1. This addendum records dispositions and source comparisons; it does not activate new prompt rules, change role permissions, or authorize consequential actions.
+2. M-0367 and M-0368 contain refined restoration proposals. Their new or clarified controls require explicit approved specification text, named tests, and evidence before being marked IMPLEMENTED or TESTED.
+3. M-0369 deprecation is a proposed architecture disposition. Do not delete historical source material; retain it in the archive.
+4. M-0370, M-0371, M-0372, and M-0373 are mapped at the specification level only. Mapping does not establish runtime enforcement.
+5. Independent peer review, source/provenance review of the full SNT-TO-07 scope, and a formal Verifier receipt remain outstanding. Issue #52 therefore remains open.
+6. No source archive file, role specification, permission model, or runtime implementation was modified by this batch.
