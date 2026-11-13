@@ -109,7 +109,7 @@ jobs:
             cat wd002-integrity.txt
             echo "Parsed row inventory: wd002-row-inventory.json (attached as workflow artifact)."
             echo "WD-002 itself groups invariant identifiers and does not provide a complete individually enumerated 49-row inventory."
-            echo "report"
+            echo "WD002_REPORT"
           } >> "$GITHUB_OUTPUT"
 
           cat wd002-preflight-report.md >> "$GITHUB_STEP_SUMMARY"
