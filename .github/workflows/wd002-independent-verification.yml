@@ -20,7 +20,7 @@ jobs:
           github.event.comment.author_association == 'OWNER' &&
           github.event.issue.pull_request == null &&
           github.event.issue.number == 52 &&
-          startsWith(github.event.comment.body, '@sentinel-verification run WD-002') }}
+          startsWith(github.event.comment.body, '@gemini-cli plan: WD-002-HASH') }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -38,7 +38,6 @@ jobs:
           TARGET_COMMIT="5b77f567846906288fa096c22e815ce33e573250"
           TARGET_PATH=".github/audits/SNT-TO-05-v3.6-v4.0-crosswalk-WD-002.md"
           EXPECTED_BLOB="0cd359fb0e7946f4cb3985d44af3d5d8b41e3480"
-          EXPECTED_SHA256="RECORD_ACTUAL_ON_FIRST_RUN"
           test "$(git rev-parse HEAD)" = "${TARGET_COMMIT}"
           test -f "${TARGET_PATH}"
 
