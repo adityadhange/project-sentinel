@@ -4,9 +4,14 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lint_epistemic_tags import lint_text
+from lint_epistemic_tags import is_excluded_path, lint_text
 
 class EpistemicLintTests(unittest.TestCase):
+    def test_archived_paths_are_excluded_but_active_paths_are_not(self):
+        self.assertTrue(is_excluded_path("02_Archive_Legacy/example.md"))
+        self.assertFalse(is_excluded_path("02_Archive_Legacyish/example.md"))
+        self.assertFalse(is_excluded_path("01_Governance_Rules/example.md"))
+
     def test_fact_with_locator_passes(self):
         self.assertEqual(lint_text("[FACT: PRIMARY_VERIFIED] The record was signed. [Q-014]"), [])
 
