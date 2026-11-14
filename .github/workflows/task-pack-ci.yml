@@ -38,3 +38,36 @@ jobs:
 
       - name: Run repository task-pack pytest suites
         run: python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q
+
+  epistemic-markdown-lint:
+    name: Epistemic Markdown lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository without persisted credentials
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        with:
+          python-version: '3.11'
+
+      - name: Run epistemic linter unit tests
+        run: python -m unittest discover -s scripts -p 'test_lint_epistemic_tags.py' -v
+
+      - name: Lint Markdown changed by pull request
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python scripts/lint_epistemic_tags.py --base-ref "$BASE_SHA" --head-ref "$HEAD_SHA"
+
+      - name: Lint Markdown changed by push
+        if: github.event_name == 'push'
+        env:
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.event.after }}
+        run: python scripts/lint_epistemic_tags.py --base-ref "$BASE_SHA" --head-ref "$HEAD_SHA"
