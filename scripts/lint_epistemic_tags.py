@@ -7,9 +7,13 @@ import sys
 from pathlib import Path
 
 TAGS = {"[FACT: PRIMARY_VERIFIED]", "[INFERENCE: DEDUCTIVE_VALID]", "[GAP: UNVERIFIED_ABSTENTION]", "[REFUTED]"}
+EXCLUDED_PATH_PREFIXES = ("02_Archive_Legacy/",)
 TAG_RE = re.compile(r"\[(?:FACT|INFERENCE|GAP)\s*:[^\]]*\]|\[REFUTED\]", re.I)
 LOCATOR_RE = re.compile(r"\[(?:Q|E|SRC|REF)-?\d+[A-Za-z0-9._-]*\]|https?://[^\s<>)]+|\[[^\]]+\]\((?:https?://|/|\.\.?/)[^)]+\)|\b[\w.-]+(?:/[\w.-]+)+\.(?:md|markdown|py|yml|yaml|json|txt)(?::L?\d+(?:-L?\d+)?)?\b|\blocator\s*:\s*\S+", re.I)
 ASSERTION_RE = re.compile(r"\b(?:is|are|was|were|has|have|had|does|do|did|will|would|must|should|can|cannot|could|may|might|contains|supports|requires|provides|prevents|ensures|allows|blocks|validates|implements|demonstrates|proves|shows|indicates|means|results|causes|increases|decreases|includes|excludes|uses|depends|remains|becomes|represents|records|states|establishes|creates|maintains|fails|passes|confirms|contradicts|identifies|defines|specifies|applies|precedes|follows|matches|differs|equals)\b", re.I)
+
+def is_excluded_path(filename):
+    return any(filename.startswith(prefix) for prefix in EXCLUDED_PATH_PREFIXES)
 
 def clean(line):
     line = re.sub(r"^(?:>\s*)+", "", line.strip())
@@ -89,7 +93,9 @@ def main():
     except subprocess.CalledProcessError as exc:
         print(f"ERROR: cannot determine changed Markdown files: {exc}", file=sys.stderr)
         return 2
-    files = [name for name in result.stdout.splitlines() if name]
+    changed_files = [name for name in result.stdout.splitlines() if name]
+    files = [name for name in changed_files if not is_excluded_path(name)]
+    excluded_files = [name for name in changed_files if is_excluded_path(name)]
     failures = []
     for filename in files:
         path = Path(filename)
@@ -105,7 +111,10 @@ def main():
         for failure in failures:
             print(f"::error::{failure}", file=sys.stderr)
         return 1
-    print(f"Epistemic Markdown lint passed: {len(files)} changed Markdown file(s) checked.")
+    print(
+        f"Epistemic Markdown lint passed: {len(files)} changed Markdown file(s) checked; "
+        f"{len(excluded_files)} archived file(s) excluded."
+    )
     print("Static tag/locator validation only; factual truth and deductive validity remain human/Verifier responsibilities.")
     return 0
 
