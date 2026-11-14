@@ -10,6 +10,35 @@ permissions:
   contents: read
 
 jobs:
+  reference-tests:
+    name: Reference implementation tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository without persisted credentials
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
+        with:
+          node-version: '20'
+
+      - name: Run canonical structure and Markdown link audit
+        run: npm run audit:structure
+
+      - name: Install pytest
+        run: python -m pip install pytest
+
+      - name: Run repository task-pack pytest suites
+        run: python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q
+
   epistemic-markdown-lint:
     name: Epistemic Markdown lint
     runs-on: ubuntu-latest
@@ -42,17 +71,3 @@ jobs:
           BASE_SHA: ${{ github.event.before }}
           HEAD_SHA: ${{ github.event.after }}
         run: python scripts/lint_epistemic_tags.py --base-ref "$BASE_SHA" --head-ref "$HEAD_SHA"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
-        with:
-          node-version: '20'
-
-      - name: Run canonical structure and Markdown link audit
-        run: npm run audit:structure
-
-      - name: Install pytest
-        run: python -m pip install pytest
-
-      - name: Run repository task-pack pytest suites
-        run: python -m pytest Task_Packs/SNT-010 Task_Packs/SNT-011 -q
