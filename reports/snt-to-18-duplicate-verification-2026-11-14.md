@@ -27,7 +27,7 @@ This is a verification-only report for issue #90. It does not delete, rename, ov
 
 ## Unresolved rows
 
-Five rows are `UNVERIFIED`. They are historical DOCX candidates whose Git objects are still present in repository history, but whose files are absent from the current checked-out tree. The ledger now records each historical object byte count, independently computed historical-object SHA-256, and status `HISTORICAL_OBJECT_CONFIRMED_CURRENT_FILE_UNVERIFIED`. Because issue #90 requires recomputation from current repository files, historical object availability alone is not elevated to an exact-duplicate classification.
+Five rows are `UNVERIFIED`. They are historical DOCX candidates whose Git objects are still present in repository history, but whose files are absent from the current checked-out tree. Their documented provenance is that the DOCX files were downloaded, converted to Markdown, re-uploaded, and then intentionally removed. The ledger now records each historical object byte count, independently computed historical-object SHA-256, and status `HISTORICAL_OBJECT_CONFIRMED_CURRENT_FILE_UNVERIFIED`. Because issue #90 requires recomputation from current repository files, historical object availability alone is not elevated to an exact-duplicate classification.
 
 - Row 24: `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/Copy of 01_sentinel-master-task-register (Kernel v3.5.0 Ratified).md.docx` vs `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/01_sentinel-master-task-register (Kernel v3.5.0 Ratified).md(1).docx`; blob `3bd8eb09a7e153140448285aaaebf16d3eeb11b6`; 223660 bytes.
 - Row 56: `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/Copy of [SUPERSEDED] 02_Sentinel_Master_Roadmap (Kernel v3.5.0 Ratified).docx` vs `01 - SOURCE ARCHIVE/Organized_Legacy_Versions/Kernel v3.5/[SUPERSEDED] 02_Sentinel_Master_Roadmap (Kernel v3.5.0 Ratified).docx`; blob `f8d838006db6e8a7aa6d1eb71dbec23b96eff7a9`; 220035 bytes.
@@ -47,7 +47,13 @@ The five unresolved rows are not missing from Git history. Their historical Git 
 | 58 | 221160 | `2671465f4b2884c14f0983414af7006fc5e59c1c9f3fc1129adcbc21b70d240c` | No current matching path | `HISTORICAL_OBJECT_CONFIRMED_CURRENT_FILE_UNVERIFIED` |
 | 59 | 222808 | `03157580be184bfbcca0e993f5f0543169c38396994290a155a57b036e87fadc` | No current matching path | `HISTORICAL_OBJECT_CONFIRMED_CURRENT_FILE_UNVERIFIED` |
 
-The status update documents historical provenance; it does not authorize recovery, deletion, or cleanup.
+The status update documents historical provenance and marks these five rows `EXCLUDED_FROM_CLEANUP`; it does not authorize recovery, deletion, or any new cleanup action.
+
+## DOCX conversion and cleanup disposition
+
+The five historical Kernel v3.5 DOCX rows are retained as `UNVERIFIED` for evidence integrity because their current checked-out bytes cannot be recomputed. Their provenance is now explicitly recorded as downloaded DOCX sources that were converted to Markdown, re-uploaded, and then removed. They are therefore marked `EXCLUDED_FROM_CLEANUP`; they are not proposed removal candidates under SNT-TO-19.
+
+The 165 current-tree exact-byte rows remain subject to separate retained-copy review and explicit per-file Principal Operator authorization.
 
 ## Reference and provenance assessment
 
